@@ -1,0 +1,506 @@
+openapi: 3.0.3
+info:
+  title: zhglxt File Manager API
+  description: |
+    Comprehensive file management API with elFinder integration, supporting:
+    - Local and cloud storage backends (AWS S3, Alibaba OSS, Tencent COS)
+    - File upload, download, delete, move, and preview operations
+    - Thumbnail generation and watermarking
+    - Advanced security features and permission control
+    - Multi-language support (English/Chinese)
+  version: 1.0.0
+  contact:
+    name: zhglxt Development Team
+    email: support@zhglxt.com
+    url: https://github.com/zhglxt/zhglxt
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: /
+    description: Default server
+
+security:
+  - shiroAuth: []
+
+paths:
+  /file-manager/api/files/upload:
+    post:
+      tags:
+        - File Operations
+      summary: Upload files
+      description: Upload one or more files to the specified directory
+      operationId: uploadFiles
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                directory:
+                  type: string
+                  description: Target directory path
+                  example: "/uploads/documents"
+                applyWatermark:
+                  type: boolean
+                  description: Whether to apply watermark to images
+                  default: false
+      responses:
+        '200':
+          description: Files uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUploadResponse'
+        '400':
+          description: Invalid request or file validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /file-manager/api/files/download:
+    get:
+      tags:
+        - File Operations
+      summary: Download file
+      description: Download a file by its path
+      operationId: downloadFile
+      parameters:
+        - name: path
+          in: query
+          required: true
+          schema:
+            type: string
+          description: File path to download
+          example: "/uploads/documents/report.pdf"
+      responses:
+        '200':
+          description: File downloaded successfully
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /file-manager/api/files/list:
+    get:
+      tags:
+        - File Operations
+      summary: List files and directories
+      description: Get a list of files and directories in the specified path
+      operationId: listFiles
+      parameters:
+        - name: path
+          in: query
+          required: false
+          schema:
+            type: string
+            default: "/"
+          description: Directory path to list
+          example: "/uploads"
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+          description: Page number for pagination
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+          description: Number of items per page
+      responses:
+        '200':
+          description: Files listed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileListResponse'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /file-manager/api/files/delete:
+    delete:
+      tags:
+        - File Operations
+      summary: Delete files or directories
+      description: Delete one or more files or directories
+      operationId: deleteFiles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paths:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of file/directory paths to delete
+                  example: ["/uploads/temp/file1.txt", "/uploads/temp/file2.txt"]
+      responses:
+        '200':
+          description: Files deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResponse'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /file-manager/api/files/move:
+    post:
+      tags:
+        - File Operations
+      summary: Move files or directories
+      description: Move files or directories to a new location
+      operationId: moveFiles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sources:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of source paths
+                  example: ["/uploads/temp/file1.txt"]
+                target:
+                  type: string
+                  description: Target directory path
+                  example: "/uploads/documents"
+      responses:
+        '200':
+          description: Files moved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResponse'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /file-manager/api/files/preview:
+    get:
+      tags:
+        - File Operations
+      summary: Preview file
+      description: Get file preview (thumbnail for images, metadata for others)
+      operationId: previewFile
+      parameters:
+        - name: path
+          in: query
+          required: true
+          schema:
+            type: string
+          description: File path to preview
+          example: "/uploads/images/photo.jpg"
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [small, medium, large]
+            default: medium
+          description: Thumbnail size for images
+      responses:
+        '200':
+          description: Preview generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilePreviewResponse'
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /file-manager/connector:
+    get:
+      tags:
+        - elFinder Connector
+      summary: elFinder connector GET requests
+      description: Handle elFinder connector GET requests
+      operationId: elFinderConnectorGet
+      parameters:
+        - name: cmd
+          in: query
+          required: true
+          schema:
+            type: string
+          description: elFinder command
+        - name: target
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Target hash
+      responses:
+        '200':
+          description: Command executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElFinderResponse'
+
+    post:
+      tags:
+        - elFinder Connector
+      summary: elFinder connector POST requests
+      description: Handle elFinder connector POST requests (file uploads, etc.)
+      operationId: elFinderConnectorPost
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                cmd:
+                  type: string
+                  description: elFinder command
+                target:
+                  type: string
+                  description: Target hash
+                upload:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: Files to upload
+      responses:
+        '200':
+          description: Command executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElFinderResponse'
+
+  /file-manager/health:
+    get:
+      tags:
+        - Monitoring
+      summary: Health check
+      description: Check the health status of the file manager service
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '503':
+          description: Service is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+components:
+  securitySchemes:
+    shiroAuth:
+      type: http
+      scheme: bearer
+      description: Shiro-based authentication token
+
+  schemas:
+    FileUploadResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileInfo'
+        errors:
+          type: array
+          items:
+            type: string
+
+    FileListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileInfo'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        size:
+          type: integer
+
+    FilePreviewResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        previewUrl:
+          type: string
+        thumbnailUrl:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+
+    OperationResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        affectedFiles:
+          type: integer
+
+    ElFinderResponse:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: object
+        cwd:
+          type: object
+        options:
+          type: object
+        error:
+          type: array
+          items:
+            type: string
+
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [UP, DOWN]
+        timestamp:
+          type: string
+          format: date-time
+        details:
+          type: object
+          properties:
+            storage:
+              type: string
+              enum: [UP, DOWN]
+            database:
+              type: string
+              enum: [UP, DOWN]
+            cache:
+              type: string
+              enum: [UP, DOWN]
+
+    FileInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: File or directory name
+        path:
+          type: string
+          description: Full path
+        type:
+          type: string
+          description: File type (file/directory)
+        size:
+          type: integer
+          format: int64
+          description: File size in bytes
+        lastModified:
+          type: string
+          format: date-time
+          description: Last modification time
+        mimeType:
+          type: string
+          description: MIME type
+        isDirectory:
+          type: boolean
+          description: Whether this is a directory
+        thumbnailPath:
+          type: string
+          description: Thumbnail path for images
+        permissions:
+          type: object
+          properties:
+            read:
+              type: boolean
+            write:
+              type: boolean
+            delete:
+              type: boolean
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        localizedMessage:
+          type: string
+          description: Localized error message
+        timestamp:
+          type: string
+          format: date-time
+        path:
+          type: string
+          description: Request path
+        details:
+          type: object
+          additionalProperties: true
+          description: Additional error details

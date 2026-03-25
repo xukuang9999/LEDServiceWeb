@@ -1,0 +1,195 @@
+/**
+ * Bulletproof Modal CSS
+ * Ensures modal displays properly in all scenarios
+ */
+
+/* Force modal to be on top of everything */
+#bulletproof-news-modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 2147483647 !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ensure modal dialog is properly styled */
+#bulletproof-modal-dialog {
+    position: relative !important;
+    z-index: 2147483648 !important;
+    pointer-events: auto !important;
+}
+
+/* Prevent body scroll when modal is open */
+body.bulletproof-modal-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+}
+
+/* Ensure all text is readable */
+#bulletproof-news-modal * {
+    box-sizing: border-box !important;
+}
+
+#bulletproof-news-modal p,
+#bulletproof-news-modal div,
+#bulletproof-news-modal span,
+#bulletproof-news-modal h1,
+#bulletproof-news-modal h2,
+#bulletproof-news-modal h3,
+#bulletproof-news-modal h4,
+#bulletproof-news-modal h5,
+#bulletproof-news-modal h6 {
+    color: inherit !important;
+    font-family: inherit !important;
+}
+
+/* Ensure images display properly */
+#bulletproof-modal-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto 20px auto !important;
+    border-radius: 8px !important;
+}
+
+/* Scrollbar styling */
+#bulletproof-modal-body::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+#bulletproof-modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+    border-radius: 4px !important;
+}
+
+#bulletproof-modal-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1 !important;
+    border-radius: 4px !important;
+}
+
+#bulletproof-modal-body::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8 !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #bulletproof-modal-dialog {
+        width: 95% !important;
+        max-height: 90vh !important;
+        margin: 20px !important;
+    }
+    
+    #bulletproof-modal-header {
+        padding: 20px !important;
+    }
+    
+    #bulletproof-modal-title {
+        font-size: 18px !important;
+    }
+    
+    #bulletproof-modal-body {
+        padding: 20px !important;
+    }
+    
+    #bulletproof-modal-body > div {
+        padding: 20px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #bulletproof-modal-dialog {
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 100vh !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+    
+    #bulletproof-modal-header {
+        border-radius: 0 !important;
+    }
+    
+    #bulletproof-modal-body > div {
+        border-radius: 0 !important;
+    }
+}
+
+/* Animation keyframes */
+@keyframes bulletproofFadeIn {
+    from {
+        opacity: 0 !important;
+    }
+    to {
+        opacity: 1 !important;
+    }
+}
+
+@keyframes bulletproofSlideIn {
+    from {
+        transform: scale(0.9) translateY(-20px) !important;
+        opacity: 0 !important;
+    }
+    to {
+        transform: scale(1) translateY(0) !important;
+        opacity: 1 !important;
+    }
+}
+
+/* Apply animations */
+#bulletproof-news-modal {
+    animation: bulletproofFadeIn 0.3s ease-out !important;
+}
+
+#bulletproof-modal-dialog {
+    animation: bulletproofSlideIn 0.3s ease-out !important;
+}
+
+/* Ensure buttons work properly */
+#bulletproof-news-modal button {
+    cursor: pointer !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+}
+
+#bulletproof-news-modal button:hover {
+    opacity: 0.9 !important;
+}
+
+#bulletproof-news-modal button:active {
+    transform: scale(0.98) !important;
+}
+
+/* Hide any conflicting modals */
+.modal.fade,
+.modal.show,
+.modal-backdrop {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Ensure our modal always wins */
+#bulletproof-news-modal {
+    z-index: 2147483647 !important;
+}
+
+/* Loading spinner animation */
+.fa-spinner.fa-spin {
+    animation: fa-spin 1s infinite linear !important;
+}
+
+@keyframes fa-spin {
+    0% {
+        transform: rotate(0deg) !important;
+    }
+    100% {
+        transform: rotate(360deg) !important;
+    }
+}

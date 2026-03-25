@@ -1,0 +1,533 @@
+/**
+ * File Manager Custom Styles
+ * Additional styling for the file manager interface
+ * 
+ * @author zhglxt
+ */
+
+/* 基础样式 */
+.file-manager-wrapper {
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+}
+
+.file-manager-header {
+    background: #f8f8f9;
+    border-bottom: 1px solid #e7eaec;
+    padding: 15px;
+    border-radius: 3px 3px 0 0;
+}
+
+.file-manager-header h3 {
+    margin: 0;
+    color: #676a6c;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.file-manager-content {
+    padding: 15px;
+}
+
+/* elFinder 主题定制 */
+.elfinder {
+    border: 1px solid #e7eaec;
+    border-radius: 3px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.elfinder-toolbar {
+    background: #f8f8f9;
+    border-bottom: 1px solid #e7eaec;
+    padding: 8px;
+}
+
+.elfinder-toolbar .ui-widget-header {
+    background: transparent;
+    border: none;
+}
+
+.elfinder-button {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin: 2px;
+    padding: 6px 8px;
+    color: #676a6c;
+    transition: all 0.2s ease;
+}
+
+.elfinder-button:hover {
+    background: #f0f0f0;
+    border-color: #ccc;
+    color: #333;
+}
+
+.elfinder-button.ui-state-active {
+    background: #1ab394;
+    border-color: #1ab394;
+    color: #fff;
+}
+
+.elfinder-navbar {
+    background: #f8f8f9;
+    border-right: 1px solid #e7eaec;
+}
+
+.elfinder-tree {
+    background: transparent;
+}
+
+.elfinder-tree .elfinder-navbar-dir {
+    padding: 4px 8px;
+    border-radius: 3px;
+    margin: 1px;
+    color: #676a6c;
+    transition: all 0.2s ease;
+}
+
+.elfinder-tree .elfinder-navbar-dir:hover {
+    background: #e6f3ff;
+    color: #1ab394;
+}
+
+.elfinder-tree .elfinder-navbar-dir.ui-state-active {
+    background: #1ab394;
+    color: #fff;
+}
+
+.elfinder-workzone {
+    background: #fff;
+}
+
+.elfinder-cwd {
+    background: transparent;
+}
+
+.elfinder-cwd-file {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    margin: 2px;
+    padding: 4px;
+    transition: all 0.2s ease;
+}
+
+.elfinder-cwd-file:hover {
+    background: #f0f0f0;
+    border-color: #ddd;
+}
+
+.elfinder-cwd-file.ui-selected {
+    background: #e6f3ff;
+    border-color: #1ab394;
+}
+
+.elfinder-cwd-filename {
+    color: #676a6c;
+    font-size: 12px;
+}
+
+/* 状态栏样式 */
+.elfinder-statusbar {
+    background: #f8f8f9;
+    border-top: 1px solid #e7eaec;
+    padding: 8px 15px;
+    font-size: 12px;
+    color: #999;
+}
+
+/* 对话框样式 */
+.elfinder-dialog {
+    border-radius: 3px;
+    box-shadow: 0 4px 8px rgba(0,0,0,.2);
+}
+
+.elfinder-dialog .ui-dialog-titlebar {
+    background: #1ab394;
+    color: #fff;
+    border: none;
+    border-radius: 3px 3px 0 0;
+}
+
+.elfinder-dialog .ui-dialog-content {
+    padding: 20px;
+}
+
+.elfinder-dialog .ui-dialog-buttonpane {
+    background: #f8f8f9;
+    border-top: 1px solid #e7eaec;
+    border-radius: 0 0 3px 3px;
+}
+
+.elfinder-dialog .ui-button {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    color: #676a6c;
+    padding: 6px 12px;
+    margin: 0 5px;
+    transition: all 0.2s ease;
+}
+
+.elfinder-dialog .ui-button:hover {
+    background: #f0f0f0;
+    border-color: #ccc;
+}
+
+.elfinder-dialog .ui-button.ui-button-primary {
+    background: #1ab394;
+    border-color: #1ab394;
+    color: #fff;
+}
+
+.elfinder-dialog .ui-button.ui-button-primary:hover {
+    background: #18a085;
+    border-color: #18a085;
+}
+
+/* 上传进度条 */
+.elfinder-upload-progress {
+    background: #f8f8f9;
+    border: 1px solid #e7eaec;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.elfinder-upload-progress .progress {
+    height: 20px;
+    background: #e7eaec;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.elfinder-upload-progress .progress-bar {
+    background: #1ab394;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* 右键菜单样式 */
+.elfinder-contextmenu {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    padding: 5px 0;
+}
+
+.elfinder-contextmenu-item {
+    padding: 8px 15px;
+    color: #676a6c;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.elfinder-contextmenu-item:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.elfinder-contextmenu-separator {
+    border-top: 1px solid #e7eaec;
+    margin: 5px 0;
+}
+
+/* 搜索框样式 */
+.elfinder-search {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 6px 12px;
+    color: #676a6c;
+    transition: all 0.2s ease;
+}
+
+.elfinder-search:focus {
+    border-color: #1ab394;
+    outline: none;
+    box-shadow: 0 0 5px rgba(26, 179, 148, 0.3);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .elfinder-navbar {
+        width: 200px !important;
+        min-width: 150px !important;
+    }
+    
+    .elfinder-toolbar {
+        padding: 5px;
+    }
+    
+    .elfinder-button {
+        padding: 4px 6px;
+        margin: 1px;
+        font-size: 11px;
+    }
+    
+    .elfinder-cwd-file {
+        margin: 1px;
+        padding: 2px;
+    }
+    
+    .elfinder-cwd-filename {
+        font-size: 11px;
+    }
+    
+    .file-manager-header {
+        padding: 10px;
+    }
+    
+    .file-manager-header h3 {
+        font-size: 16px;
+    }
+    
+    .file-manager-content {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .elfinder-navbar {
+        width: 150px !important;
+        min-width: 120px !important;
+    }
+    
+    .elfinder-toolbar {
+        padding: 3px;
+    }
+    
+    .elfinder-button {
+        padding: 3px 5px;
+        font-size: 10px;
+    }
+    
+    .file-manager-header {
+        padding: 8px;
+    }
+    
+    .file-manager-header h3 {
+        font-size: 14px;
+    }
+    
+    .file-manager-content {
+        padding: 8px;
+    }
+}
+
+/* 加载动画 */
+.file-manager-loading {
+    text-align: center;
+    padding: 50px;
+    color: #999;
+}
+
+.file-manager-loading .spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #1ab394;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 工具提示 */
+.file-manager-tooltip {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+/* 文件类型图标 */
+.file-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.file-icon.folder {
+    color: #f39c12;
+}
+
+.file-icon.image {
+    color: #3498db;
+}
+
+.file-icon.document {
+    color: #e74c3c;
+}
+
+.file-icon.archive {
+    color: #9b59b6;
+}
+
+.file-icon.video {
+    color: #e67e22;
+}
+
+.file-icon.audio {
+    color: #1abc9c;
+}
+
+.file-icon.code {
+    color: #34495e;
+}
+
+/* 自定义按钮样式 */
+.btn-file-manager {
+    background: #1ab394;
+    border-color: #1ab394;
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+.btn-file-manager:hover,
+.btn-file-manager:focus {
+    background: #18a085;
+    border-color: #18a085;
+    color: #fff;
+}
+
+.btn-file-manager:active {
+    background: #16926d;
+    border-color: #16926d;
+}
+
+/* 拖拽上传区域 */
+.file-drop-zone {
+    border: 2px dashed #ddd;
+    border-radius: 5px;
+    padding: 40px;
+    text-align: center;
+    color: #999;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.file-drop-zone:hover,
+.file-drop-zone.dragover {
+    border-color: #1ab394;
+    background: #f0fffe;
+    color: #1ab394;
+}
+
+.file-drop-zone .drop-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.file-drop-zone .drop-text {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.file-drop-zone .drop-hint {
+    font-size: 12px;
+    color: #999;
+}
+
+/* 文件预览 */
+.file-preview {
+    max-width: 100%;
+    max-height: 400px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+
+.file-preview-container {
+    text-align: center;
+    padding: 20px;
+    background: #f8f8f9;
+    border-radius: 3px;
+}
+
+/* 面包屑导航 */
+.file-breadcrumb {
+    background: #f8f8f9;
+    border: 1px solid #e7eaec;
+    border-radius: 3px;
+    padding: 8px 15px;
+    margin-bottom: 15px;
+}
+
+.file-breadcrumb a {
+    color: #1ab394;
+    text-decoration: none;
+}
+
+.file-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.file-breadcrumb .separator {
+    color: #999;
+    margin: 0 5px;
+}
+
+/* 文件信息面板 */
+.file-info-panel {
+    background: #f8f8f9;
+    border: 1px solid #e7eaec;
+    border-radius: 3px;
+    padding: 15px;
+}
+
+.file-info-panel .info-item {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.file-info-panel .info-label {
+    font-weight: 600;
+    color: #676a6c;
+}
+
+.file-info-panel .info-value {
+    color: #999;
+}
+
+/* 错误消息 */
+.file-error {
+    background: #f2dede;
+    border: 1px solid #ebccd1;
+    color: #a94442;
+    padding: 10px 15px;
+    border-radius: 3px;
+    margin: 10px 0;
+}
+
+.file-error .error-icon {
+    margin-right: 5px;
+}
+
+/* 成功消息 */
+.file-success {
+    background: #dff0d8;
+    border: 1px solid #d6e9c6;
+    color: #3c763d;
+    padding: 10px 15px;
+    border-radius: 3px;
+    margin: 10px 0;
+}
+
+.file-success .success-icon {
+    margin-right: 5px;
+}

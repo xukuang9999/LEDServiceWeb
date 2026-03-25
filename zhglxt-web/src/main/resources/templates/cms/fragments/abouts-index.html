@@ -1,0 +1,42 @@
+<div th:fragment="abouts">
+    <div class="container about-section" th:if="${not #lists.isEmpty(abouts)}">
+        <div class="row about-content" th:each="about,aboutStat : ${abouts}" th:if="${aboutStat.index==0}">
+            <!-- Left side - Image -->
+            <div class="col-md-6 about-image-container">
+                <div class="about-image-wrapper">
+                    <img th:src="${about.imageUrl}" 
+                         class="about-image img-responsive" 
+                         alt="About Us">
+                    <div class="image-overlay"></div>
+                </div>
+            </div>
+            
+            <!-- Right side - Content -->
+            <div class="col-md-6 about-text-container">
+                <div class="about-text-wrapper">
+                    <h2 class="about-title">About Our Company</h2>
+                    <div class="about-divider"></div>
+                    <div class="about-description" th:if="${not #strings.isEmpty(about.content)}" 
+                         th:utext="${about.content}">
+                    </div>
+                    
+                    <!-- Additional features section -->
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <i class="feature-icon">🚀</i>
+                            <span class="feature-text">Innovation & Technology</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="feature-icon">⭐</i>
+                            <span class="feature-text">Premium Quality</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="feature-icon">🤝</i>
+                            <span class="feature-text">Professional Service</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+<div th:fragment="newss">
+    <div class="news-section" th:if="${not #lists.isEmpty(newss)}">
+        <div class="container">
+            <!-- News Grid -->
+            <div class="news-grid">
+                <div th:each="news,newsStat : ${newss}"
+                    th:class="'news-card ' + ${newsStat.index < 3 ? 'featured' : 'regular'} + ' company'"
+                    th:data-category="company">
+
+                    <!-- News Card -->
+                    <article class="news-article">
+                        <!-- News Image -->
+                        <div class="news-image-container">
+                            <img th:if="${not #strings.isEmpty(news.imageUrl)}" th:src="${news.imageUrl}"
+                                class="news-image" alt="News Image">
+                            <div class="news-overlay">
+                                <div class="news-category-badge">
+                                    <i class="fas fa-building"></i>
+                                    <span>Company News</span>
+                                </div>
+                                <button class="news-read-btn" 
+                                        th:data-news-id="${news.id}"
+                                        onclick="if(window.showNewsPageModal) window.showNewsPageModal(this.getAttribute('data-news-id')); else if(window.showNewsModal) window.showNewsModal(this.getAttribute('data-news-id')); else alert('Modal system loading...');"
+                                        title="Click to read full article">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- News Content -->
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <div class="news-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span th:text="${#dates.format(news.createTime, 'MM dd, yyyy')}">Mar 15,
+                                        2025</span>
+                                </div>
+                                <div class="news-reading-time">
+                                    <i class="fas fa-clock"></i>
+                                    <span>3 min read</span>
+                                </div>
+                            </div>
+
+                            <h3 class="news-title" th:if="${not #strings.isEmpty(news.title)}" th:text="${news.title}">
+                                Breaking News Title
+                            </h3>
+
+                            <p class="news-excerpt" th:if="${not #strings.isEmpty(news.description)}"
+                                th:text="${#strings.abbreviate(news.description, 150)}">
+                                This is a brief excerpt of the news article that gives readers a preview...
+                            </p>
+
+                            <div class="news-actions">
+                                <button class="btn-read-more news-detail-btn" 
+                                        th:data-news-id="${news.id}"
+                                        onclick="if(window.showNewsPageModal) window.showNewsPageModal(this.getAttribute('data-news-id')); else if(window.showNewsModal) window.showNewsModal(this.getAttribute('data-news-id')); else alert('Modal system loading...');"
+                                        title="Click to read full article">
+                                    <span>Read Full Article</span>
+                                    <i class="fas fa-external-link-alt"></i>
+                                </button>
+
+                                <!--<div class="news-share">
+                                    <button class="share-btn" title="Share">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                    <button class="bookmark-btn" title="Bookmark">
+                                        <i class="fas fa-bookmark"></i>
+                                    </button>
+                                </div>-->
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Enhanced Modal -->
+                    <div class="modal fade news-modal" th:id="${'modal-'+news.id}" tabindex="-1" role="dialog"
+                        th:aria-labelledby="${'modal-title-'+news.id}" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="modal-header-content">
+                                        <div class="modal-category">
+                                            <i class="fas fa-building"></i>
+                                            <span>Company News</span>
+                                        </div>
+                                        <h2 class="modal-title" th:id="${'modal-title-'+news.id}"
+                                            th:text="${news.title}">News Title</h2>
+                                        <div class="modal-meta">
+                                            <span class="modal-date"
+                                                th:text="${#dates.format(news.createTime, 'MM dd, yyyy')}">March 15,
+                                                2025</span>
+                                            <span class="modal-reading-time">
+                                                <i class="fas fa-clock"></i>
+                                                3 min read
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="modal-image" th:if="${not #strings.isEmpty(news.imageUrl)}">
+                                        <img th:src="${news.imageUrl}" alt="News Image" class="img-responsive">
+                                    </div>
+                                    <div class="modal-content-text" th:utext="${news.content}">
+                                        <p>Full news content goes here...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Section -->
+            <div class="news-load-more">
+                <button class="btn-load-more">
+                    <i class="fas fa-plus"></i>
+                    <span>Load More News</span>
+                </button>
+                <!--
+                <p class="load-more-text">Showing <span class="current-count">6</span> of <span class="total-count">24</span> articles</p>
+-->
+            </div>
+        </div>
+    </div>
+</div>

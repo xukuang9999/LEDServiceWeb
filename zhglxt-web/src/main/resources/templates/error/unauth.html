@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403</title>
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.min.css}" rel="stylesheet"/>
+</head>
+<body class="gray-bg">
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>403</h1>
+        <h3 class="font-bold">You do not have access!</h3>
+
+        <div class="error-desc">
+            Sorry you do not have access! Please do not operate illegally.
+            <a href="javascript:index()" class="btn btn-outline btn-primary btn-xs">Home Page</a>
+        </div>
+    </div>
+    <script th:inline="javascript">
+      var ctx = [[@{/}]];
+      function index() {
+    	  window.top.location = ctx + "index";
+      }
+    </script>
+</body>
+</html>

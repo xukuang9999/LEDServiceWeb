@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="LED display projects, stage lighting installations, onsite technical support and live environment delivery references from LED Service.">
+    <meta name="keywords" content="LED display projects, stage lighting installation, LED screen repair, onsite technical support, video wall maintenance">
+    <meta name="author" content="LED Service">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="LED Display Projects & Stage Lighting Installations | LED Service">
+    <meta property="og:description" content="LED display projects, stage lighting installations, onsite technical support and live environment delivery references from LED Service.">
+    <meta property="og:locale" content="en_AU">
+    <link rel="canonical" href="https://www.ledservice.com.au/zhglxt/cms/projects.html">
+    <link rel="alternate" hreflang="en" href="https://www.ledservice.com.au/zhglxt/cms/projects.html?lang=en">
+    <link rel="alternate" hreflang="zh" href="https://www.ledservice.com.au/zhglxt/cms/projects.html?lang=zh">
+    <link rel="alternate" hreflang="hi" href="https://www.ledservice.com.au/zhglxt/cms/projects.html?lang=hi">
+    <link rel="alternate" hreflang="ko" href="https://www.ledservice.com.au/zhglxt/cms/projects.html?lang=ko">
+    <link rel="alternate" hreflang="ja" href="https://www.ledservice.com.au/zhglxt/cms/projects.html?lang=ja">
+    <link rel="alternate" hreflang="ms" href="https://www.ledservice.com.au/zhglxt/cms/projects.html?lang=ms">
+    <link rel="alternate" hreflang="x-default" href="https://www.ledservice.com.au/zhglxt/cms/projects.html">
+    <link th:href="@{/favicon.png}" rel="shortcut icon" />
+    <title>LED Display Projects & Stage Lighting Installations | LED Service</title>
+    <link th:href="@{/cms/css/support-public.css}" rel="stylesheet">
+    <script th:src="@{/cms/js/support-public.js}" defer></script>
+</head>
+<body class="support-page" data-page="projects">
+<div th:replace="~{cms/fragments/support-navbar :: navbar('projects')}"></div>
+
+<main>
+    <section class="support-hero">
+        <div class="support-container">
+            <p class="support-hero__eyebrow" data-i18n="projects.hero.eyebrow">Projects</p>
+            <h1 class="support-hero__title" data-i18n="projects.hero.title">Selected project work, field delivery, and live environment support.</h1>
+            <p class="support-hero__lead" data-i18n="projects.hero.lead">
+                This page keeps the project story clean and direct, with examples of the environments and service outcomes our team supports across Queensland, Victoria, New South Wales, and Auckland.
+            </p>
+        </div>
+    </section>
+
+    <section class="support-section">
+        <div class="support-container">
+            <div class="support-section-header">
+                <h2 data-i18n="projects.references.title">Reference environments</h2>
+                <p data-i18n="projects.references.subtitle">A quick visual read on the kinds of technical and live-production conditions our work is built for.</p>
+            </div>
+
+            <div class="support-project-grid">
+                <article class="support-project-card">
+                    <div class="support-project-card__media">
+                        <img th:src="@{/cms/images/support/retail-led-display.jpg}" alt="Retail shopping environment with LED display installations">
+                    </div>
+                    <div class="support-project-card__body">
+                        <span class="support-project-card__label" data-i18n="projects.references.card1.label">LED systems</span>
+                        <h3 data-i18n="projects.references.card1.title">Control, monitoring, and image stability.</h3>
+                        <p data-i18n="projects.references.card1.text">Professional environments where processors, calibration, and signal confidence all matter.</p>
+                    </div>
+                </article>
+                <article class="support-project-card">
+                    <div class="support-project-card__media">
+                        <img th:src="@{/cms/images/support/project-onsite-service.jpg}" alt="Technician carrying out onsite equipment maintenance">
+                    </div>
+                    <div class="support-project-card__body">
+                        <span class="support-project-card__label" data-i18n="projects.references.card2.label">Onsite response</span>
+                        <h3 data-i18n="projects.references.card2.title">Field service when delivery cannot slip.</h3>
+                        <p data-i18n="projects.references.card2.text">Planned maintenance, recovery work, and practical onsite attendance in active environments.</p>
+                    </div>
+                </article>
+                <article class="support-project-card">
+                    <div class="support-project-card__media">
+                        <img th:src="@{/cms/images/support/project-stage-lighting.jpg}" alt="Stage lighting beams over a live audience">
+                    </div>
+                    <div class="support-project-card__body">
+                        <span class="support-project-card__label" data-i18n="projects.references.card3.label">Stage lighting</span>
+                        <h3 data-i18n="projects.references.card3.title">Large-format lighting with live-show discipline.</h3>
+                        <p data-i18n="projects.references.card3.text">Lighting systems that need to feel polished, bright, and production-ready under pressure.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="support-section">
+        <div class="support-container">
+            <div class="support-section-header">
+                <h2 data-i18n="projects.list.title">Project list</h2>
+                <p data-i18n="projects.list.subtitle">Live project references drawn from the current CMS content library.</p>
+            </div>
+
+            <div class="support-project-grid" th:if="${not #lists.isEmpty(projects)}">
+                <article class="support-project-card" th:each="project : ${projects}">
+                    <div class="support-project-card__media">
+                        <img th:if="${not #strings.isEmpty(project.imageUrl)}"
+                             th:src="${project.imageUrl}"
+                             th:alt="${project.title}"
+                             th:attr="onerror=|this.onerror=null;this.src='@{/cms/images/support/project-stage-lighting.jpg}'|">
+                        <img th:unless="${not #strings.isEmpty(project.imageUrl)}"
+                             th:src="@{/cms/images/support/project-stage-lighting.jpg}"
+                             alt="Project reference image">
+                    </div>
+                    <div class="support-project-card__body">
+                        <span class="support-project-card__label"
+                              th:text="${!#strings.isEmpty(project.columnName) ? project.columnName : 'Project'}">Project</span>
+                        <h3 th:text="${project.title}">Project title</h3>
+                        <p th:text="${!#strings.isEmpty(project.description) ? project.description : 'LED display installation, support, or onsite service project.'}">
+                            Project description
+                        </p>
+                        <div class="support-project-card__meta"
+                             th:text="${project.createTime != null ? #dates.format(project.createTime, 'dd MMM yyyy') : 'Project reference'}">
+                            Project reference
+                        </div>
+                        <div class="support-project-card__actions">
+                            <a class="support-inline-link"
+                               data-i18n="projects.list.enquire"
+                               data-mailto-key="projects.mail.card"
+                               href="mailto:kevin.liao@ledservice.com.au?subject=Project%20Consultation%20Request&body=Hello%2C%0A%0AI%20would%20like%20to%20discuss%20a%20similar%20project%20or%20service%20scope.%0A%0AProject%20reference%3A">
+                                Enquire about a similar job
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="support-project-grid" th:if="${#lists.isEmpty(projects)}">
+                <article class="support-project-card">
+                    <div class="support-project-card__media">
+                        <img th:src="@{/cms/images/support/retail-led-display.jpg}" alt="Commercial retail LED display environment">
+                    </div>
+                    <div class="support-project-card__body">
+                        <span class="support-project-card__label">LED display</span>
+                        <h3>Commercial screen delivery</h3>
+                        <p>Installation, processor setup, calibration, and support planning for permanent LED display systems.</p>
+                    </div>
+                </article>
+                <article class="support-project-card">
+                    <div class="support-project-card__media">
+                        <img th:src="@{/cms/images/support/project-onsite-service.jpg}" alt="Technician performing equipment repair and maintenance">
+                    </div>
+                    <div class="support-project-card__body">
+                        <span class="support-project-card__label">Maintenance</span>
+                        <h3>Service recovery and upkeep</h3>
+                        <p>Preventive maintenance, diagnosis, and replacement support to keep customer-facing screens stable.</p>
+                    </div>
+                </article>
+                <article class="support-project-card">
+                    <div class="support-project-card__media">
+                        <img th:src="@{/cms/images/support/project-stage-lighting.jpg}" alt="Stage lighting beams in a live project environment">
+                    </div>
+                    <div class="support-project-card__body">
+                        <span class="support-project-card__label">Live production</span>
+                        <h3>Stage lighting and onsite support</h3>
+                        <p>Large-scale lighting layout coordination and field attendance for operational delivery on site.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="support-section support-section--surface">
+        <div class="support-container">
+            <div class="support-cta-panel">
+                <div>
+                    <p class="support-panel-label" data-i18n="projects.contact.label">Next step</p>
+                    <h2 data-i18n="projects.contact.title">Need a similar result?</h2>
+                    <p data-i18n="projects.contact.text">Send us your site details, event scope, or service requirement and we can advise on the right delivery path.</p>
+                </div>
+                <div class="support-cta-panel__details">
+                    <div class="support-detail">
+                        <strong data-i18n="projects.contact.goodFor">Good for</strong>
+                        <span data-i18n="projects.contact.goodForValue">LED installations, recoveries, lighting systems, onsite support</span>
+                    </div>
+                    <div class="support-detail">
+                        <strong data-i18n="common.footer.contact">Contact</strong>
+                        <span><a href="mailto:kevin.liao@ledservice.com.au">kevin.liao@ledservice.com.au</a></span>
+                    </div>
+                    <div class="support-detail">
+                        <strong data-i18n="common.labels.servicePoints">Service points</strong>
+                        <span data-i18n="common.servicePointsValue">Queensland, Victoria, New South Wales, and Auckland</span>
+                    </div>
+                </div>
+                <div class="support-actions">
+                    <a class="support-button support-button--primary"
+                       data-i18n="projects.contact.ctaPrimary"
+                       data-mailto-key="projects.mail.cta"
+                       href="mailto:kevin.liao@ledservice.com.au?subject=Similar%20Project%20Enquiry&body=Hello%2C%0A%0AI%20am%20looking%20for%20a%20similar%20project%20outcome.%0A%0AProject%20type%3A%0ALocation%3A%0ATimeline%3A%0A">
+                        Email project enquiry
+                    </a>
+                    <a class="support-button support-button--secondary" th:href="@{/cms/contact.html}" data-i18n="about.contact.ctaSecondary">Contact page</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{cms/fragments/support-footer :: footer}"></div>
+</body>
+</html>

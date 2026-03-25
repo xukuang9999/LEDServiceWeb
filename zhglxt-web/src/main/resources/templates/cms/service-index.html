@@ -1,0 +1,121 @@
+<!-- Service Index Section - Dedicated service cards for index page -->
+<section id="services" class="section-spacing bg-secondary">
+    <div class="modern-container">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Service Solutions</h2>
+            <p class="section-subtitle">Service for more customers and industries</p>
+        </div>
+        
+        <!-- Service Cards Container -->
+        <div class="services-container">
+            <!-- Premium Services Grid -->
+            <div class="premium-services-grid">
+                <div th:replace="~{cms/fragments/service :: services}"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Index Specific Styles -->
+<style>
+/* Service Index specific enhancements */
+.service-card-visible {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+/* Enhanced hover effects for service cards */
+.premium-service-card {
+    cursor: pointer;
+    will-change: transform, box-shadow, background;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+/* Smooth transitions */
+.premium-service-card * {
+    transition: inherit;
+}
+
+/* Enhanced visual feedback */
+.premium-service-card:hover .premium-service-title {
+    color: #3b82f6 !important;
+}
+
+.premium-service-card:hover .service-number {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+    color: white !important;
+    transform: scale(1.1) rotate(5deg) !important;
+}
+
+.premium-service-card:hover .premium-illustration {
+    transform: scale(1.05) !important;
+}
+
+/* Loading state */
+.premium-service-card.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Animation keyframes */
+@keyframes serviceCardEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(60px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes serviceCardHover {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        transform: translateY(-15px) scale(1.02);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .premium-service-card:hover {
+        transform: translateY(-5px) scale(1.01) !important;
+    }
+}
+</style>
+
+<!-- Service Index JavaScript -->
+<script>
+// Additional service index functionality
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎯 Service Index HTML: Initializing additional features');
+    
+    // Add click handlers for service cards
+    document.querySelectorAll('.premium-service-card').forEach(function(card, index) {
+        card.addEventListener('click', function() {
+            console.log('🎯 Service card clicked:', index + 1);
+            // Add click functionality here if needed
+            // For example: navigate to service detail page
+        });
+    });
+    
+    // Add keyboard navigation
+    document.querySelectorAll('.premium-service-card').forEach(function(card, index) {
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', 'Service card ' + (index + 1));
+        
+        card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+    
+    console.log('✅ Service Index HTML: Additional features initialized');
+});
+</script>

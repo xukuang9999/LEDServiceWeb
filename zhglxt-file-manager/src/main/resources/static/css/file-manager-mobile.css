@@ -1,0 +1,465 @@
+/**
+ * File Manager Mobile Styles
+ * Responsive design for mobile and tablet devices
+ * 
+ * @author zhglxt
+ */
+
+/* 移动设备基础样式 */
+@media (max-width: 768px) {
+    /* 文件管理器容器 */
+    .file-manager-container {
+        padding: 10px;
+        margin: 0;
+    }
+    
+    .file-manager-header {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .file-manager-header h2 {
+        font-size: 16px;
+    }
+    
+    /* 工具栏 */
+    .file-manager-toolbar {
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
+    .file-manager-toolbar .btn {
+        font-size: 12px;
+        padding: 5px 10px;
+        margin: 2px;
+    }
+    
+    .file-manager-toolbar .btn-group {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .file-manager-toolbar .btn-group .btn {
+        width: auto;
+        display: inline-block;
+    }
+    
+    /* elFinder 移动端适配 */
+    #elfinder {
+        min-height: 400px;
+        font-size: 14px;
+    }
+    
+    .elfinder-navbar {
+        width: 200px !important;
+        min-width: 150px !important;
+    }
+    
+    .elfinder-toolbar {
+        padding: 5px;
+        flex-wrap: wrap;
+    }
+    
+    .elfinder-button {
+        padding: 4px 6px;
+        margin: 1px;
+        font-size: 11px;
+        min-width: 30px;
+    }
+    
+    .elfinder-button .elfinder-button-text {
+        display: none;
+    }
+    
+    .elfinder-cwd {
+        font-size: 12px;
+    }
+    
+    .elfinder-cwd-file {
+        margin: 1px;
+        padding: 3px;
+    }
+    
+    .elfinder-cwd-filename {
+        font-size: 11px;
+        line-height: 1.2;
+    }
+    
+    .elfinder-cwd-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    /* 对话框移动端适配 */
+    .elfinder-dialog {
+        max-width: 95% !important;
+        max-height: 90% !important;
+    }
+    
+    .elfinder-dialog .ui-dialog-content {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .elfinder-dialog .ui-button {
+        padding: 8px 12px;
+        font-size: 14px;
+        margin: 5px;
+        min-width: 80px;
+    }
+    
+    /* 上下文菜单 */
+    .elfinder-contextmenu {
+        font-size: 14px;
+    }
+    
+    .elfinder-contextmenu-item {
+        padding: 12px 15px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+    
+    /* 搜索框 */
+    .elfinder-search {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+    
+    /* 状态栏 */
+    .elfinder-statusbar {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+}
+
+/* 小屏幕手机适配 */
+@media (max-width: 480px) {
+    .file-manager-container {
+        padding: 5px;
+    }
+    
+    .file-manager-header {
+        padding: 8px;
+        margin-bottom: 8px;
+    }
+    
+    .file-manager-header h2 {
+        font-size: 14px;
+    }
+    
+    .file-manager-toolbar .btn {
+        font-size: 11px;
+        padding: 4px 8px;
+        width: 100%;
+        margin-bottom: 3px;
+        margin-right: 0;
+    }
+    
+    #elfinder {
+        min-height: 350px;
+    }
+    
+    .elfinder-navbar {
+        width: 150px !important;
+        min-width: 120px !important;
+    }
+    
+    .elfinder-toolbar {
+        padding: 3px;
+    }
+    
+    .elfinder-button {
+        padding: 3px 5px;
+        font-size: 10px;
+        min-width: 28px;
+    }
+    
+    .elfinder-cwd-icon {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .elfinder-cwd-filename {
+        font-size: 10px;
+    }
+    
+    /* 弹窗模式适配 */
+    .popup-header {
+        padding: 6px 10px;
+    }
+    
+    .popup-header h4 {
+        font-size: 14px;
+    }
+    
+    .popup-actions .btn {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .popup-footer {
+        padding: 6px 10px;
+    }
+    
+    .popup-footer .btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    /* 浏览器模式适配 */
+    .browser-header {
+        padding: 6px 10px;
+    }
+    
+    .browser-header h5 {
+        font-size: 12px;
+    }
+    
+    .browser-toolbar .btn {
+        padding: 3px 6px;
+        font-size: 10px;
+    }
+    
+    .browser-footer {
+        padding: 6px 10px;
+    }
+    
+    .browser-actions .btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+    
+    .selected-info {
+        font-size: 11px;
+    }
+}
+
+/* 平板设备适配 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .file-manager-container {
+        padding: 12px;
+    }
+    
+    .file-manager-toolbar .btn {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+    
+    #elfinder {
+        min-height: 500px;
+    }
+    
+    .elfinder-navbar {
+        width: 250px !important;
+        min-width: 200px !important;
+    }
+    
+    .elfinder-button {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+    
+    .elfinder-cwd-filename {
+        font-size: 12px;
+    }
+}
+
+/* 触摸设备优化 */
+@media (pointer: coarse) {
+    /* 增大可点击区域 */
+    .elfinder-button {
+        min-height: 36px;
+        min-width: 36px;
+    }
+    
+    .elfinder-cwd-file {
+        min-height: 44px;
+        padding: 6px;
+    }
+    
+    .elfinder-tree .elfinder-navbar-dir {
+        min-height: 36px;
+        padding: 6px 10px;
+    }
+    
+    .elfinder-contextmenu-item {
+        min-height: 44px;
+        padding: 12px 15px;
+    }
+    
+    /* 滚动条优化 */
+    .elfinder-cwd::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .elfinder-cwd::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+    
+    .elfinder-cwd::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 4px;
+    }
+    
+    .elfinder-cwd::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+}
+
+/* 横屏模式优化 */
+@media (orientation: landscape) and (max-width: 768px) {
+    #elfinder {
+        min-height: 300px;
+    }
+    
+    .elfinder-navbar {
+        width: 180px !important;
+        min-width: 150px !important;
+    }
+    
+    .file-manager-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .file-manager-toolbar .btn-group {
+        margin-bottom: 0;
+    }
+}
+
+/* 竖屏模式优化 */
+@media (orientation: portrait) and (max-width: 768px) {
+    .file-manager-toolbar {
+        text-align: center;
+    }
+    
+    .file-manager-toolbar .btn-group {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .file-manager-toolbar .pull-right {
+        float: none !important;
+    }
+}
+
+/* 高分辨率屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .elfinder-cwd-icon {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+    
+    .elfinder-button-icon {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* 暗色主题支持 */
+@media (prefers-color-scheme: dark) {
+    .file-manager-container {
+        background: #2c3e50;
+        color: #ecf0f1;
+    }
+    
+    .file-manager-header {
+        background: #34495e;
+        border-color: #4a5f7a;
+    }
+    
+    .elfinder {
+        background: #2c3e50;
+        border-color: #4a5f7a;
+    }
+    
+    .elfinder-toolbar {
+        background: #34495e;
+        border-color: #4a5f7a;
+    }
+    
+    .elfinder-navbar {
+        background: #34495e;
+        border-color: #4a5f7a;
+    }
+    
+    .elfinder-workzone {
+        background: #2c3e50;
+    }
+    
+    .elfinder-button {
+        background: #3a4f66;
+        border-color: #4a5f7a;
+        color: #ecf0f1;
+    }
+    
+    .elfinder-button:hover {
+        background: #4a5f7a;
+        border-color: #5a6f8a;
+    }
+    
+    .elfinder-cwd-file {
+        color: #ecf0f1;
+    }
+    
+    .elfinder-cwd-file:hover {
+        background: #3a4f66;
+        border-color: #4a5f7a;
+    }
+    
+    .elfinder-cwd-file.ui-selected {
+        background: #1abc9c;
+        border-color: #16a085;
+    }
+}
+
+/* 减少动画效果（节省电池） */
+@media (prefers-reduced-motion: reduce) {
+    .elfinder-button,
+    .elfinder-cwd-file,
+    .elfinder-tree .elfinder-navbar-dir {
+        transition: none;
+    }
+    
+    .file-manager-loading .spinner {
+        animation: none;
+    }
+    
+    .file-manager-loading i {
+        animation: none;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .file-manager-toolbar,
+    .elfinder-toolbar,
+    .elfinder-statusbar {
+        display: none;
+    }
+    
+    .file-manager-container {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+    
+    #elfinder {
+        border: none;
+        min-height: auto;
+    }
+    
+    .elfinder-workzone {
+        background: #fff;
+    }
+    
+    .elfinder-cwd-file {
+        break-inside: avoid;
+    }
+}

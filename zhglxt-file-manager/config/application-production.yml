@@ -1,0 +1,273 @@
+# Production configuration for zhglxt File Manager
+# This configuration is optimized for production deployment
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+spring:
+  profiles:
+    active: production
+  
+  # Database configuration (if needed)
+  datasource:
+    url: jdbc:mysql://localhost:3306/zhglxt?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: ${DB_USERNAME:zhglxt}
+    password: ${DB_PASSWORD:zhglxt123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
+  # JPA configuration
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: false
+        
+  # Redis configuration (for caching)
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    database: 0
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 50
+        max-wait: -1ms
+        max-idle: 20
+        min-idle: 5
+
+# File Manager Configuration
+zhglxt:
+  file-manager:
+    enabled: true
+    
+    # Storage configuration
+    root-directory: "/opt/zhglxt/files"
+    max-file-size: 104857600  # 100MB
+    max-files-per-request: 10
+    
+    # Allowed file extensions
+    allowed-extensions:
+      - jpg
+      - jpeg
+      - png
+      - gif
+      - bmp
+      - webp
+      - pdf
+      - doc
+      - docx
+      - xls
+      - xlsx
+      - ppt
+      - pptx
+      - txt
+      - csv
+      - zip
+      - rar
+      - 7z
+      - mp4
+      - avi
+      - mov
+      - mp3
+      - wav
+      
+    # Blocked extensions (security)
+    blocked-extensions:
+      - exe
+      - bat
+      - sh
+      - php
+      - jsp
+      - asp
+      - aspx
+      - js
+      - vbs
+      - scr
+      - com
+      - pif
+      
+    # Storage backend configuration
+    storage:
+      type: ${STORAGE_TYPE:local}  # local, aws-s3, alibaba-oss, tencent-cos
+      
+      # Local storage settings
+      local:
+        root-path: "/opt/zhglxt/files"
+        create-directories: true
+        
+      # AWS S3 configuration
+      aws-s3:
+        endpoint: ${AWS_S3_ENDPOINT:https://s3.amazonaws.com}
+        region: ${AWS_S3_REGION:us-east-1}
+        bucket-name: ${AWS_S3_BUCKET:zhglxt-files}
+        access-key: ${AWS_ACCESS_KEY:}
+        secret-key: ${AWS_SECRET_KEY:}
+        path-style-access: false
+        cdn:
+          enabled: ${AWS_CDN_ENABLED:false}
+          domain: ${AWS_CDN_DOMAIN:}
+          
+      # Alibaba OSS configuration
+      alibaba-oss:
+        endpoint: ${ALIBABA_OSS_ENDPOINT:https://oss-cn-hangzhou.aliyuncs.com}
+        bucket-name: ${ALIBABA_OSS_BUCKET:zhglxt-files}
+        access-key: ${ALIBABA_ACCESS_KEY:}
+        secret-key: ${ALIBABA_SECRET_KEY:}
+        cdn:
+          enabled: ${ALIBABA_CDN_ENABLED:false}
+          domain: ${ALIBABA_CDN_DOMAIN:}
+          
+      # Tencent COS configuration
+      tencent-cos:
+        region: ${TENCENT_COS_REGION:ap-beijing}
+        bucket-name: ${TENCENT_COS_BUCKET:zhglxt-files}
+        secret-id: ${TENCENT_SECRET_ID:}
+        secret-key: ${TENCENT_SECRET_KEY:}
+        cdn:
+          enabled: ${TENCENT_CDN_ENABLED:false}
+          domain: ${TENCENT_CDN_DOMAIN:}
+    
+    # Watermark configuration
+    watermark:
+      enabled: ${WATERMARK_ENABLED:true}
+      text: ${WATERMARK_TEXT:© zhglxt}
+      font-size: 24
+      color: "#FFFFFF"
+      opacity: 0.5
+      position: bottom-right
+      margin: 10
+      image-types:
+        - jpg
+        - jpeg
+        - png
+        
+    # Thumbnail configuration
+    thumbnail:
+      enabled: true
+      cache-enabled: true
+      cache-directory: "/opt/zhglxt/files/thumbnails"
+      sizes:
+        small: 64
+        medium: 128
+        large: 256
+      quality: 0.8
+      format: "jpg"
+      
+    # Security configuration
+    security:
+      scan-uploads: true
+      rate-limiting:
+        enabled: true
+        requests-per-minute: 60
+        requests-per-hour: 1000
+        upload-mb-per-hour: 1000
+      csrf-protection:
+        enabled: true
+      validation:
+        check-file-headers: true
+        max-filename-length: 255
+        sanitize-filenames: true
+        
+    # Performance configuration
+    performance:
+      async:
+        enabled: true
+        thread-pool-size: 20
+      cache:
+        type: ${CACHE_TYPE:redis}  # memory, redis
+        ttl: 3600
+        max-size: 10000
+      connection-pool:
+        max-connections: 100
+        connection-timeout: 30000
+        read-timeout: 60000
+        
+    # Monitoring configuration
+    health:
+      storage-check: true
+      cache-check: true
+      disk-space-check: true
+      disk-space-threshold: 85
+      
+    metrics:
+      enabled: true
+      collect:
+        file-operations: true
+        storage-usage: true
+        performance-stats: true
+        error-rates: true
+      export:
+        prometheus: true
+        jmx: true
+        
+    # Logging configuration
+    logging:
+      audit-logging: true
+      security-logging: true
+      performance-logging: true
+      separate-log-files: true
+      log-directory: "/opt/zhglxt/logs"
+      
+    # Maintenance configuration
+    maintenance:
+      thumbnail-cleanup:
+        enabled: true
+        schedule: "0 2 * * *"  # Daily at 2 AM
+      temp-file-cleanup:
+        enabled: true
+        schedule: "0 */6 * * *"  # Every 6 hours
+        max-age: 24
+      usage-reports:
+        enabled: true
+        schedule: "0 0 * * 0"  # Weekly on Sunday
+        
+    # Swagger documentation (disabled in production)
+    swagger:
+      enabled: false
+
+# Logging configuration
+logging:
+  level:
+    root: INFO
+    com.zhglxt.fileManager: INFO
+    com.zhglxt.fileManager.security: WARN
+    org.springframework.security: WARN
+    org.springframework.web: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: "/opt/zhglxt/logs/file-manager.log"
+    max-size: 100MB
+    max-history: 30
+    
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+      show-components: always
+    metrics:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: zhglxt-file-manager
+      environment: production

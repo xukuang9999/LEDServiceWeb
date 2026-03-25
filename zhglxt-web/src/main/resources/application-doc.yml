@@ -1,0 +1,17 @@
+# Springdoc配置
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    tags-sorter: alpha
+  group-configs:
+    - group: 'default'
+      display-name: 'Test Module'
+      paths-to-match: '/**'
+      packages-to-scan: com.zhglxt.web.controller.tool
+    - group: 'cms'
+      display-name: 'Enterprise Official Website'
+      paths-to-match: '/cms/**'
+      packages-to-scan: com.zhglxt.web.controller

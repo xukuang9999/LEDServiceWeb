@@ -1,0 +1,114 @@
+<div th:fragment="contacts">
+    <div class="container contact-section" th:if="${not #lists.isEmpty(contacts)}">
+        <div class="row contact-content" th:each="contact,contactStat : ${contacts}" th:if="${contactStat.index==0}">
+            <!-- Left side - Contact Information -->
+            <div class="col-md-6 contact-text-container">
+                <div class="contact-text-wrapper">
+                    <div class="contact-header">
+                        <div class="contact-badge">
+                            <i class="fas fa-envelope"></i>
+                            <span>Get In Touch</span>
+                        </div>
+                        <h2 class="contact-title">Contact Us</h2>
+                        <div class="contact-divider"></div>
+                    </div>
+                    
+                    <div class="contact-description" th:if="${not #strings.isEmpty(contact.content)}" 
+                         th:utext="${contact.content}">
+                    </div>
+                    
+                    <!-- Contact Methods -->
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="method-content">
+                                <h4>Visit Our Office</h4>
+                                <p>123 Business Street, Suite 100<br>City, State 12345</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="method-content">
+                                <h4>Call Us</h4>
+                                <p>+1 (555) 123-4567<br>Mon - Fri, 9AM - 6PM</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-content">
+                                <h4>Email Us</h4>
+                                <p>info@company.com<br>support@company.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div class="contact-social">
+                        <h4>Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right side - Image and Contact Form -->
+            <div class="col-md-6 contact-visual-container">
+                <div class="contact-visual-wrapper">
+                    <!-- Contact Image -->
+                    <div class="contact-image-section">
+                        <img th:src="${contact.imageUrl}" 
+                             class="contact-image img-responsive" 
+                             alt="Contact Us">
+                        <div class="image-overlay"></div>
+                    </div>
+                    
+                    <!-- Quick Contact Form -->
+                    <div class="quick-contact-form">
+                        <h3>Send us a Message</h3>
+                        <form class="contact-form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="phone" class="form-control" placeholder="Your Phone" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Subject" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-contact-submit">
+                                <i class="fas fa-paper-plane"></i>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,312 @@
+/**
+ * INDEPENDENT MODAL SYSTEMS CSS
+ * Styling for news page and exhibition page modals
+ * Separate from home page modals
+ */
+
+/* News Page Modal Styles */
+#news-page-modal {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+#news-page-modal * {
+    box-sizing: border-box !important;
+}
+
+#news-modal-dialog {
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4) !important;
+}
+
+#news-modal-header {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Clean header without background patterns */
+
+#news-modal-content {
+    background: #fafbfc !important;
+}
+
+#news-modal-content > div {
+    background: white !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* News Modal Scrollbar */
+#news-modal-content::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+#news-modal-content::-webkit-scrollbar-track {
+    background: #f1f5f9 !important;
+    border-radius: 4px !important;
+}
+
+#news-modal-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1 !important;
+    border-radius: 4px !important;
+    transition: background 0.2s ease !important;
+}
+
+#news-modal-content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8 !important;
+}
+
+/* Exhibition Page Modal Styles */
+#exhibition-page-modal {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+#exhibition-page-modal * {
+    box-sizing: border-box !important;
+}
+
+#exhibition-modal-dialog {
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4) !important;
+}
+
+#exhibition-modal-header {
+    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #a855f7 100%) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Clean header without background patterns */
+
+#exhibition-modal-content {
+    background: #fafbfc !important;
+}
+
+#exhibition-modal-content > div {
+    background: white !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Exhibition Modal Scrollbar */
+#exhibition-modal-content::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+#exhibition-modal-content::-webkit-scrollbar-track {
+    background: #f1f5f9 !important;
+    border-radius: 4px !important;
+}
+
+#exhibition-modal-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1 !important;
+    border-radius: 4px !important;
+    transition: background 0.2s ease !important;
+}
+
+#exhibition-modal-content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8 !important;
+}
+
+/* Button Hover Effects */
+#news-maximize-btn:hover,
+#exhibition-maximize-btn:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+#news-modal-header button:hover,
+#exhibition-modal-header button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Modal Animations */
+@keyframes newsModalFadeIn {
+    from {
+        opacity: 0 !important;
+        backdrop-filter: blur(0px) !important;
+    }
+    to {
+        opacity: 1 !important;
+        backdrop-filter: blur(4px) !important;
+    }
+}
+
+@keyframes newsModalSlideIn {
+    from {
+        transform: scale(0.9) translateY(-30px) !important;
+        opacity: 0 !important;
+    }
+    to {
+        transform: scale(1) translateY(0) !important;
+        opacity: 1 !important;
+    }
+}
+
+@keyframes exhibitionModalFadeIn {
+    from {
+        opacity: 0 !important;
+        backdrop-filter: blur(0px) !important;
+    }
+    to {
+        opacity: 1 !important;
+        backdrop-filter: blur(4px) !important;
+    }
+}
+
+@keyframes exhibitionModalSlideIn {
+    from {
+        transform: scale(0.9) translateY(-30px) !important;
+        opacity: 0 !important;
+    }
+    to {
+        transform: scale(1) translateY(0) !important;
+        opacity: 1 !important;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #news-modal-dialog,
+    #exhibition-modal-dialog {
+        width: 95% !important;
+        max-height: 90vh !important;
+        margin: 20px !important;
+    }
+    
+    #news-modal-header,
+    #exhibition-modal-header {
+        padding: 16px 20px !important;
+    }
+    
+    #news-modal-title,
+    #exhibition-modal-title {
+        font-size: 18px !important;
+    }
+    
+    #news-modal-content,
+    #exhibition-modal-content {
+        padding: 0 !important;
+    }
+    
+    #news-modal-content > div,
+    #exhibition-modal-content > div {
+        margin: 20px !important;
+        padding: 24px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #news-modal-dialog,
+    #exhibition-modal-dialog {
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 100vh !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+    
+    #news-modal-header,
+    #exhibition-modal-header {
+        border-radius: 0 !important;
+        padding: 12px 16px !important;
+    }
+    
+    #news-modal-title,
+    #exhibition-modal-title {
+        font-size: 16px !important;
+    }
+    
+    #news-modal-content > div,
+    #exhibition-modal-content > div {
+        margin: 16px !important;
+        padding: 20px !important;
+        border-radius: 8px !important;
+    }
+}
+
+/* Prevent body scroll when modals are open */
+body.news-modal-open,
+body.exhibition-modal-open {
+    overflow: hidden !important;
+}
+
+/* Ensure modals are always on top */
+#news-page-modal,
+#exhibition-page-modal {
+    z-index: 999999 !important;
+}
+
+/* Hide conflicting Bootstrap modals when independent modals are active */
+body.news-modal-open .modal.fade,
+body.news-modal-open .modal.show,
+body.news-modal-open .modal-backdrop,
+body.exhibition-modal-open .modal.fade,
+body.exhibition-modal-open .modal.show,
+body.exhibition-modal-open .modal-backdrop {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Content styling within modals */
+#news-modal-content img,
+#exhibition-modal-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 12px !important;
+    margin: 16px 0 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+#news-modal-content h1,
+#news-modal-content h2,
+#news-modal-content h3,
+#news-modal-content h4,
+#exhibition-modal-content h1,
+#exhibition-modal-content h2,
+#exhibition-modal-content h3,
+#exhibition-modal-content h4 {
+    color: #1f2937 !important;
+    margin: 24px 0 16px 0 !important;
+    font-weight: 600 !important;
+}
+
+#news-modal-content p,
+#exhibition-modal-content p {
+    margin: 16px 0 !important;
+    line-height: 1.7 !important;
+    color: #374151 !important;
+}
+
+#news-modal-content ul,
+#news-modal-content ol,
+#exhibition-modal-content ul,
+#exhibition-modal-content ol {
+    margin: 16px 0 !important;
+    padding-left: 24px !important;
+}
+
+#news-modal-content li,
+#exhibition-modal-content li {
+    margin: 8px 0 !important;
+    line-height: 1.6 !important;
+    color: #374151 !important;
+}
+
+/* Simplified modal content - only title, image, and content */
+#news-modal-content .modal-content-wrapper,
+#exhibition-modal-content .modal-content-wrapper {
+    padding: 0 !important;
+}
+
+/* Clean content styling */
+#news-modal-content > div > *:first-child,
+#exhibition-modal-content > div > *:first-child {
+    margin-top: 0 !important;
+}
+
+#news-modal-content > div > *:last-child,
+#exhibition-modal-content > div > *:last-child {
+    margin-bottom: 0 !important;
+}

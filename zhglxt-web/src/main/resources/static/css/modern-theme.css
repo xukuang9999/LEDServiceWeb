@@ -1,0 +1,1271 @@
+/* Modern Technology-Focused Theme */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    --tech-blue: #00d4ff;
+    --tech-purple: #6c5ce7;
+    --tech-green: #00b894;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 20px rgba(108, 92, 231, 0.3);
+}
+
+/* Override existing body styles */
+body.fixed-sidebar.full-height-layout {
+    background: var(--dark-gradient) !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    overflow-x: hidden !important;
+}
+
+/* Animated Background */
+body.fixed-sidebar.full-height-layout::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(108, 92, 231, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 184, 148, 0.1) 0%, transparent 50%);
+    z-index: -1;
+    animation: backgroundShift 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark-gradient);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(108, 92, 231, 0.3);
+    border-top: 3px solid var(--tech-purple);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Modern Sidebar */
+.navbar-default.navbar-static-side {
+    background: rgba(30, 39, 46, 0.95) !important;
+    backdrop-filter: blur(20px);
+    border-right: 1px solid var(--glass-border) !important;
+    box-shadow: var(--shadow-soft) !important;
+}
+
+/* Logo Enhancement */
+.navbar-static-side a {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.navbar-static-side .logo,
+.navbar-static-side a .logo {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 15px 8px !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    position: relative !important;
+    overflow: hidden !important;
+    border: none !important;
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    line-height: 1.1 !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    margin: 0 !important;
+    top: 0 !important;
+}
+
+.navbar-static-side .logo .logo-lg,
+.navbar-static-side a .logo .logo-lg {
+    color: white !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    display: block !important;
+    line-height: 1.1 !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* User Panel Enhancement - More specific selectors */
+#side-menu .user-panel,
+.sidebar-collapse .user-panel {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 15px !important;
+    margin: 15px !important;
+    padding: 15px 10px 20px 10px !important;
+    text-align: left !important;
+    transition: all 0.3s ease !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 140px !important;
+    display: block !important;
+    width: calc(100% - 30px) !important;
+    position: relative !important;
+    clear: both !important;
+}
+
+#side-menu .user-panel:hover,
+.sidebar-collapse .user-panel:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-glow) !important;
+}
+
+#side-menu .user-panel a.menuItem,
+.sidebar-collapse .user-panel a.menuItem {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-bottom: 15px !important;
+    padding: 0 !important;
+}
+
+#side-menu .user-panel img,
+.sidebar-collapse .user-panel img {
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    border: 3px solid var(--tech-blue) !important;
+    margin: 0 auto 15px auto !important;
+    transition: all 0.3s ease !important;
+    display: block !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+#side-menu .user-panel img:hover,
+.sidebar-collapse .user-panel img:hover {
+    transform: scale(1.1) !important;
+    border-color: var(--tech-purple) !important;
+}
+
+#side-menu .user-panel .info,
+.sidebar-collapse .user-panel .info {
+    color: #ecf0f1 !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+    width: 100% !important;
+    float: none !important;
+    display: block !important;
+    clear: both !important;
+    position: relative !important;
+    z-index: 1 !important;
+    padding-left: 5px !important;
+    margin-top: 5px !important;
+}
+
+#side-menu .user-panel .info p,
+.sidebar-collapse .user-panel .info p {
+    margin: 0 0 8px 0 !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #ecf0f1 !important;
+    text-align: left !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
+
+#side-menu .user-panel .info a,
+.sidebar-collapse .user-panel .info a {
+    color: var(--tech-green) !important;
+    text-decoration: none !important;
+    font-size: 11px !important;
+    margin: 0 6px 0 0 !important;
+    transition: all 0.3s ease !important;
+    display: inline-block !important;
+    padding: 2px 0 !important;
+    white-space: nowrap !important;
+}
+
+#side-menu .user-panel .info a:hover,
+.sidebar-collapse .user-panel .info a:hover {
+    color: var(--tech-blue) !important;
+    text-shadow: 0 0 10px currentColor !important;
+}
+
+/* Force override any conflicting styles */
+#side-menu .user-panel .pull-left,
+.sidebar-collapse .user-panel .pull-left {
+    float: none !important;
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#side-menu .user-panel .image,
+.sidebar-collapse .user-panel .image {
+    text-align: center !important;
+    margin-bottom: 15px !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+/* Modern Navigation - Preserve Original Functionality */
+#side-menu > li > a {
+    background: transparent !important;
+    color: #bdc3c7 !important;
+    border-radius: 10px !important;
+    margin: 5px 15px !important;
+    padding: 12px 20px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    border: none !important;
+    text-decoration: none !important;
+    display: block !important;
+}
+
+#side-menu > li > a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-gradient);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+#side-menu > li > a:hover::before,
+#side-menu > li.active > a::before {
+    left: 0;
+}
+
+#side-menu > li > a:hover,
+#side-menu > li.active > a,
+#side-menu > li > a:focus {
+    color: white !important;
+    transform: translateX(5px) !important;
+    box-shadow: var(--shadow-glow) !important;
+    background: transparent !important;
+    text-decoration: none !important;
+}
+
+#side-menu > li > a i {
+    margin-right: 10px !important;
+    font-size: 16px !important;
+    width: 20px !important;
+    text-align: center !important;
+}
+
+/* Preserve submenu functionality */
+#side-menu .nav-second-level > li > a,
+#side-menu .nav-third-level > li > a,
+#side-menu .nav-four-level > li > a {
+    background: transparent !important;
+    color: #95a5a6 !important;
+    border-radius: 8px !important;
+    margin: 2px 10px 2px 30px !important;
+    padding: 8px 15px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    font-size: 13px !important;
+    text-decoration: none !important;
+    display: block !important;
+}
+
+#side-menu .nav-second-level > li > a::before,
+#side-menu .nav-third-level > li > a::before,
+#side-menu .nav-four-level > li > a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--secondary-gradient);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+#side-menu .nav-second-level > li > a:hover::before,
+#side-menu .nav-third-level > li > a:hover::before,
+#side-menu .nav-four-level > li > a:hover::before,
+#side-menu .nav-second-level > li.active > a::before,
+#side-menu .nav-third-level > li.active > a::before,
+#side-menu .nav-four-level > li.active > a::before {
+    left: 0;
+}
+
+#side-menu .nav-second-level > li > a:hover,
+#side-menu .nav-third-level > li > a:hover,
+#side-menu .nav-four-level > li > a:hover,
+#side-menu .nav-second-level > li.active > a,
+#side-menu .nav-third-level > li.active > a,
+#side-menu .nav-four-level > li.active > a {
+    color: white !important;
+    transform: translateX(3px) !important;
+    box-shadow: var(--shadow-glow) !important;
+    background: transparent !important;
+    text-decoration: none !important;
+}
+
+/* Preserve menu arrows and expand/collapse functionality */
+#side-menu .fa.arrow {
+    float: right !important;
+    margin-top: 2px !important;
+}
+
+/* Ensure menu collapse/expand works */
+#side-menu .nav-second-level,
+#side-menu .nav-third-level,
+#side-menu .nav-four-level {
+    background: transparent !important;
+}
+
+#side-menu .nav-second-level.collapse,
+#side-menu .nav-third-level.collapse,
+#side-menu .nav-four-level.collapse {
+    display: none !important;
+}
+
+#side-menu .nav-second-level.collapse.in,
+#side-menu .nav-third-level.collapse.in,
+#side-menu .nav-four-level.collapse.in {
+    display: block !important;
+}
+
+/* Top Navigation Bar */
+.navbar-static-top {
+    background: rgba(30, 39, 46, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+    box-shadow: var(--shadow-soft) !important;
+}
+
+.navbar-minimalize {
+    background: var(--tech-blue) !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    margin: 10px !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+}
+
+.navbar-minimalize:hover,
+.navbar-minimalize:focus {
+    background: var(--tech-purple) !important;
+    transform: scale(1.05) !important;
+    box-shadow: 0 0 15px rgba(108, 92, 231, 0.5) !important;
+    color: white !important;
+}
+
+/* Top Navigation Links */
+.navbar-top-links > li > a {
+    color: #ecf0f1 !important;
+    padding: 15px 20px !important;
+    transition: all 0.3s ease !important;
+    border-radius: 8px !important;
+    margin: 0 5px !important;
+}
+
+.navbar-top-links > li > a:hover,
+.navbar-top-links > li > a:focus {
+    background: var(--glass-bg) !important;
+    color: var(--tech-blue) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* User Dropdown */
+.user-menu .dropdown-toggle {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 25px !important;
+    padding: 8px 15px !important;
+    transition: all 0.3s ease !important;
+    color: #ecf0f1 !important;
+}
+
+.user-menu .dropdown-toggle:hover,
+.user-menu .dropdown-toggle:focus {
+    background: var(--primary-gradient) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-glow) !important;
+    color: white !important;
+}
+
+.user-menu .user-image {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50% !important;
+    border: 2px solid var(--tech-blue) !important;
+    margin-right: 8px !important;
+}
+
+/* Content Tabs */
+.content-tabs {
+    background: rgba(30, 39, 46, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+}
+
+.page-tabs-content a {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: #ecf0f1 !important;
+    border-radius: 8px 8px 0 0 !important;
+    margin-right: 2px !important;
+    transition: all 0.3s ease !important;
+}
+
+.page-tabs-content a.active,
+.page-tabs-content a:hover {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Main Content Area */
+.mainContent {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 15px !important;
+    margin: 15px !important;
+    overflow: hidden !important;
+    box-shadow: var(--shadow-soft) !important;
+}
+
+.Zhglxt_iframe {
+    border-radius: 15px !important;
+}
+
+/* Footer */
+.footer {
+    background: rgba(30, 39, 46, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    color: #bdc3c7 !important;
+    text-align: center !important;
+    padding: 15px !important;
+    border-top: 1px solid var(--glass-border) !important;
+}
+
+/* Scroll Enhancements */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-gradient);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-gradient);
+}
+
+/* Ripple Effect */
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.navbar-top-links li a {
+    position: relative;
+    overflow: hidden;
+}
+
+.page-tabs-content a {
+    position: relative;
+    overflow: hidden;
+}
+
+.page-transition {
+    transition: all 0.3s ease;
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .user-panel {
+        margin: 10px !important;
+        padding: 15px !important;
+    }
+    
+    .logo {
+        font-size: 16px !important;
+        padding: 15px 10px !important;
+    }
+    
+    #side-menu > li > a {
+        margin: 3px 10px !important;
+        padding: 10px 15px !important;
+    }
+}
+
+/* Force override for gray-bg class */
+.gray-bg {
+    background: var(--dark-gradient) !important;
+}
+
+/* Override existing sidebar styles */
+.navbar-default {
+    background-color: rgba(30, 39, 46, 0.95) !important;
+    border-color: var(--glass-border) !important;
+}
+
+/* Override existing navigation styles while preserving functionality */
+.nav > li > a:hover,
+.nav > li > a:focus {
+    background-color: transparent !important;
+    text-decoration: none !important;
+}
+
+/* Preserve original menu behavior */
+.navbar-static-side .nav {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.navbar-static-side .nav > li {
+    position: relative !important;
+    display: block !important;
+}
+
+.navbar-static-side .nav > li > a {
+    position: relative !important;
+    display: block !important;
+    cursor: pointer !important;
+}
+
+/* Ensure menu collapse/expand functionality */
+.navbar-static-side .collapse {
+    display: none !important;
+}
+
+.navbar-static-side .collapse.in {
+    display: block !important;
+}
+
+/* Preserve menu item states */
+.navbar-static-side .nav > li.active > a {
+    background-color: transparent !important;
+}
+
+/* Ensure menu icons display correctly */
+.navbar-static-side .nav i {
+    display: inline-block !important;
+    font-family: FontAwesome !important;
+}
+
+/* ===== HORIZONTAL MENU STYLES (index-topnav.html) ===== */
+
+/* Horizontal menu body styling */
+body.top-navigation.full-height-layout {
+    background: var(--dark-gradient) !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Horizontal menu animated background */
+body.top-navigation.full-height-layout::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(108, 92, 231, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 184, 148, 0.1) 0%, transparent 50%);
+    z-index: -1;
+    animation: backgroundShift 20s ease-in-out infinite;
+}
+
+/* Horizontal menu sidebar */
+body.top-navigation .navbar-static-side {
+    background: rgba(30, 39, 46, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border-right: 1px solid var(--glass-border) !important;
+    box-shadow: var(--shadow-soft) !important;
+}
+
+/* Horizontal menu logo */
+body.top-navigation .navbar-static-side .logo {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 15px 10px !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+}
+
+/* Horizontal menu user panel */
+body.top-navigation .user-panel {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 15px !important;
+    margin: 15px !important;
+    padding: 15px !important;
+    text-align: left !important;
+    transition: all 0.3s ease !important;
+    height: auto !important;
+    min-height: 80px !important;
+    display: block !important;
+    overflow: visible !important;
+}
+
+body.top-navigation .user-panel .pull-left.image {
+    float: left !important;
+    margin-right: 15px !important;
+    width: auto !important;
+}
+
+body.top-navigation .user-panel .pull-left.info {
+    float: left !important;
+    text-align: left !important;
+    width: auto !important;
+    margin-top: 5px !important;
+}
+
+body.top-navigation .user-panel img {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    border: 2px solid var(--tech-blue) !important;
+    transition: all 0.3s ease !important;
+}
+
+body.top-navigation .user-panel img:hover {
+    transform: scale(1.1) !important;
+    border-color: var(--tech-purple) !important;
+}
+
+body.top-navigation .user-panel .info p {
+    color: #ecf0f1 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    margin: 0 0 5px 0 !important;
+}
+
+body.top-navigation .user-panel .info a {
+    color: var(--tech-green) !important;
+    text-decoration: none !important;
+    font-size: 11px !important;
+    margin-right: 8px !important;
+    transition: all 0.3s ease !important;
+}
+
+body.top-navigation .user-panel .info a:hover {
+    color: var(--tech-blue) !important;
+    text-shadow: 0 0 10px currentColor !important;
+}
+
+/* Horizontal menu tab content */
+body.top-navigation .tab-content {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 15px !important;
+    margin: 15px !important;
+    padding: 20px !important;
+    box-shadow: var(--shadow-soft) !important;
+}
+
+/* Horizontal menu navigation items */
+body.top-navigation .nav-second-level > li > a,
+body.top-navigation .nav-third-level > li > a {
+    background: transparent !important;
+    color: #bdc3c7 !important;
+    border-radius: 8px !important;
+    margin: 2px 5px !important;
+    padding: 8px 15px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+body.top-navigation .nav-second-level > li > a:hover,
+body.top-navigation .nav-third-level > li > a:hover {
+    color: white !important;
+    background: var(--primary-gradient) !important;
+    transform: translateX(5px) !important;
+    box-shadow: var(--shadow-glow) !important;
+}
+/* 
+===== HORIZONTAL MENU STYLES (index-topnav.html) ===== */
+
+/* Horizontal menu body styling */
+body.top-navigation.full-height-layout {
+    background: var(--dark-gradient) !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Horizontal menu animated background */
+body.top-navigation.full-height-layout::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(108, 92, 231, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 184, 148, 0.1) 0%, transparent 50%);
+    z-index: -1;
+    animation: backgroundShift 20s ease-in-out infinite;
+}
+
+/* Horizontal menu top navigation bar */
+body.top-navigation .navbar-static-top {
+    background: rgba(30, 39, 46, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+    box-shadow: var(--shadow-soft) !important;
+}
+
+/* Horizontal menu - Level 1 items in top navbar */
+body.top-navigation .navbar-toolbar > li > a.top-nav-item {
+    background: transparent !important;
+    color: #bdc3c7 !important;
+    border-radius: 8px !important;
+    margin: 5px 10px !important;
+    padding: 10px 15px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    border: none !important;
+    text-decoration: none !important;
+    display: block !important;
+}
+
+body.top-navigation .navbar-toolbar > li > a.top-nav-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-gradient);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+body.top-navigation .navbar-toolbar > li > a.top-nav-item:hover::before,
+body.top-navigation .navbar-toolbar > li.active > a.top-nav-item::before {
+    left: 0;
+}
+
+body.top-navigation .navbar-toolbar > li > a.top-nav-item:hover,
+body.top-navigation .navbar-toolbar > li.active > a.top-nav-item {
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-glow) !important;
+    background: transparent !important;
+    text-decoration: none !important;
+}
+
+body.top-navigation .navbar-toolbar > li > a.top-nav-item i {
+    margin-right: 8px !important;
+    font-size: 14px !important;
+    width: 16px !important;
+    text-align: center !important;
+}
+
+body.top-navigation .navbar-toolbar > li > a.top-nav-item .nav-label {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+/* Horizontal menu sidebar - consistent with left menu */
+body.top-navigation .navbar-static-side {
+    background: rgba(30, 39, 46, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border-right: 1px solid var(--glass-border) !important;
+    box-shadow: var(--shadow-soft) !important;
+}
+
+/* Horizontal menu logo */
+body.top-navigation .navbar-static-side .logo {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 15px 8px !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+}
+
+/* Horizontal menu user panel - consistent with left menu */
+body.top-navigation .user-panel {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 15px !important;
+    margin: 15px !important;
+    padding: 15px 10px 20px 10px !important;
+    text-align: left !important;
+    transition: all 0.3s ease !important;
+    height: auto !important;
+    min-height: 100px !important;
+    display: block !important;
+    overflow: visible !important;
+}
+
+body.top-navigation .user-panel .pull-left.image {
+    float: left !important;
+    margin-right: 15px !important;
+    width: auto !important;
+}
+
+body.top-navigation .user-panel .pull-left.info {
+    float: left !important;
+    text-align: left !important;
+    width: auto !important;
+    margin-top: 5px !important;
+    padding-left: 5px !important;
+}
+
+body.top-navigation .user-panel img {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    border: 2px solid var(--tech-blue) !important;
+    transition: all 0.3s ease !important;
+}
+
+body.top-navigation .user-panel img:hover {
+    transform: scale(1.1) !important;
+    border-color: var(--tech-purple) !important;
+}
+
+body.top-navigation .user-panel .info p {
+    color: #ecf0f1 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    margin: 0 0 8px 0 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+}
+
+body.top-navigation .user-panel .info a {
+    color: var(--tech-green) !important;
+    text-decoration: none !important;
+    font-size: 11px !important;
+    margin: 0 6px 0 0 !important;
+    transition: all 0.3s ease !important;
+    white-space: nowrap !important;
+}
+
+body.top-navigation .user-panel .info a:hover {
+    color: var(--tech-blue) !important;
+    text-shadow: 0 0 10px currentColor !important;
+}
+
+/* Horizontal menu tab content - consistent with left menu */
+body.top-navigation .tab-content {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 15px !important;
+    margin: 15px !important;
+    padding: 20px !important;
+    box-shadow: var(--shadow-soft) !important;
+}
+
+/* Horizontal menu navigation items - consistent with left menu */
+body.top-navigation .nav > li > a.menu-content {
+    background: transparent !important;
+    color: #bdc3c7 !important;
+    border-radius: 10px !important;
+    margin: 5px 15px !important;
+    padding: 12px 20px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    border: none !important;
+    text-decoration: none !important;
+    display: block !important;
+}
+
+body.top-navigation .nav > li > a.menu-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-gradient);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+body.top-navigation .nav > li > a.menu-content:hover::before,
+body.top-navigation .nav > li.active > a.menu-content::before {
+    left: 0;
+}
+
+body.top-navigation .nav > li > a.menu-content:hover,
+body.top-navigation .nav > li.active > a.menu-content {
+    color: white !important;
+    transform: translateX(5px) !important;
+    box-shadow: var(--shadow-glow) !important;
+    background: transparent !important;
+    text-decoration: none !important;
+}
+
+body.top-navigation .nav > li > a.menu-content i {
+    margin-right: 10px !important;
+    font-size: 16px !important;
+    width: 20px !important;
+    text-align: center !important;
+}
+
+/* Horizontal menu submenu items - consistent with left menu */
+body.top-navigation .nav-second-level > li > a,
+body.top-navigation .nav-third-level > li > a {
+    background: transparent !important;
+    color: #95a5a6 !important;
+    border-radius: 8px !important;
+    margin: 2px 10px 2px 30px !important;
+    padding: 8px 15px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    font-size: 13px !important;
+    text-decoration: none !important;
+    display: block !important;
+}
+
+body.top-navigation .nav-second-level > li > a::before,
+body.top-navigation .nav-third-level > li > a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--secondary-gradient);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+body.top-navigation .nav-second-level > li > a:hover::before,
+body.top-navigation .nav-third-level > li > a:hover::before,
+body.top-navigation .nav-second-level > li.active > a::before,
+body.top-navigation .nav-third-level > li.active > a::before {
+    left: 0;
+}
+
+body.top-navigation .nav-second-level > li > a:hover,
+body.top-navigation .nav-third-level > li > a:hover,
+body.top-navigation .nav-second-level > li.active > a,
+body.top-navigation .nav-third-level > li.active > a {
+    color: white !important;
+    transform: translateX(3px) !important;
+    box-shadow: var(--shadow-glow) !important;
+    background: transparent !important;
+    text-decoration: none !important;
+}
+
+/* Preserve menu arrows and functionality */
+body.top-navigation .fa.arrow {
+    float: right !important;
+    margin-top: 2px !important;
+}
+
+/* Ensure menu collapse/expand works */
+body.top-navigation .nav-second-level,
+body.top-navigation .nav-third-level {
+    background: transparent !important;
+}
+
+body.top-navigation .nav-second-level.collapse,
+body.top-navigation .nav-third-level.collapse {
+    display: none !important;
+}
+
+body.top-navigation .nav-second-level.collapse.in,
+body.top-navigation .nav-third-level.collapse.in {
+    display: block !important;
+}
+
+/* Additional horizontal menu consistency fixes */
+body.top-navigation .navbar-toolbar {
+    background: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body.top-navigation .navbar-toolbar > li {
+    display: inline-block !important;
+    float: left !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Ensure horizontal menu user panel matches left menu exactly */
+body.top-navigation .user-panel:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-glow) !important;
+}
+
+/* Horizontal menu tab content styling */
+body.top-navigation .tab-pane {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 15px !important;
+    margin: 15px !important;
+    padding: 20px !important;
+    box-shadow: var(--shadow-soft) !important;
+    min-height: calc(100vh - 200px) !important;
+}
+
+/* Ensure proper spacing and layout */
+body.top-navigation .sidebar-collapse {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Fix tab content height */
+body.top-navigation .height-full {
+    height: 100% !important;
+    min-height: calc(100vh - 200px) !important;
+}
+
+/* Ensure menu items in tabs have proper styling */
+body.top-navigation .tab-pane .nav > li > a {
+    background: transparent !important;
+    color: #bdc3c7 !important;
+    border-radius: 10px !important;
+    margin: 5px 15px !important;
+    padding: 12px 20px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    border: none !important;
+    text-decoration: none !important;
+    display: block !important;
+}
+
+body.top-navigation .tab-pane .nav > li > a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-gradient);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+body.top-navigation .tab-pane .nav > li > a:hover::before,
+body.top-navigation .tab-pane .nav > li.active > a::before {
+    left: 0;
+}
+
+body.top-navigation .tab-pane .nav > li > a:hover,
+body.top-navigation .tab-pane .nav > li.active > a {
+    color: white !important;
+    transform: translateX(5px) !important;
+    box-shadow: var(--shadow-glow) !important;
+    background: transparent !important;
+    text-decoration: none !important;
+}
+
+body.top-navigation .tab-pane .nav > li > a i {
+    margin-right: 10px !important;
+    font-size: 16px !important;
+    width: 20px !important;
+    text-align: center !important;
+}
+
+/* Enhanced horizontal menu layout */
+body.top-navigation .navbar-static-side {
+    width: 220px !important;
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    height: 100vh !important;
+    z-index: 1000 !important;
+    transform: translateX(-220px) !important;
+    transition: transform 0.3s ease !important;
+}
+
+/* Show sidebar when menu is active */
+body.top-navigation .navbar-static-side.show-sidebar {
+    transform: translateX(0) !important;
+}
+
+/* Adjust main content for horizontal menu */
+body.top-navigation #page-wrapper {
+    margin-left: 0 !important;
+    transition: margin-left 0.3s ease !important;
+}
+
+body.top-navigation #page-wrapper.sidebar-open {
+    margin-left: 220px !important;
+}
+
+/* Top navbar brand styling */
+body.top-navigation .navbar-brand {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    border-radius: 0 8px 8px 0 !important;
+    margin-right: 20px !important;
+    padding: 15px 20px !important;
+    text-decoration: none !important;
+}
+
+body.top-navigation .navbar-brand:hover,
+body.top-navigation .navbar-brand:focus {
+    color: white !important;
+    text-decoration: none !important;
+    background: var(--secondary-gradient) !important;
+}
+
+/* Sidebar content styling for horizontal menu */
+body.top-navigation .sidebar-collapse {
+    padding-top: 20px !important;
+    background: transparent !important;
+}
+
+body.top-navigation .tab-pane {
+    padding: 20px 15px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 15px !important;
+    margin: 15px !important;
+    box-shadow: var(--shadow-soft) !important;
+    min-height: calc(100vh - 100px) !important;
+}
+
+/* Hide inactive tab panes */
+body.top-navigation .tab-pane:not(.active) {
+    display: none !important;
+}
+
+body.top-navigation .tab-pane.active {
+    display: block !important;
+}
+
+/* Ensure proper tab behavior */
+body.top-navigation .tab-pane.fade:not(.in) {
+    opacity: 0 !important;
+    display: none !important;
+}
+
+body.top-navigation .tab-pane.fade.in {
+    opacity: 1 !important;
+    display: block !important;
+}
+
+/* Top navigation toolbar styling */
+body.top-navigation .navbar-toolbar {
+    background: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body.top-navigation .navbar-toolbar > li {
+    display: inline-block !important;
+    float: left !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Active state for top navigation */
+body.top-navigation .navbar-toolbar > li.active > a.top-nav-item {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-glow) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body.top-navigation .navbar-static-side {
+        width: 100% !important;
+        transform: translateX(-100%) !important;
+    }
+    
+    body.top-navigation .navbar-static-side.show-sidebar {
+        transform: translateX(0) !important;
+    }
+    
+    body.top-navigation #page-wrapper.sidebar-open {
+        margin-left: 0 !important;
+    }
+    
+    body.top-navigation .navbar-brand {
+        font-size: 14px !important;
+        padding: 15px 15px !important;
+    }
+}

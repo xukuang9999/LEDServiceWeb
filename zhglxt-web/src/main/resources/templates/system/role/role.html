@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:insert="~{include :: header('Role List')}" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="role-form">
+					<div class="select-list">
+						<ul>
+							<li>
+								Role Name：<input type="text" name="roleName"/>
+							</li>
+							<li>
+								Permission Symbol：<input type="text" name="roleKey"/>
+							</li>
+							<li>
+								Status：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+									<option value="">All</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+							</li>
+							<li class="select-time">
+								<label>Create Time： </label>
+								<input type="text" class="time-input" id="startTime" placeholder="Start Time" name="params[beginTime]"/>
+								<span>-</span>
+								<input type="text" class="time-input" id="endTime" placeholder="End Time" name="params[endTime]"/>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;Search</a>
+							    <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;Reset</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+		
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:role:add">
+	                <i class="fa fa-plus"></i> Add
+	            </a>
+	            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:role:edit">
+		            <i class="fa fa-edit"></i> Edit
+		        </a>
+				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:role:remove">
+		            <i class="fa fa-remove"></i> Delete
+		        </a>
+		        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:role:export">
+		            <i class="fa fa-download"></i> Export
+		        </a>
+	        </div>
+	        
+	        <div class="col-sm-12 select-table table-striped">
+			    <table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:insert="~{include :: footer}" />
+	<script th:inline="javascript">
+		var editFlag = [[${@permission.hasPermi('system:role:edit')}]];
+		var removeFlag = [[${@permission.hasPermi('system:role:remove')}]];
+		var prefix = ctx + "system/role";
+		
+
+		$(function() {
+		    var options = {
+		        url: prefix + "/list",
+		        createUrl: prefix + "/add",
+		        updateUrl: prefix + "/edit/{id}",
+		        removeUrl: prefix + "/remove",
+		        exportUrl: prefix + "/export",
+		        sortName: "roleSort",
+				sortOrder: "asc",
+		        modalName: "Role",
+				rememberSelected: true,
+		        columns: [{
+					field: 'state',
+		            checkbox: true
+		        },
+		        {
+		            field: 'roleId',
+		            title: 'Role ID'
+		        },
+		        {
+		            field: 'roleName',
+		            title: 'Role Name',
+		            sortable: true
+		        },
+		        {
+		            field: 'roleKey',
+		            title: 'Permission Symbol',
+		            sortable: true
+		        },
+		        {
+		            field: 'dataScope',
+		            title: 'Data Permission',
+		            formatter: function(value, item, index) {
+		                if (item.dataScope == '1') {
+		                    return '<span class="badge badge-primary">All Data Permission</span>';
+		                }
+		                else if (item.dataScope == '2') {
+		                    return '<span class="badge badge-success">Custom Data Permission</span>';
+		                }
+		                else if (item.dataScope == '3') {
+		                    return '<span class="badge badge-info">Department Data Permission</span>';
+		                }
+		                else if (item.dataScope == '4') {
+		                    return '<span class="badge badge-warning">Department and Below Data Permission</span>';
+		                }
+		                else if (item.dataScope == '5') {
+		                    return '<span class="badge badge-danger">Only Self Data Permission</span>';
+		                }
+		            }
+		        },
+		        {
+		            field: 'roleSort',
+		            title: 'Sort',
+		            sortable: true
+		        },
+		        {
+		        	visible: editFlag == 'hidden' ? false : true,
+		        	title: 'Status',
+		        	align: 'center',
+		        	formatter: function (value, row, index) {
+		        		return statusTools(row);
+		        	}
+		        },
+		        {
+		            field: 'createTime',
+		            title: 'Create Time',
+		            sortable: true
+		        },
+				{
+					field: 'updateTime',
+					title: 'Update Time'
+				},
+		        {
+		            title: 'Operation',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	if (row.roleId !== "1") {
+		                    var actions = [];
+		                    actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.roleId + '\')"><i class="fa fa-edit"></i>Edit</a> ');
+		                    actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.roleId + '\')"><i class="fa fa-remove"></i>Delete</a> ');
+		                    var more = [];
+		                    more.push("<a class='btn btn-default btn-xs " + editFlag + "' href='javascript:void(0)' onclick='authDataScope(" + row.roleId + ")'><i class='fa fa-check-square-o'></i>Data Permission</a> ");
+		                    more.push("<a class='btn btn-default btn-xs " + editFlag + "' href='javascript:void(0)' onclick='authUser(" + row.roleId + ")'><i class='fa fa-user'></i>Allocate User</a>");
+		                    actions.push('<a tabindex="0" class="btn btn-info btn-xs" role="button" data-container="body" data-placement="left" data-toggle="popover" data-html="true" data-trigger="hover" data-content="' + more.join('') + '"><i class="fa fa-chevron-circle-right"></i>More Operations</a>');
+		                    return actions.join('');
+		            	} else {
+		                    return "";
+		                }
+		            }
+		        }]
+		    };
+		    $.table.init(options);
+		});
+		
+		/* 角色管理-分配数据权限 */
+		function authDataScope(roleId) {
+		    var url = prefix + '/authDataScope/' + roleId;
+		    $.modal.open("Allocate Data Permission", url);
+		}
+		
+		/* 角色管理-分配用户 */
+		function authUser(roleId) {
+		    var url = prefix + '/authUser/' + roleId;
+		    $.modal.openTab("Allocate User", url);
+		}
+		
+		/* 角色状态显示 */
+		function statusTools(row) {
+		    if (row.status == 1) {
+    			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.roleId + '\')"></i> ';
+    		} else {
+    			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.roleId + '\')"></i> ';
+    		}
+		}
+		
+		/* 角色管理-停用 */
+		function disable(roleId) {
+			$.modal.confirm("Do you confirm to disable the role？", function() {
+				$.operate.post(prefix + "/changeStatus", { "roleId": roleId, "status": 1 });
+		    })
+		}
+
+		/* 角色管理启用 */
+		function enable(roleId) {
+			$.modal.confirm("Do you confirm to enable the role？", function() {
+				$.operate.post(prefix + "/changeStatus", { "roleId": roleId, "status": 0 });
+		    })
+		}
+	</script>
+</body>
+</html>

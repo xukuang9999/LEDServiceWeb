@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>文件浏览器</title>
+    
+    <!-- 通用CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.min.css}" rel="stylesheet"/>
+    
+    <!-- elFinder CSS -->
+    <link th:href="@{/elfinder/css/elfinder.min.css}" rel="stylesheet"/>
+    <link th:href="@{/elfinder/css/theme.css}" rel="stylesheet"/>
+    
+    <!-- 文件管理器自定义样式 -->
+    <link th:href="@{/css/file-manager.css}" rel="stylesheet"/>
+    <link th:href="@{/css/file-manager-mobile.css}" rel="stylesheet"/>
+    
+    <!-- 浏览器模式样式 -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        
+        .browser-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .browser-header {
+            background: #f8f8f9;
+            border-bottom: 1px solid #e7eaec;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .browser-header h5 {
+            margin: 0;
+            color: #676a6c;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .browser-toolbar {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .browser-toolbar .btn {
+            padding: 4px 8px;
+            font-size: 11px;
+        }
+        
+        .browser-content {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #elfinder {
+            height: 100%;
+            border: none;
+        }
+        
+        .browser-footer {
+            background: #f8f8f9;
+            border-top: 1px solid #e7eaec;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .selected-info {
+            font-size: 12px;
+            color: #676a6c;
+        }
+        
+        .browser-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .browser-actions .btn {
+            padding: 4px 12px;
+            font-size: 12px;
+        }
+        
+        /* 简化的elFinder界面 */
+        .elfinder-toolbar {
+            display: none !important;
+        }
+        
+        .elfinder-navbar {
+            width: 200px !important;
+            min-width: 150px !important;
+        }
+        
+        .elfinder-workzone {
+            background: #fff;
+        }
+        
+        /* 加载动画 */
+        .browser-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #999;
+        }
+        
+        .browser-loading i {
+            font-size: 20px;
+            margin-bottom: 8px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .browser-header {
+                padding: 6px 10px;
+            }
+            
+            .browser-header h5 {
+                font-size: 12px;
+            }
+            
+            .browser-toolbar .btn {
+                padding: 3px 6px;
+                font-size: 10px;
+            }
+            
+            .browser-footer {
+                padding: 6px 10px;
+            }
+            
+            .elfinder-navbar {
+                width: 150px !important;
+                min-width: 120px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="browser-container">
+        <!-- 浏览器头部 -->
+        <div class="browser-header">
+            <h5><i class="fa fa-folder-o"></i> 文件浏览器</h5>
+            <div class="browser-toolbar">
+                <button type="button" class="btn btn-default btn-sm" onclick="refreshBrowser()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" onclick="goHome()">
+                    <i class="fa fa-home"></i>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" onclick="goUp()">
+                    <i class="fa fa-level-up"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 文件浏览器内容 -->
+        <div class="browser-content">
+            <div id="elfinder">
+                <div class="browser-loading">
+                    <i class="fa fa-spinner"></i>
+                    <div>正在加载...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 浏览器底部 -->
+        <div class="browser-footer">
+            <div class="selected-info">
+                <span id="selectedCount">未选择文件</span>
+            </div>
+            <div class="browser-actions">
+                <button type="button" class="btn btn-default" onclick="closeBrowser()">
+                    取消
+                </button>
+                <button type="button" class="btn btn-primary" onclick="confirmSelection()" id="confirmBtn" disabled>
+                    确定
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通用JS -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    
+    <!-- elFinder JS -->
+    <script th:src="@{/elfinder/js/elfinder.min.js}"></script>
+    
+    <!-- 国际化支持 -->
+    <script th:src="@{/js/i18n/elfinder.zh.js}"></script>
+    <script th:src="@{/js/i18n/elfinder.en.js}"></script>
+    
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var ctx = /*[[${#httpServletRequest.contextPath}]]*/ '';
+        var config = /*[[${config}]]*/ {};
+        var userId = /*[[${userId}]]*/ '';
+        
+        // 全局变量
+        var elfinderInstance = null;
+        var selectedFiles = [];
+        var allowMultiple = true;
+        var allowedTypes = [];
+        
+        $(document).ready(function() {
+            // 解析URL参数
+            parseUrlParameters();
+            
+            // 初始化文件浏览器
+            initializeBrowser();
+        });
+        
+        /**
+         * 解析URL参数
+         */
+        function parseUrlParameters() {
+            var urlParams = new URLSearchParams(window.location.search);
+            
+            // 是否允许多选
+            allowMultiple = urlParams.get('multiple') !== 'false';
+            
+            // 允许的文件类型
+            var types = urlParams.get('types');
+            if (types) {
+                allowedTypes = types.split(',');
+            }
+        }
+        
+        /**
+         * 初始化文件浏览器
+         */
+        function initializeBrowser() {
+            try {
+                // 获取用户语言偏好
+                var userLang = getUserLanguage();
+                config.lang = userLang;
+                
+                // 设置连接器URL
+                config.url = ctx + '/api/file-manager/connector';
+                
+                // 浏览器模式配置
+                config.width = '100%';
+                config.height = '100%';
+                config.resizable = false;
+                
+                // 简化界面配置
+                config.uiOptions = {
+                    toolbar: [], // 隐藏工具栏
+                    tree: {
+                        openRootOnLoad: true,
+                        syncTree: true
+                    },
+                    navbar: {
+                        minWidth: 150,
+                        maxWidth: 300
+                    }
+                };
+                
+                // 禁用某些命令
+                config.commands = [
+                    'open', 'reload', 'home', 'up', 'back', 'forward',
+                    'select', 'download', 'quicklook', 'info'
+                ];
+                
+                // 添加用户ID到请求头
+                config.customHeaders = {
+                    'X-User-Id': userId
+                };
+                
+                // 设置CSRF令牌
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (csrfToken) {
+                    config.customHeaders['X-CSRF-TOKEN'] = csrfToken;
+                }
+                
+                // 初始化elFinder
+                elfinderInstance = $('#elfinder').elfinder(config);
+                
+                // 绑定事件
+                bindBrowserEvents();
+                
+                console.log('File browser initialized successfully');
+            } catch (error) {
+                console.error('Failed to initialize file browser:', error);
+                showError('文件浏览器初始化失败: ' + error.message);
+            }
+        }
+        
+        /**
+         * 绑定浏览器事件
+         */
+        function bindBrowserEvents() {
+            if (!elfinderInstance) return;
+            
+            // 文件选择事件
+            elfinderInstance.bind('select', function(e) {
+                if (e.data && e.data.selected) {
+                    handleFileSelection(e.data.selected);
+                }
+            });
+            
+            // 双击文件事件
+            elfinderInstance.bind('dblclick', function(e) {
+                if (e.data && e.data.file && !e.data.file.mime.startsWith('directory/')) {
+                    // 双击文件直接选择
+                    selectedFiles = [e.data.file];
+                    confirmSelection();
+                }
+            });
+            
+            // 错误事件
+            elfinderInstance.bind('error', function(e) {
+                if (e.data && e.data.error) {
+                    showError('操作失败: ' + e.data.error);
+                }
+            });
+        }
+        
+        /**
+         * 处理文件选择
+         */
+        function handleFileSelection(files) {
+            // 过滤文件类型
+            var validFiles = files.filter(function(file) {
+                // 跳过目录
+                if (file.mime.startsWith('directory/')) {
+                    return false;
+                }
+                
+                // 检查文件类型限制
+                if (allowedTypes.length > 0) {
+                    var ext = file.name.split('.').pop().toLowerCase();
+                    return allowedTypes.includes(ext);
+                }
+                
+                return true;
+            });
+            
+            // 处理多选限制
+            if (!allowMultiple && validFiles.length > 1) {
+                validFiles = [validFiles[0]];
+            }
+            
+            selectedFiles = validFiles;
+            updateSelectionInfo();
+        }
+        
+        /**
+         * 更新选择信息
+         */
+        function updateSelectionInfo() {
+            var countElement = $('#selectedCount');
+            var confirmBtn = $('#confirmBtn');
+            
+            if (selectedFiles.length === 0) {
+                countElement.text('未选择文件');
+                confirmBtn.prop('disabled', true);
+            } else if (selectedFiles.length === 1) {
+                countElement.text('已选择: ' + selectedFiles[0].name);
+                confirmBtn.prop('disabled', false);
+            } else {
+                countElement.text('已选择 ' + selectedFiles.length + ' 个文件');
+                confirmBtn.prop('disabled', false);
+            }
+        }
+        
+        /**
+         * 获取用户语言偏好
+         */
+        function getUserLanguage() {
+            // 从localStorage获取
+            var savedLang = localStorage.getItem('file-manager-lang');
+            if (savedLang) {
+                return savedLang;
+            }
+            
+            // 从浏览器语言获取
+            var browserLang = navigator.language || navigator.userLanguage;
+            if (browserLang.startsWith('zh')) {
+                return 'zh_CN';
+            }
+            
+            return 'en';
+        }
+        
+        /**
+         * 刷新浏览器
+         */
+        function refreshBrowser() {
+            if (elfinderInstance) {
+                elfinderInstance.exec('reload');
+            }
+        }
+        
+        /**
+         * 回到主目录
+         */
+        function goHome() {
+            if (elfinderInstance) {
+                elfinderInstance.exec('home');
+            }
+        }
+        
+        /**
+         * 返回上级目录
+         */
+        function goUp() {
+            if (elfinderInstance) {
+                elfinderInstance.exec('up');
+            }
+        }
+        
+        /**
+         * 确认选择
+         */
+        function confirmSelection() {
+            if (selectedFiles.length === 0) {
+                showError('请先选择文件');
+                return;
+            }
+            
+            // 通知父窗口选择的文件
+            if (window.parent && window.parent.onFileBrowserSelection) {
+                window.parent.onFileBrowserSelection(selectedFiles);
+            } else if (window.opener && window.opener.onFileBrowserSelection) {
+                window.opener.onFileBrowserSelection(selectedFiles);
+            }
+            
+            closeBrowser();
+        }
+        
+        /**
+         * 关闭浏览器
+         */
+        function closeBrowser() {
+            if (window.parent && window.parent.layer) {
+                // 使用layer关闭
+                var index = window.parent.layer.getFrameIndex(window.name);
+                window.parent.layer.close(index);
+            } else if (window.close) {
+                // 直接关闭窗口
+                window.close();
+            }
+        }
+        
+        /**
+         * 显示错误消息
+         */
+        function showError(message) {
+            console.error('Error:', message);
+            // 在浏览器模式下，简化消息显示
+            if (window.parent && window.parent.layer) {
+                window.parent.layer.msg(message, {icon: 2, time: 3000});
+            } else {
+                alert(message);
+            }
+        }
+        
+        // 键盘快捷键支持
+        $(document).keydown(function(e) {
+            // ESC键关闭浏览器
+            if (e.keyCode === 27) {
+                closeBrowser();
+            }
+            // Enter键确认选择
+            if (e.keyCode === 13 && selectedFiles.length > 0) {
+                confirmSelection();
+            }
+        });
+        /*]]>*/
+    </script>
+</body>
+</html>

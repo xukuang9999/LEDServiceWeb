@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="~{include :: header('Edit Advert')}"/>
+    <th:block th:insert="~{include :: bootstrap-fileinput-css}" />
+    
+    <style>
+        .hide-small-remove-btn .kv-file-remove {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-advertising-edit" th:object="${advertising}">
+        <input name="id" type="hidden" th:field="*{id}"/>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Advert Title：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="title" id="title" th:field="*{title}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Advert Content：</label>
+            <div class="col-sm-8">
+                <textarea type="text" name="content" class="form-control" th:rows="5" th:field="*{content}"
+                          placeholder="Please enter advertisement content"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Image：</label>
+            <input id="imageUrl" type="hidden" name="imageUrl" th:field="*{imageUrl}"/>
+            <div class="col-sm-3">
+                <div class="file-loading">
+                    <input id="imageFile" name="file" type="file">
+                </div>
+                <div id="errorBlock" style="color: red;"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">Image Name：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="name" id="name" th:field="*{name}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Image Jump URL：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="jumpUrl" id="jumpUrl" th:field="*{jumpUrl}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">Sort：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="sort" th:field="*{sort}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Display or not：</label>
+            <div class="col-sm-9">
+                <div class="radio-box" th:each="dict : ${@dict.getType('cms_show_hide')}">
+                    <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}"
+                           th:field="*{status}" th:checked="${dict.default}">
+                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Remark：</label>
+            <div class="col-sm-8">
+                <textarea type="text" name="remark" class="form-control" th:rows="5" th:field="*{remark}"
+                          placeholder="Please enter text"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:insert="~{include :: footer}"/>
+<th:block th:insert="~{include :: bootstrap-fileinput-js}" />
+<script type="text/javascript" th:inline="javascript">
+    var prefix = ctx + "cms/advertising";
+    $(function () {
+
+        // 初始化已有文件预览
+        var initialFile = $("#imageUrl").val();
+        var fileInputConfig = {
+            language: 'en',
+            uploadUrl: prefix + '/uploadCMS',
+            maxFileCount: 1,
+            autoReplace: true,
+            showUpload: true,
+            showRemove: true,
+            showCaption: true,
+            showPreview: true,
+            showClose: false,
+            browseClass: "btn btn-primary",
+            browseLabel: "Select File",
+            browseIcon: '<i class="fa fa-file-music-o"></i> ',
+            removeClass: "btn btn-danger",
+            removeLabel: "Remove",
+            removeIcon: '<i class="fa fa-trash"></i> ',
+            uploadClass: "btn btn-success",
+            uploadLabel: "Upload",
+            uploadIcon: '<i class="fa fa-upload"></i> ',
+            allowedFileExtensions: ["bmp", "gif", "jpg", "jpeg", "png"],
+            previewFileIcon: '<i class="fa fa-file-audio-o"></i>',
+            maxFileSize: 20000, // 20MB
+            msgSizeTooLarge: 'File "{name}" ({size} KB) are more than the limit size {maxSize} KB。',
+            msgFilesTooLess: 'You must at least select {n} files to upload。',
+            msgInvalidFileExtension: 'Unsupport file type "{name}"。Only support "{extensions}" the file。',
+            elErrorContainer: '#errorBlock',
+            previewClass: 'hide-small-remove-btn'
+        };
+
+        // 如果有已存在的文件，添加初始预览配置
+        if (initialFile && initialFile.length > 0) {
+            // 提取文件名
+            var fileName = initialFile.split('/').pop();
+
+            // 直接使用URL回显，保持组件原生样式
+            fileInputConfig.initialPreview = [initialFile];
+            fileInputConfig.initialPreviewAsData = true; // 关键配置：将URL视为数据
+            fileInputConfig.initialPreviewConfig = [
+                {
+                    caption: fileName,
+                    type: 'image',
+                    size: 0, // 可从服务器获取实际大小
+                    url: prefix + '/deleteFile', // 删除文件的URL
+                    key: 1,
+                    extra: {id: $('#id').val(), field: 'imageUrl'},
+                    downloadUrl: initialFile
+                }
+            ];
+            fileInputConfig.overwriteInitial = true;
+        }
+
+        // 初始化文件上传组件并缓存实例
+        var $fileInput = $("#imageFile").fileinput(fileInputConfig);
+
+        // 绑定文件清空事件（处理初始预览和新上传文件的移除）
+        $fileInput.on('fileclear', function() {
+            $("#imageUrl").val('');
+            $("#name").val('');
+        });
+
+        // 绑定文件上传成功事件
+        $fileInput.on('fileuploaded', function(event, data) {
+            var rsp = data.response;
+            $("#imageUrl").val(rsp.url);
+            $("#name").val(rsp.newFileName);
+            $.modal.alertSuccess("Succeeded to upload the file!");
+        });
+
+        // 绑定文件上传失败事件
+        $fileInput.on('fileuploaderror', function(event, data) {
+            var response = data.response;
+            console.log('Upload errors:', response);
+            $.modal.alertError("Failed to upload the file: " + (response ? response.message : 'unknown errors'));
+        });
+
+        // 绑定文件验证错误事件
+        $fileInput.on('fileerror', function(event, data, msg) {
+            $.modal.alertWarning(msg);
+        });
+    })
+    
+    $("#form-advertising-edit").validate({
+        onkeyup: false,
+        rules: {
+            sort: {
+                digits: true
+            },
+        },
+        messages: {
+            "name": {
+                remote: "The file name existed"
+            }
+        },
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/editAdvertising", $('#form-advertising-edit').serialize());
+        }
+    }
+
+</script>
+</body>
+</html>

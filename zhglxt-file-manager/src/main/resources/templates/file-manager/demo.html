@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>文件管理器集成示例</title>
+    
+    <!-- 通用CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.min.css}" rel="stylesheet"/>
+    <link th:href="@{/zhglxt/css/zhglxt-ui.css}" rel="stylesheet"/>
+    
+    <!-- 文件管理器CSS -->
+    <link th:href="@{/css/file-manager.css}" rel="stylesheet"/>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5><i class="fa fa-code"></i> 文件管理器集成示例</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <!-- 基本功能示例 -->
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">基本功能</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label>打开文件管理器</label>
+                                            <div>
+                                                <button type="button" class="btn btn-primary" onclick="openFileManager()">
+                                                    <i class="fa fa-folder-open"></i> 文件管理器
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>选择单个文件</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="selectedFile" placeholder="未选择文件" readonly>
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" onclick="selectSingleFile()">
+                                                        <i class="fa fa-file-o"></i> 选择
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>选择多个文件</label>
+                                            <div>
+                                                <button type="button" class="btn btn-info" onclick="selectMultipleFiles()">
+                                                    <i class="fa fa-files-o"></i> 选择多个文件
+                                                </button>
+                                                <div id="selectedFiles" class="mt-2"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>上传文件</label>
+                                            <div>
+                                                <input type="file" id="fileInput" multiple style="display: none;">
+                                                <button type="button" class="btn btn-success" onclick="uploadFiles()">
+                                                    <i class="fa fa-upload"></i> 上传文件
+                                                </button>
+                                            </div>
+                                            <div id="uploadProgress" class="mt-2" style="display: none;">
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 图片选择示例 -->
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">图片选择</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label>选择单张图片</label>
+                                            <div class="text-center">
+                                                <div id="imagePreview" class="mb-2" style="min-height: 150px; border: 1px dashed #ddd; display: flex; align-items: center; justify-content: center; background: #f8f8f9;">
+                                                    <span class="text-muted">未选择图片</span>
+                                                </div>
+                                                <button type="button" class="btn btn-primary" onclick="selectImage()">
+                                                    <i class="fa fa-image"></i> 选择图片
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>选择多张图片</label>
+                                            <div>
+                                                <button type="button" class="btn btn-info" onclick="selectMultipleImages()">
+                                                    <i class="fa fa-images"></i> 选择多张图片
+                                                </button>
+                                                <div id="imageGallery" class="mt-2 row"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- jQuery插件示例 -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">jQuery插件示例</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label>使用jQuery插件</label>
+                                            <div>
+                                                <button type="button" class="btn btn-default" id="pluginSelectBtn">
+                                                    <i class="fa fa-file-o"></i> 插件选择文件
+                                                </button>
+                                                <button type="button" class="btn btn-success" id="pluginUploadBtn">
+                                                    <i class="fa fa-upload"></i> 插件上传文件
+                                                </button>
+                                                <button type="button" class="btn btn-primary" id="pluginManageBtn">
+                                                    <i class="fa fa-folder-open"></i> 插件管理文件
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>拖拽上传区域</label>
+                                            <div class="file-drop-zone" id="dropZone">
+                                                <div class="drop-icon">
+                                                    <i class="fa fa-cloud-upload"></i>
+                                                </div>
+                                                <div class="drop-text">拖拽文件到此处上传</div>
+                                                <div class="drop-hint">或点击选择文件</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 日志输出 -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">操作日志</h4>
+                                        <div class="panel-tools">
+                                            <button type="button" class="btn btn-xs btn-default" onclick="clearLog()">
+                                                <i class="fa fa-trash"></i> 清空
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <pre id="logOutput" style="height: 200px; overflow-y: auto; background: #f8f8f9; border: 1px solid #e7eaec; padding: 10px; font-size: 12px;"></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通用JS -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+    <script th:src="@{/zhglxt/js/common.js}"></script>
+    
+    <!-- 文件管理器JS -->
+    <script th:src="@{/js/file-manager.js}"></script>
+    
+    <script>
+        $(document).ready(function() {
+            log('页面加载完成，文件管理器已准备就绪');
+            
+            // 初始化jQuery插件示例
+            initializePluginExamples();
+            
+            // 初始化拖拽上传
+            initializeDragUpload();
+        });
+        
+        /**
+         * 打开文件管理器
+         */
+        function openFileManager() {
+            log('打开文件管理器...');
+            FileManager.openPopup({
+                title: '文件管理器',
+                width: 1000,
+                height: 600
+            });
+        }
+        
+        /**
+         * 选择单个文件
+         */
+        function selectSingleFile() {
+            log('选择单个文件...');
+            FileManager.selectFile({
+                title: '选择文件'
+            }, function(file) {
+                log('选择的文件: ' + file.name);
+                $('#selectedFile').val(file.name);
+            });
+        }
+        
+        /**
+         * 选择多个文件
+         */
+        function selectMultipleFiles() {
+            log('选择多个文件...');
+            FileManager.selectFiles({
+                title: '选择多个文件'
+            }, function(files) {
+                log('选择了 ' + files.length + ' 个文件');
+                var html = '<ul class="list-unstyled">';
+                files.forEach(function(file) {
+                    html += '<li><i class="fa fa-file-o"></i> ' + file.name + '</li>';
+                });
+                html += '</ul>';
+                $('#selectedFiles').html(html);
+            });
+        }
+        
+        /**
+         * 上传文件
+         */
+        function uploadFiles() {
+            $('#fileInput').click();
+        }
+        
+        // 文件输入框变化事件
+        $('#fileInput').change(function() {
+            var files = this.files;
+            if (files.length > 0) {
+                log('开始上传 ' + files.length + ' 个文件...');
+                $('#uploadProgress').show();
+                
+                FileManager.uploadFiles(files, {
+                    directory: '/uploads',
+                    onProgress: function(percent) {
+                        $('.progress-bar').css('width', percent + '%');
+                    }
+                }, function(result) {
+                    $('#uploadProgress').hide();
+                    if (result.success) {
+                        log('文件上传成功');
+                        layer.msg('文件上传成功', {icon: 1});
+                    } else {
+                        log('文件上传失败: ' + result.message);
+                        layer.msg('文件上传失败: ' + result.message, {icon: 2});
+                    }
+                });
+            }
+        });
+        
+        /**
+         * 选择图片
+         */
+        function selectImage() {
+            log('选择图片...');
+            FileManager.selectImage({
+                title: '选择图片'
+            }, function(image) {
+                log('选择的图片: ' + image.name);
+                var previewUrl = FileManager.getPreviewUrl(image.path);
+                $('#imagePreview').html('<img src="' + previewUrl + '" class="img-responsive" style="max-height: 150px;">');
+            });
+        }
+        
+        /**
+         * 选择多张图片
+         */
+        function selectMultipleImages() {
+            log('选择多张图片...');
+            FileManager.selectImages({
+                title: '选择多张图片'
+            }, function(images) {
+                log('选择了 ' + images.length + ' 张图片');
+                var html = '';
+                images.forEach(function(image) {
+                    var previewUrl = FileManager.getThumbnailUrl(image.path, 'small');
+                    html += '<div class="col-xs-6 col-sm-4 col-md-3 mb-2">';
+                    html += '<div class="thumbnail">';
+                    html += '<img src="' + previewUrl + '" class="img-responsive">';
+                    html += '<div class="caption text-center">';
+                    html += '<small>' + image.name + '</small>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                });
+                $('#imageGallery').html(html);
+            });
+        }
+        
+        /**
+         * 初始化jQuery插件示例
+         */
+        function initializePluginExamples() {
+            // 选择文件按钮
+            $('#pluginSelectBtn').fileManagerButton({
+                type: 'select',
+                multiple: true,
+                onSelect: function(files) {
+                    log('插件选择了 ' + files.length + ' 个文件');
+                    layer.msg('选择了 ' + files.length + ' 个文件', {icon: 1});
+                }
+            });
+            
+            // 上传文件按钮
+            $('#pluginUploadBtn').fileManagerButton({
+                type: 'upload',
+                multiple: true,
+                onUpload: function(result) {
+                    if (result.success) {
+                        log('插件上传成功');
+                        layer.msg('上传成功', {icon: 1});
+                    } else {
+                        log('插件上传失败: ' + result.message);
+                        layer.msg('上传失败: ' + result.message, {icon: 2});
+                    }
+                }
+            });
+            
+            // 管理文件按钮
+            $('#pluginManageBtn').fileManagerButton({
+                type: 'manage'
+            });
+        }
+        
+        /**
+         * 初始化拖拽上传
+         */
+        function initializeDragUpload() {
+            var dropZone = $('#dropZone');
+            
+            // 阻止默认拖拽行为
+            $(document).on('dragover drop', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 拖拽进入
+            dropZone.on('dragenter dragover', function(e) {
+                e.preventDefault();
+                $(this).addClass('dragover');
+            });
+            
+            // 拖拽离开
+            dropZone.on('dragleave', function(e) {
+                e.preventDefault();
+                $(this).removeClass('dragover');
+            });
+            
+            // 文件拖放
+            dropZone.on('drop', function(e) {
+                e.preventDefault();
+                $(this).removeClass('dragover');
+                
+                var files = e.originalEvent.dataTransfer.files;
+                if (files.length > 0) {
+                    log('拖拽上传 ' + files.length + ' 个文件...');
+                    FileManager.uploadFiles(files, function(result) {
+                        if (result.success) {
+                            log('拖拽上传成功');
+                            layer.msg('上传成功', {icon: 1});
+                        } else {
+                            log('拖拽上传失败: ' + result.message);
+                            layer.msg('上传失败: ' + result.message, {icon: 2});
+                        }
+                    });
+                }
+            });
+            
+            // 点击上传
+            dropZone.click(function() {
+                var fileInput = $('<input type="file" multiple style="display:none;">');
+                fileInput.change(function() {
+                    var files = this.files;
+                    if (files.length > 0) {
+                        log('点击上传 ' + files.length + ' 个文件...');
+                        FileManager.uploadFiles(files, function(result) {
+                            if (result.success) {
+                                log('点击上传成功');
+                                layer.msg('上传成功', {icon: 1});
+                            } else {
+                                log('点击上传失败: ' + result.message);
+                                layer.msg('上传失败: ' + result.message, {icon: 2});
+                            }
+                        });
+                    }
+                });
+                fileInput.click();
+            });
+        }
+        
+        /**
+         * 记录日志
+         */
+        function log(message) {
+            var timestamp = new Date().toLocaleTimeString();
+            var logOutput = $('#logOutput');
+            logOutput.append('[' + timestamp + '] ' + message + '\n');
+            logOutput.scrollTop(logOutput[0].scrollHeight);
+        }
+        
+        /**
+         * 清空日志
+         */
+        function clearLog() {
+            $('#logOutput').empty();
+        }
+    </script>
+</body>
+</html>

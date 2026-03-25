@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Theme Test</title>
+    <link href="css/modern-theme.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-sidebar {
+            width: 250px;
+            height: 400px;
+            margin: 20px 0;
+        }
+        .test-user-panel {
+            width: 200px;
+            height: 150px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body class="fixed-sidebar full-height-layout">
+    <div class="test-container">
+        <h1>Modern Theme Test Page</h1>
+        <p>If the modern theme is working, you should see:</p>
+        <ul>
+            <li>Dark gradient background</li>
+            <li>Modern fonts</li>
+            <li>Styled elements below</li>
+        </ul>
+        
+        <div class="navbar-default navbar-static-side test-sidebar">
+            <div class="logo">
+                <span class="logo-lg">TEST LOGO</span>
+            </div>
+            <div class="user-panel test-user-panel">
+                <img src="img/profile.jpg" alt="Test User" style="width: 60px; height: 60px;">
+                <div class="info">
+                    <p>Test User</p>
+                    <a href="#">Online</a>
+                    <a href="#">Logout</a>
+                </div>
+            </div>
+        </div>
+        
+        <div id="wrapper">
+            <p>This wrapper should have a blue border if CSS is working</p>
+        </div>
+    </div>
+</body>
+</html>

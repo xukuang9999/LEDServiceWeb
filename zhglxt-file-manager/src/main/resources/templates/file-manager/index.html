@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="${pageTitle}">文件管理器</title>
+    
+    <!-- 通用CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.min.css}" rel="stylesheet"/>
+    <link th:href="@{/zhglxt/css/zhglxt-ui.css}" rel="stylesheet"/>
+    
+    <!-- elFinder CSS -->
+    <link th:href="@{/elfinder/css/elfinder.min.css}" rel="stylesheet"/>
+    <link th:href="@{/elfinder/css/theme.css}" rel="stylesheet"/>
+    
+    <!-- 文件管理器自定义样式 -->
+    <link th:href="@{/css/file-manager.css}" rel="stylesheet"/>
+    <link th:href="@{/css/file-manager-mobile.css}" rel="stylesheet"/>
+    
+    <!-- 自定义样式 -->
+    <style>
+        .file-manager-container {
+            padding: 15px;
+            background: #fff;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+        }
+        
+        .file-manager-header {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e7eaec;
+        }
+        
+        .file-manager-header h2 {
+            margin: 0;
+            color: #676a6c;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .file-manager-toolbar {
+            margin-bottom: 15px;
+        }
+        
+        .file-manager-toolbar .btn {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        #elfinder {
+            min-height: 600px;
+            border: 1px solid #e7eaec;
+            border-radius: 3px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .file-manager-container {
+                padding: 10px;
+            }
+            
+            .file-manager-header h2 {
+                font-size: 16px;
+            }
+            
+            #elfinder {
+                min-height: 400px;
+            }
+            
+            .file-manager-toolbar .btn {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .file-manager-container {
+                padding: 5px;
+            }
+            
+            #elfinder {
+                min-height: 350px;
+            }
+            
+            .file-manager-toolbar {
+                text-align: center;
+            }
+            
+            .file-manager-toolbar .btn {
+                width: 100%;
+                margin-bottom: 5px;
+                margin-right: 0;
+            }
+        }
+        
+        /* elFinder 主题定制 */
+        .elfinder-toolbar {
+            background: #f8f8f9;
+            border-bottom: 1px solid #e7eaec;
+        }
+        
+        .elfinder-navbar {
+            background: #f8f8f9;
+            border-right: 1px solid #e7eaec;
+        }
+        
+        .elfinder-workzone {
+            background: #fff;
+        }
+        
+        /* 加载动画 */
+        .file-manager-loading {
+            text-align: center;
+            padding: 50px;
+            color: #999;
+        }
+        
+        .file-manager-loading i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5><i class="fa fa-folder-open"></i> <span th:text="${pageTitle}">文件管理器</span></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="fullscreen-link">
+                                <i class="fa fa-expand"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="file-manager-container">
+                            <!-- 工具栏 -->
+                            <div class="file-manager-toolbar">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="refreshFileManager()">
+                                        <i class="fa fa-refresh"></i> 刷新
+                                    </button>
+                                    <button type="button" class="btn btn-success btn-sm" onclick="uploadFiles()">
+                                        <i class="fa fa-upload"></i> 上传
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-sm" onclick="createFolder()">
+                                        <i class="fa fa-folder-o"></i> 新建文件夹
+                                    </button>
+                                </div>
+                                <div class="btn-group pull-right" role="group">
+                                    <button type="button" class="btn btn-default btn-sm" onclick="toggleView('list')">
+                                        <i class="fa fa-list"></i> 列表
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-sm" onclick="toggleView('icons')">
+                                        <i class="fa fa-th"></i> 图标
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- 文件管理器容器 -->
+                            <div id="elfinder">
+                                <div class="file-manager-loading">
+                                    <i class="fa fa-spinner"></i>
+                                    <div>正在加载文件管理器...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通用JS -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+    <script th:src="@{/zhglxt/js/common.js}"></script>
+    <script th:src="@{/zhglxt/js/zhglxt-ui.js}"></script>
+    
+    <!-- elFinder JS -->
+    <script th:src="@{/elfinder/js/elfinder.min.js}"></script>
+    
+    <!-- 国际化支持 -->
+    <script th:src="@{/js/i18n/elfinder.zh.js}"></script>
+    <script th:src="@{/js/i18n/elfinder.en.js}"></script>
+    
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var ctx = /*[[${#httpServletRequest.contextPath}]]*/ '';
+        var config = /*[[${config}]]*/ {};
+        var userId = /*[[${userId}]]*/ '';
+        
+        // 全局变量
+        var elfinderInstance = null;
+        
+        $(document).ready(function() {
+            initializeFileManager();
+            
+            // 响应式处理
+            handleResponsiveLayout();
+            $(window).resize(handleResponsiveLayout);
+        });
+        
+        /**
+         * 初始化文件管理器
+         */
+        function initializeFileManager() {
+            try {
+                // 获取用户语言偏好
+                var userLang = getUserLanguage();
+                config.lang = userLang;
+                
+                // 设置连接器URL
+                config.url = ctx + '/api/file-manager/connector';
+                
+                // 添加用户ID到请求头
+                config.customHeaders = {
+                    'X-User-Id': userId
+                };
+                
+                // 设置CSRF令牌
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (csrfToken) {
+                    config.customHeaders['X-CSRF-TOKEN'] = csrfToken;
+                }
+                
+                // 初始化elFinder
+                elfinderInstance = $('#elfinder').elfinder(config);
+                
+                // 绑定事件
+                bindElFinderEvents();
+                
+                console.log('File manager initialized successfully');
+            } catch (error) {
+                console.error('Failed to initialize file manager:', error);
+                showError('文件管理器初始化失败: ' + error.message);
+            }
+        }
+        
+        /**
+         * 绑定elFinder事件
+         */
+        function bindElFinderEvents() {
+            if (!elfinderInstance) return;
+            
+            // 文件上传完成事件
+            elfinderInstance.bind('upload', function(e) {
+                if (e.data && e.data.added && e.data.added.length > 0) {
+                    showSuccess('文件上传成功: ' + e.data.added.length + ' 个文件');
+                }
+            });
+            
+            // 文件删除事件
+            elfinderInstance.bind('rm', function(e) {
+                if (e.data && e.data.removed && e.data.removed.length > 0) {
+                    showSuccess('文件删除成功: ' + e.data.removed.length + ' 个文件');
+                }
+            });
+            
+            // 错误事件
+            elfinderInstance.bind('error', function(e) {
+                if (e.data && e.data.error) {
+                    showError('操作失败: ' + e.data.error);
+                }
+            });
+        }
+        
+        /**
+         * 获取用户语言偏好
+         */
+        function getUserLanguage() {
+            // 从localStorage获取
+            var savedLang = localStorage.getItem('file-manager-lang');
+            if (savedLang) {
+                return savedLang;
+            }
+            
+            // 从浏览器语言获取
+            var browserLang = navigator.language || navigator.userLanguage;
+            if (browserLang.startsWith('zh')) {
+                return 'zh_CN';
+            }
+            
+            return 'en';
+        }
+        
+        /**
+         * 处理响应式布局
+         */
+        function handleResponsiveLayout() {
+            var windowWidth = $(window).width();
+            
+            if (windowWidth < 768) {
+                // 移动设备布局调整
+                $('#elfinder').css('min-height', '400px');
+                $('.file-manager-toolbar .btn').addClass('btn-sm');
+            } else if (windowWidth < 992) {
+                // 平板设备布局调整
+                $('#elfinder').css('min-height', '500px');
+            } else {
+                // 桌面设备布局
+                $('#elfinder').css('min-height', '600px');
+            }
+        }
+        
+        /**
+         * 刷新文件管理器
+         */
+        function refreshFileManager() {
+            if (elfinderInstance) {
+                elfinderInstance.exec('reload');
+                showInfo('文件管理器已刷新');
+            }
+        }
+        
+        /**
+         * 上传文件
+         */
+        function uploadFiles() {
+            if (elfinderInstance) {
+                elfinderInstance.exec('upload');
+            }
+        }
+        
+        /**
+         * 创建文件夹
+         */
+        function createFolder() {
+            if (elfinderInstance) {
+                elfinderInstance.exec('mkdir');
+            }
+        }
+        
+        /**
+         * 切换视图模式
+         */
+        function toggleView(viewType) {
+            if (elfinderInstance) {
+                elfinderInstance.exec('view', viewType);
+                
+                // 更新按钮状态
+                $('.file-manager-toolbar .btn-group .btn').removeClass('active');
+                $('button[onclick="toggleView(\'' + viewType + '\')"]').addClass('active');
+            }
+        }
+        
+        /**
+         * 显示成功消息
+         */
+        function showSuccess(message) {
+            if (typeof layer !== 'undefined') {
+                layer.msg(message, {icon: 1, time: 2000});
+            } else {
+                alert(message);
+            }
+        }
+        
+        /**
+         * 显示错误消息
+         */
+        function showError(message) {
+            if (typeof layer !== 'undefined') {
+                layer.msg(message, {icon: 2, time: 3000});
+            } else {
+                alert(message);
+            }
+        }
+        
+        /**
+         * 显示信息消息
+         */
+        function showInfo(message) {
+            if (typeof layer !== 'undefined') {
+                layer.msg(message, {icon: 0, time: 2000});
+            } else {
+                alert(message);
+            }
+        }
+        
+        // 全屏功能
+        $('.fullscreen-link').click(function() {
+            var element = $('.file-manager-container')[0];
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+        });
+        /*]]>*/
+    </script>
+</body>
+</html>

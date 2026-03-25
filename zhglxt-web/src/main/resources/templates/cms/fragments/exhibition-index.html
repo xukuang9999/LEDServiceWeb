@@ -1,0 +1,153 @@
+<div th:fragment="exhibitions-index">
+    <!-- Exhibitions Grid for Index Page -->
+    <div class="exhibitions-preview-grid" th:if="${exhibitions != null and !exhibitions.isEmpty()}">
+        <!-- Dynamic Exhibition Cards -->
+        <div th:each="exhibition, iterStat : ${exhibitions}" 
+             th:class="${iterStat.first} ? 'exhibition-preview-card featured' : 'exhibition-preview-card'">
+            <div class="card-badge" th:if="${iterStat.first}">
+                <i class="fas fa-star"></i>
+                <span>Popular</span>
+            </div>
+            <div class="exhibition-visual">
+                <div class="exhibition-image-container">
+                    <img th:if="${not #strings.isEmpty(exhibition.imageUrl)}" 
+                         th:src="${exhibition.imageUrl}"
+                         class="exhibition-image" 
+                         alt="Exhibition Image"
+                         style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px;">
+                    
+                    <!-- Fallback visual when no image available -->
+                    <div th:if="${#strings.isEmpty(exhibition.imageUrl)}" 
+                         class="exhibition-placeholder"
+                         style="
+                            width: 100%;
+                            height: 200px;
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            border-radius: 12px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: white;
+                            font-size: 48px;
+                         ">
+                        <i class="fas fa-building"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="exhibition-content">
+                <div class="content-header">
+                    <h3 th:text="${exhibition.title}">Exhibition Title</h3>
+                    <div class="exhibition-category" th:text="${exhibition.columnName ?: 'Exhibition Category'}">Category</div>
+                </div>
+                <p class="exhibition-description" th:text="${exhibition.description ?: exhibition.content}">
+                    Exhibition description content
+                </p>
+                <div class="exhibition-features" th:if="${exhibition.keywords != null and !#strings.isEmpty(exhibition.keywords)}">
+                    <div class="feature-tag" th:each="keyword : ${#strings.arraySplit(exhibition.keywords, ',')}" th:text="${#strings.trim(keyword)}">Feature Tag</div>
+                </div>
+                <div class="exhibition-actions">
+                    <a th:href="@{/cms/exhibition.html}" class="exhibition-cta primary"
+                       title="Click to View Details">
+                        <i class="fas fa-info-circle"></i>
+                        <span>View Details</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Exhibition Modals - Moved outside the loop to avoid context issues -->
+    <div th:each="exhibition : ${exhibitions}" th:if="${exhibitions != null and !exhibitions.isEmpty()}">
+        <div class="modal fade exhibition-modal" th:id="${'modal-'+exhibition.id}" tabindex="-1" role="dialog"
+             th:aria-labelledby="${'modal-title-'+exhibition.id}" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-category">
+                            <i class="fas fa-building"></i>
+                            <span>Exhibition Details</span>
+                        </div>
+                        <h2 class="modal-title" th:id="${'modal-title-'+exhibition.id}"
+                            th:text="${exhibition.title}">Exhibition Title</h2>
+                        <div class="modal-meta">
+                            <span class="modal-category-name" th:text="${exhibition.columnName ?: 'Exhibition'}">Exhibition</span>
+                            <span class="modal-date" th:if="${exhibition.createTime != null}"
+                                  th:text="${#dates.format(exhibition.createTime, 'MMM dd, yyyy')}">Date</span>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="modal-image" th:if="${not #strings.isEmpty(exhibition.imageUrl)}">
+                            <img th:src="${exhibition.imageUrl}" alt="Exhibition Image" class="img-responsive">
+                        </div>
+                        <div class="modal-content-text" th:utext="${exhibition.content ?: exhibition.description}">
+                            <p>Exhibition details and information...</p>
+                        </div>
+                        
+                        <!-- Exhibition Features -->
+                        <div class="modal-features" th:if="${exhibition.keywords != null and !#strings.isEmpty(exhibition.keywords)}">
+                            <h4>Exhibition Features</h4>
+                            <div class="feature-tags">
+                                <span class="feature-tag" th:each="keyword : ${#strings.arraySplit(exhibition.keywords, ',')}" 
+                                      th:text="${#strings.trim(keyword)}">Feature</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="modal-actions">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                <i class="fas fa-times"></i>
+                                Close
+                            </button>
+                            <button type="button" class="btn btn-primary" th:if="${not #strings.isEmpty(exhibition.link)}">
+                                <i class="fas fa-external-link-alt"></i>
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Fallback content when no exhibitions available -->
+    <div class="exhibitions-preview-grid" th:if="${exhibitions == null or exhibitions.isEmpty()}">
+        <div class="exhibition-preview-card featured">
+            <div class="card-badge">
+                <i class="fas fa-info-circle"></i>
+                <span>Coming Soon</span>
+            </div>
+            <div class="exhibition-visual">
+                <div class="visual-container">
+                    <div class="exhibition-illustration placeholder">
+                        <div class="placeholder-content">
+                            <i class="fas fa-building"></i>
+                            <p>No exhibitions available at the moment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="exhibition-content">
+                <div class="content-header">
+                    <h3 class="exhibition-title">Exhibitions Coming Soon</h3>
+                    <div class="exhibition-category">Stay Tuned</div>
+                </div>
+                <p class="exhibition-description">
+                    We are preparing exciting exhibition content for you. Please check back soon for updates.
+                </p>
+                <div class="exhibition-actions">
+                    <a th:href="@{/cms/exhibition.html}" class="exhibition-cta primary">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Learn More</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

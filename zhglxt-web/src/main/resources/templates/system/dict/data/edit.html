@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:insert="~{include :: header('Edit Dict Data')}" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-dict-edit" th:object="${dict}">
+			<input name="dictCode"  type="hidden"  th:field="*{dictCode}" />
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">Dict Label：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="dictLabel" id="dictLabel" th:field="*{dictLabel}" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">Dict Value：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="dictValue" id="dictValue" th:field="*{dictValue}" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Dict Type：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" readonly="true" th:field="*{dictType}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Css Class：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" id="cssClass" name="cssClass" th:field="*{cssClass}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">Dict Sort：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="dictSort" th:field="*{dictSort}" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Back Display Style：</label>
+				<div class="col-sm-8">
+					<select name="listClass" class="form-control m-b">
+					    <option value=""        th:field="*{listClass}">---Select---</option>
+	                    <option value="default" th:field="*{listClass}">Default</option>
+	                    <option value="primary" th:field="*{listClass}">Primary</option>
+	                    <option value="success" th:field="*{listClass}">Success</option>
+	                    <option value="info"    th:field="*{listClass}">Info</option>
+	                    <option value="warning" th:field="*{listClass}">Warning</option>
+	                    <option value="danger"  th:field="*{listClass}">Danger</option>
+	                </select>
+	                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> Table column style attribute </span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">System Default：</label>
+				<div class="col-sm-8">
+					<div class="radio-box" th:each="dict : ${@dict.getType('sys_yes_no')}">
+						<input type="radio" th:id="${dict.dictCode}" name="isDefault" th:value="${dict.dictValue}" th:field="*{isDefault}">
+						<label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Status：</label>
+				<div class="col-sm-8">
+					<div class="radio-box" th:each="dict : ${@dict.getType('sys_normal_disable')}">
+						<input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:field="*{status}">
+						<label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Remark：</label>
+				<div class="col-sm-8">
+					<textarea id="remark" name="remark" class="form-control">[[*{remark}]]</textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:insert="~{include :: footer}" />
+	<script type="text/javascript">
+		var prefix = ctx + "system/dict/data";
+	
+		$("#form-dict-edit").validate({
+			rules:{
+				dictSort:{
+					digits:true
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	        	$.operate.save(prefix + "/edit", $('#form-dict-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

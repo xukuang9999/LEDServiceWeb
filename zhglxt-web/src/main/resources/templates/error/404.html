@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.min.css}" rel="stylesheet"/>
+</head>
+<body class="gray-bg">
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>404</h1>
+        <h3 class="font-bold">Not found the page!</h3>
+        <div class="error-desc">
+            Sorry, The page  you are looking for does not exist. Try checking the URL for error, then use the search bar or navigate to other contents in our application.
+            <a href="javascript:index()" class="btn btn-primary m-t">Home Page</a>
+        </div>
+    </div>
+    <script th:inline="javascript">
+      var ctx = [[@{/}]];
+      function index() {
+    	  window.top.location = ctx + "index";
+      }
+    </script>
+</body>
+</html>

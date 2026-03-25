@@ -1,0 +1,185 @@
+# Development configuration for zhglxt File Manager
+# This configuration is optimized for development and testing
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  profiles:
+    active: development
+    
+  # H2 Database for development
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+    
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+
+# File Manager Configuration
+zhglxt:
+  file-manager:
+    enabled: true
+    
+    # Storage configuration
+    root-directory: "./dev-files"
+    max-file-size: 10485760  # 10MB for development
+    max-files-per-request: 5
+    
+    # Allowed file extensions (more permissive in development)
+    allowed-extensions:
+      - jpg
+      - jpeg
+      - png
+      - gif
+      - bmp
+      - pdf
+      - doc
+      - docx
+      - txt
+      - csv
+      - zip
+      - json
+      - xml
+      - html
+      - css
+      - js
+      
+    # Storage backend configuration
+    storage:
+      type: local
+      local:
+        root-path: "./dev-files"
+        create-directories: true
+    
+    # Watermark configuration (disabled for development)
+    watermark:
+      enabled: false
+      text: "© zhglxt DEV"
+      font-size: 20
+      color: "#FF0000"
+      opacity: 0.3
+      position: bottom-right
+      margin: 5
+        
+    # Thumbnail configuration
+    thumbnail:
+      enabled: true
+      cache-enabled: false  # Disable caching in development
+      cache-directory: "./dev-files/thumbnails"
+      sizes:
+        small: 64
+        medium: 128
+        large: 256
+      quality: 0.7
+      format: "jpg"
+      
+    # Security configuration (relaxed for development)
+    security:
+      scan-uploads: false
+      rate-limiting:
+        enabled: false
+      csrf-protection:
+        enabled: false
+      validation:
+        check-file-headers: false
+        max-filename-length: 255
+        sanitize-filenames: true
+        
+    # Performance configuration
+    performance:
+      async:
+        enabled: false  # Synchronous processing for easier debugging
+        thread-pool-size: 2
+      cache:
+        type: memory
+        ttl: 300  # 5 minutes
+        max-size: 100
+      connection-pool:
+        max-connections: 10
+        connection-timeout: 10000
+        read-timeout: 30000
+        
+    # Monitoring configuration
+    health:
+      storage-check: true
+      cache-check: false
+      disk-space-check: false
+      
+    metrics:
+      enabled: true
+      collect:
+        file-operations: true
+        storage-usage: false
+        performance-stats: true
+        error-rates: true
+      export:
+        prometheus: false
+        jmx: true
+        
+    # Logging configuration
+    logging:
+      audit-logging: true
+      security-logging: false
+      performance-logging: false
+      separate-log-files: false
+      log-directory: "./dev-logs"
+      
+    # Maintenance configuration (disabled in development)
+    maintenance:
+      thumbnail-cleanup:
+        enabled: false
+      temp-file-cleanup:
+        enabled: false
+      usage-reports:
+        enabled: false
+        
+    # Swagger documentation (enabled in development)
+    swagger:
+      enabled: true
+
+# Logging configuration
+logging:
+  level:
+    root: INFO
+    com.zhglxt.fileManager: DEBUG
+    com.zhglxt.fileManager.service: DEBUG
+    com.zhglxt.fileManager.controller: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    
+# Management endpoints (more exposed in development)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    metrics:
+      enabled: true
+  metrics:
+    tags:
+      application: zhglxt-file-manager
+      environment: development

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>文件管理器 - 弹窗模式</title>
+    
+    <!-- 通用CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.min.css}" rel="stylesheet"/>
+    
+    <!-- elFinder CSS -->
+    <link th:href="@{/elfinder/css/elfinder.min.css}" rel="stylesheet"/>
+    <link th:href="@{/elfinder/css/theme.css}" rel="stylesheet"/>
+    
+    <!-- 文件管理器自定义样式 -->
+    <link th:href="@{/css/file-manager.css}" rel="stylesheet"/>
+    <link th:href="@{/css/file-manager-mobile.css}" rel="stylesheet"/>
+    
+    <!-- 弹窗模式样式 -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        
+        .popup-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .popup-header {
+            background: #f8f8f9;
+            border-bottom: 1px solid #e7eaec;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .popup-header h4 {
+            margin: 0;
+            color: #676a6c;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .popup-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .popup-actions .btn {
+            padding: 5px 12px;
+            font-size: 12px;
+        }
+        
+        .popup-content {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #elfinder {
+            height: 100%;
+            border: none;
+        }
+        
+        .popup-footer {
+            background: #f8f8f9;
+            border-top: 1px solid #e7eaec;
+            padding: 10px 15px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+        
+        .popup-footer .btn {
+            margin-left: 5px;
+        }
+        
+        /* 加载动画 */
+        .popup-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #999;
+        }
+        
+        .popup-loading i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .popup-header {
+                padding: 8px 10px;
+            }
+            
+            .popup-header h4 {
+                font-size: 14px;
+            }
+            
+            .popup-actions .btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+            
+            .popup-footer {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="popup-container">
+        <!-- 弹窗头部 -->
+        <div class="popup-header">
+            <h4><i class="fa fa-folder-open"></i> 文件管理器</h4>
+            <div class="popup-actions">
+                <button type="button" class="btn btn-primary btn-sm" onclick="refreshFileManager()">
+                    <i class="fa fa-refresh"></i> 刷新
+                </button>
+                <button type="button" class="btn btn-success btn-sm" onclick="uploadFiles()">
+                    <i class="fa fa-upload"></i> 上传
+                </button>
+            </div>
+        </div>
+        
+        <!-- 文件管理器内容 -->
+        <div class="popup-content">
+            <div id="elfinder">
+                <div class="popup-loading">
+                    <i class="fa fa-spinner"></i>
+                    <div>正在加载文件管理器...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 弹窗底部 -->
+        <div class="popup-footer">
+            <button type="button" class="btn btn-default" onclick="closePopup()">
+                <i class="fa fa-times"></i> 关闭
+            </button>
+            <button type="button" class="btn btn-primary" onclick="selectFiles()" id="selectBtn" style="display: none;">
+                <i class="fa fa-check"></i> 选择
+            </button>
+        </div>
+    </div>
+
+    <!-- 通用JS -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    
+    <!-- elFinder JS -->
+    <script th:src="@{/elfinder/js/elfinder.min.js}"></script>
+    
+    <!-- 国际化支持 -->
+    <script th:src="@{/js/i18n/elfinder.zh.js}"></script>
+    <script th:src="@{/js/i18n/elfinder.en.js}"></script>
+    
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var ctx = /*[[${#httpServletRequest.contextPath}]]*/ '';
+        var config = /*[[${config}]]*/ {};
+        var userId = /*[[${userId}]]*/ '';
+        
+        // 全局变量
+        var elfinderInstance = null;
+        var selectedFiles = [];
+        var isSelectionMode = false;
+        
+        $(document).ready(function() {
+            // 检查是否为选择模式
+            checkSelectionMode();
+            
+            // 初始化文件管理器
+            initializeFileManager();
+        });
+        
+        /**
+         * 检查是否为选择模式
+         */
+        function checkSelectionMode() {
+            var urlParams = new URLSearchParams(window.location.search);
+            isSelectionMode = urlParams.get('mode') === 'select';
+            
+            if (isSelectionMode) {
+                $('#selectBtn').show();
+            }
+        }
+        
+        /**
+         * 初始化文件管理器
+         */
+        function initializeFileManager() {
+            try {
+                // 获取用户语言偏好
+                var userLang = getUserLanguage();
+                config.lang = userLang;
+                
+                // 设置连接器URL
+                config.url = ctx + '/api/file-manager/connector';
+                
+                // 弹窗模式配置
+                config.width = '100%';
+                config.height = '100%';
+                config.resizable = false;
+                
+                // 添加用户ID到请求头
+                config.customHeaders = {
+                    'X-User-Id': userId
+                };
+                
+                // 设置CSRF令牌
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (csrfToken) {
+                    config.customHeaders['X-CSRF-TOKEN'] = csrfToken;
+                }
+                
+                // 选择模式配置
+                if (isSelectionMode) {
+                    config.getFileCallback = function(files) {
+                        selectedFiles = files;
+                        updateSelectButton();
+                    };
+                }
+                
+                // 初始化elFinder
+                elfinderInstance = $('#elfinder').elfinder(config);
+                
+                // 绑定事件
+                bindElFinderEvents();
+                
+                console.log('File manager popup initialized successfully');
+            } catch (error) {
+                console.error('Failed to initialize file manager popup:', error);
+                showError('文件管理器初始化失败: ' + error.message);
+            }
+        }
+        
+        /**
+         * 绑定elFinder事件
+         */
+        function bindElFinderEvents() {
+            if (!elfinderInstance) return;
+            
+            // 文件选择事件
+            elfinderInstance.bind('select', function(e) {
+                if (isSelectionMode && e.data && e.data.selected) {
+                    selectedFiles = e.data.selected;
+                    updateSelectButton();
+                }
+            });
+            
+            // 文件上传完成事件
+            elfinderInstance.bind('upload', function(e) {
+                if (e.data && e.data.added && e.data.added.length > 0) {
+                    showSuccess('文件上传成功: ' + e.data.added.length + ' 个文件');
+                }
+            });
+            
+            // 错误事件
+            elfinderInstance.bind('error', function(e) {
+                if (e.data && e.data.error) {
+                    showError('操作失败: ' + e.data.error);
+                }
+            });
+        }
+        
+        /**
+         * 更新选择按钮状态
+         */
+        function updateSelectButton() {
+            var selectBtn = $('#selectBtn');
+            if (selectedFiles && selectedFiles.length > 0) {
+                selectBtn.text('选择 (' + selectedFiles.length + ')');
+                selectBtn.prop('disabled', false);
+            } else {
+                selectBtn.text('选择');
+                selectBtn.prop('disabled', true);
+            }
+        }
+        
+        /**
+         * 获取用户语言偏好
+         */
+        function getUserLanguage() {
+            // 从localStorage获取
+            var savedLang = localStorage.getItem('file-manager-lang');
+            if (savedLang) {
+                return savedLang;
+            }
+            
+            // 从浏览器语言获取
+            var browserLang = navigator.language || navigator.userLanguage;
+            if (browserLang.startsWith('zh')) {
+                return 'zh_CN';
+            }
+            
+            return 'en';
+        }
+        
+        /**
+         * 刷新文件管理器
+         */
+        function refreshFileManager() {
+            if (elfinderInstance) {
+                elfinderInstance.exec('reload');
+                showInfo('文件管理器已刷新');
+            }
+        }
+        
+        /**
+         * 上传文件
+         */
+        function uploadFiles() {
+            if (elfinderInstance) {
+                elfinderInstance.exec('upload');
+            }
+        }
+        
+        /**
+         * 选择文件
+         */
+        function selectFiles() {
+            if (selectedFiles && selectedFiles.length > 0) {
+                // 通知父窗口选择的文件
+                if (window.parent && window.parent.onFileSelected) {
+                    window.parent.onFileSelected(selectedFiles);
+                }
+                closePopup();
+            } else {
+                showError('请先选择文件');
+            }
+        }
+        
+        /**
+         * 关闭弹窗
+         */
+        function closePopup() {
+            if (window.parent && window.parent.layer) {
+                // 使用layer关闭
+                var index = window.parent.layer.getFrameIndex(window.name);
+                window.parent.layer.close(index);
+            } else if (window.close) {
+                // 直接关闭窗口
+                window.close();
+            }
+        }
+        
+        /**
+         * 显示成功消息
+         */
+        function showSuccess(message) {
+            console.log('Success:', message);
+            // 在弹窗模式下，简化消息显示
+            if (window.parent && window.parent.layer) {
+                window.parent.layer.msg(message, {icon: 1, time: 2000});
+            }
+        }
+        
+        /**
+         * 显示错误消息
+         */
+        function showError(message) {
+            console.error('Error:', message);
+            // 在弹窗模式下，简化消息显示
+            if (window.parent && window.parent.layer) {
+                window.parent.layer.msg(message, {icon: 2, time: 3000});
+            } else {
+                alert(message);
+            }
+        }
+        
+        /**
+         * 显示信息消息
+         */
+        function showInfo(message) {
+            console.log('Info:', message);
+            // 在弹窗模式下，简化消息显示
+            if (window.parent && window.parent.layer) {
+                window.parent.layer.msg(message, {icon: 0, time: 2000});
+            }
+        }
+        
+        // 键盘快捷键支持
+        $(document).keydown(function(e) {
+            // ESC键关闭弹窗
+            if (e.keyCode === 27) {
+                closePopup();
+            }
+            // Enter键选择文件（选择模式下）
+            if (e.keyCode === 13 && isSelectionMode && selectedFiles.length > 0) {
+                selectFiles();
+            }
+        });
+        /*]]>*/
+    </script>
+</body>
+</html>

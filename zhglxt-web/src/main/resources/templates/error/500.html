@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500</title>
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.min.css}" rel="stylesheet"/>
+</head>
+<body class="gray-bg">
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>500</h1>
+        <h3 class="font-bold">The internal server error.</h3>
+
+        <div class="error-desc">
+            Server Error. We are sorry. You can go to home page.
+            <a href="javascript:index()" class="btn btn-primary m-t">Home Page</a>
+        </div>
+    </div>
+    <script th:inline="javascript">
+      var ctx = [[@{/}]];
+      function index() {
+    	  window.top.location = ctx + "index";
+      }
+    </script>
+</body>
+</html>

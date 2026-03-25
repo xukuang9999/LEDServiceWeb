@@ -1,0 +1,59 @@
+<div th:fragment="navbar">
+    <div class="navbar-wrapper">
+        <div class="container">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle Navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div th:if="${site != null }" class="navbar-brand-logo">
+                            <img th:src="@{/img/logo.jpg}" th:alt="${site.name}" class="navbar-logo">
+                        </div>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav" th:if="${not #lists.isEmpty(columns)}">
+                            <li class="nav-item" data-page="index" data-href="/cms/index.html">
+                                <a th:href="@{/cms/index.html}" class="nav-link">Home</a>
+                            </li>
+                            <li th:each="column : ${columns}" class="nav-item"
+                                th:class="${not #lists.isEmpty(column.columnChilds) ? 'dropdown nav-item':'nav-item'}"
+                                th:data-page="${column.columnFlag}" th:data-href="${column.columnFlag + '.html'}">
+                                <!--不存在子栏目并且不是外链接-->
+                                <a th:if="${#lists.isEmpty(column.columnChilds) && column.outLink eq '1'}"
+                                    th:href="@{'/cms/' + ${column.columnFlag} + '.html'}" th:name="${column.columnFlag}"
+                                    th:text="${column.name}" class="nav-link"></a>
+                                <!--不存在子栏目并且是外部链接-->
+                                <a th:if="${#lists.isEmpty(column.columnChilds) && column.outLink eq '0'}"
+                                    th:href="${column.href}" th:text="${column.name}" th:target="_blank"
+                                    class="nav-link external-link"></a>
+                                <!--存在子栏目-->
+                                <a th:if="${not #lists.isEmpty(column.columnChilds)}" class="dropdown-toggle nav-link"
+                                    data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    [[${column.name}]]<span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" th:if="${not #lists.isEmpty(column.columnChilds)}">
+                                    <li th:each="child : ${column.columnChilds}" class="dropdown-item"
+                                        th:data-page="${child.columnFlag}" th:data-href="${child.columnFlag + '.html'}">
+                                        <!--非外部链接-->
+                                        <a th:if="${child.outLink eq '1'}" th:name="${child.columnFlag}"
+                                            th:href="@{'/cms/' + ${child.columnFlag} + '.html'}" th:text="${child.name}"
+                                            class="dropdown-link"></a>
+                                        <!--外部链接-->
+                                        <a th:if="${child.outLink eq '0'}" th:href="${child.href}"
+                                            th:text="${child.name}" th:target="_blank"
+                                            class="dropdown-link external-link"></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>

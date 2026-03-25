@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head>
+	<th:block th:include="include :: header('Modle List')" />
+</head>
+<body class="gray-bg">
+
+<div class="container-div">
+	<div class="row">
+		<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+			<a class="btn btn-success " onclick="$.operate.add()">
+				<i class="fa fa-plus"></i> Add Model
+			</a>
+			<a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()">
+				<i class="fa fa-remove"></i> Delete
+			</a>
+		</div>
+
+		<div class="col-sm-12 select-table table-striped">
+			<table id="bootstrap-table" ></table>
+		</div>
+	</div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('activiti:model:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('activiti:model:remove')}]];
+    var deployFlag = [[${@permission.hasPermi('activiti:model:deploy')}]];
+    var exportFlag = [[${@permission.hasPermi('activiti:model:export')}]];
+
+    var prefix = ctx + "activiti/model";
+
+
+    $(function () {
+        var options = {
+            url: prefix + "/modelList",
+            createUrl : prefix+"/add",
+            removeUrl: prefix + "/remove",
+            updateUrl: prefix + "/editModel?modelId={id}",
+            exportUrl: prefix + "/export",
+            deploy: prefix + "/deployModel/",
+            sortName: "createTime",
+            sortOrder: "desc",
+            modalName: "Model Manage",
+            search: false,
+            showExport: true,
+            columns: [
+                {
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: 'Id'
+                },
+                {
+                    field: 'key',
+                    title: 'Model Key'
+                },
+                {
+                    field: 'name',
+                    title: 'Model Name'
+                },
+                {
+                    field: 'version',
+                    title: 'Version'
+                },
+                {
+                    field: 'createTime',
+                    title: 'Create Time'
+                },
+                {
+                    field: 'lastUpdateTime',
+                    title: 'Last Update Time'
+                },
+                {
+                    title: 'operation',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs" href="#" onclick="deploy(\'' + row.id + '\')"><i class="fa fa-play-circle-o"></i>Deploy Process</a> ');
+                        actions.push('<a class="btn btn-primary btn-xs"  href="#" onclick="$.operate.editFullS(\'' + row.id + '\')"><i class="fa fa-edit"></i>Edit</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>Delete</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    function deploy(id) {
+        $.modal.confirm("Do you confirm to deploy the process？", function () {
+            var url = prefix + "/deployModel?id=" + id;
+            $.operate.get(url);
+        });
+    }
+</script>
+</body>
+</html>

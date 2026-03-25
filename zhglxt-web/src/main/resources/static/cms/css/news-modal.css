@@ -1,0 +1,397 @@
+/* Optimized News Modal CSS */
+.optimized-news-modal-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    z-index: 10000 !important;
+    display: none !important;
+    backdrop-filter: blur(3px) !important;
+    animation: fadeIn 0.3s ease-out !important;
+}
+
+.optimized-news-modal {
+    position: fixed !important;
+    background: white !important;
+    border-radius: 12px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+    z-index: 10001 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    opacity: 0 !important;
+    transform: scale(0.95) !important;
+}
+
+.optimized-news-modal.show {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+}
+
+/* Header styling */
+.optimized-modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    padding: 16px 20px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    cursor: move !important;
+    user-select: none !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.optimized-modal-header:hover {
+    cursor: move !important;
+}
+
+.modal-title-section {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+.modal-category {
+    font-size: 12px !important;
+    opacity: 0.9 !important;
+    margin-bottom: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+.optimized-modal-title {
+    margin: 0 !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.optimized-modal-controls {
+    display: flex !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+}
+
+/* Button styling */
+.modal-btn {
+    border: none !important;
+    color: white !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+    font-size: 12px !important;
+}
+
+.modal-btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.modal-btn:active {
+    transform: translateY(0) !important;
+}
+
+.minimize-btn, .maximize-btn {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.close-btn {
+    background: #dc3545 !important;
+}
+
+.close-btn:hover {
+    background: #c82333 !important;
+}
+
+/* Content styling */
+.optimized-modal-content {
+    flex: 1 !important;
+    padding: 24px !important;
+    overflow-y: auto !important;
+    background: #fafafa !important;
+}
+
+#optimized-modal-body {
+    background: white !important;
+    padding: 24px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    line-height: 1.6 !important;
+    color: #333 !important;
+}
+
+#optimized-modal-body img {
+    width: 100% !important;
+    max-height: 300px !important;
+    object-fit: cover !important;
+    border-radius: 6px !important;
+    margin-bottom: 20px !important;
+}
+
+#optimized-modal-body h1, 
+#optimized-modal-body h2, 
+#optimized-modal-body h3 {
+    color: #2c3e50 !important;
+    margin-top: 24px !important;
+    margin-bottom: 12px !important;
+}
+
+#optimized-modal-body p {
+    margin-bottom: 16px !important;
+}
+
+#optimized-modal-body ul, 
+#optimized-modal-body ol {
+    margin-bottom: 16px !important;
+    padding-left: 24px !important;
+}
+
+/* Footer styling */
+.optimized-modal-footer {
+    padding: 16px 20px !important;
+    background: white !important;
+    border-top: 1px solid #e9ecef !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-radius: 0 0 12px 12px !important;
+}
+
+.modal-meta {
+    color: #6c757d !important;
+    font-size: 14px !important;
+}
+
+.modal-actions {
+    display: flex !important;
+    gap: 12px !important;
+}
+
+.action-btn {
+    border: none !important;
+    padding: 8px 16px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: all 0.2s ease !important;
+    font-weight: 500 !important;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.share-btn {
+    background: #28a745 !important;
+    color: white !important;
+}
+
+.share-btn:hover {
+    background: #218838 !important;
+}
+
+.print-btn {
+    background: #17a2b8 !important;
+    color: white !important;
+}
+
+.print-btn:hover {
+    background: #138496 !important;
+}
+
+.footer-close-btn {
+    background: #6c757d !important;
+    color: white !important;
+}
+
+.footer-close-btn:hover {
+    background: #5a6268 !important;
+}
+
+/* Scrollbar styling */
+.optimized-modal-content::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+.optimized-modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+    border-radius: 4px !important;
+}
+
+.optimized-modal-content::-webkit-scrollbar-thumb {
+    background: #c1c1c1 !important;
+    border-radius: 4px !important;
+}
+
+.optimized-modal-content::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8 !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .optimized-news-modal {
+        width: 95vw !important;
+        height: 90vh !important;
+        margin: 20px !important;
+    }
+    
+    .optimized-modal-header {
+        padding: 12px 16px !important;
+    }
+    
+    .optimized-modal-title {
+        font-size: 16px !important;
+    }
+    
+    .optimized-modal-content {
+        padding: 16px !important;
+    }
+    
+    #optimized-modal-body {
+        padding: 16px !important;
+    }
+    
+    .optimized-modal-footer {
+        padding: 12px 16px !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    
+    .modal-actions {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .optimized-news-modal {
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+    
+    .optimized-modal-header {
+        border-radius: 0 !important;
+    }
+    
+    .optimized-modal-footer {
+        border-radius: 0 !important;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0 !important;
+    }
+    to {
+        opacity: 1 !important;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%) !important;
+        opacity: 0 !important;
+    }
+    to {
+        transform: translateX(0) !important;
+        opacity: 1 !important;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0) !important;
+        opacity: 1 !important;
+    }
+    to {
+        transform: translateX(100%) !important;
+        opacity: 0 !important;
+    }
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+    overflow: hidden !important;
+}
+
+/* Ensure modal is always on top */
+.optimized-news-modal-overlay {
+    z-index: 2147483646 !important;
+}
+
+.optimized-news-modal {
+    z-index: 2147483647 !important;
+}
+
+/* Legacy compatibility and Bootstrap interference prevention */
+.news-modal-overlay {
+    display: none !important;
+}
+
+.news-modal {
+    display: none !important;
+}
+
+/* Hide Bootstrap modals that interfere with our system */
+.modal.news-modal {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.modal-backdrop {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Ensure our optimized modal buttons work properly */
+.optimized-modal-trigger {
+    position: relative !important;
+    z-index: 1000 !important;
+    pointer-events: auto !important;
+}
+
+.optimized-modal-trigger:hover {
+    cursor: pointer !important;
+}
+
+/* Prevent Bootstrap modal interference on news buttons */
+.news-detail-btn[data-news-id],
+.news-read-btn[data-news-id],
+.btn-read-more[data-news-id] {
+    position: relative !important;
+    z-index: 1001 !important;
+}
+
+/* Override any Bootstrap modal styles that might interfere */
+.news-grid .modal,
+.news-section .modal,
+.news-card .modal {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+}

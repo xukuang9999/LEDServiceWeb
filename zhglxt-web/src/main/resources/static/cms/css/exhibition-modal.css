@@ -1,0 +1,344 @@
+/* Exhibition Modal Styles - Consistent with Exhibition Products Standard */
+
+/* Enhanced Bootstrap Modal Overrides for Exhibition */
+.exhibition-modal {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(4px) !important;
+}
+
+.exhibition-modal .modal-dialog {
+    max-width: 1000px !important;
+    margin: 30px auto !important;
+}
+
+.exhibition-modal .modal-content {
+    border: none !important;
+    border-radius: 20px !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3) !important;
+    overflow: hidden !important;
+    background: white !important;
+}
+
+.exhibition-modal .modal-header {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+    color: white !important;
+    border: none !important;
+    padding: 2rem !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+}
+
+.exhibition-modal .modal-title {
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+    padding-right: 100px !important;
+    line-height: 1.3 !important;
+}
+
+/* Modal Controls Container */
+.modal-controls {
+    position: absolute !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    display: flex !important;
+    gap: 8px !important;
+}
+
+/* Maximize/Restore Button */
+.modal-maximize-btn {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: none !important;
+    color: white !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1rem !important;
+    transition: background 0.3s ease !important;
+}
+
+.modal-maximize-btn:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Close Button - Same as Exhibition Products */
+.exhibition-modal .close {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: none !important;
+    color: white !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.2rem !important;
+    transition: background 0.3s ease !important;
+    opacity: 1 !important;
+    font-weight: normal !important;
+    text-shadow: none !important;
+    position: static !important;
+}
+
+.exhibition-modal .close:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    opacity: 1 !important;
+}
+
+/* Maximized Modal Styles */
+.exhibition-modal.maximized .modal-dialog {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    margin: 0 !important;
+    transition: all 0.3s ease !important;
+}
+
+.exhibition-modal.maximized .modal-content {
+    height: 100vh !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.exhibition-modal.maximized .modal-body {
+    flex: 1 !important;
+    overflow-y: auto !important;
+}
+
+/* Smooth transitions for modal resize */
+.exhibition-modal .modal-dialog {
+    transition: all 0.3s ease !important;
+}
+
+.exhibition-modal .modal-content {
+    transition: all 0.3s ease !important;
+}
+
+/* Enhanced modal controls styling */
+.modal-controls button {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.modal-controls button:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5) !important;
+    outline-offset: 2px !important;
+}
+
+.exhibition-modal .modal-body {
+    padding: 32px !important;
+    background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 100%) !important;
+    min-height: 200px;
+}
+
+.exhibition-modal .modal-image {
+    margin-bottom: 24px;
+}
+
+.exhibition-modal .modal-image img {
+    width: 100% !important;
+    max-height: 400px !important;
+    object-fit: cover !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.exhibition-modal .modal-content-text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #374151;
+    margin-bottom: 24px;
+}
+
+.exhibition-modal .modal-content-text p {
+    margin-bottom: 16px;
+}
+
+.exhibition-modal .modal-content-text p:last-child {
+    margin-bottom: 0;
+}
+
+.exhibition-modal .modal-features {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.exhibition-modal .modal-features h4 {
+    color: #374151;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.exhibition-modal .modal-features h4 i {
+    color: #f59e0b;
+    font-size: 16px;
+}
+
+.exhibition-modal .feature-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.exhibition-modal .feature-tag {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+    color: white !important;
+    padding: 8px 16px !important;
+    border-radius: 20px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    display: inline-block !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.exhibition-modal .feature-tag:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+}
+
+.exhibition-modal .modal-footer {
+    background: #f8fafc;
+    border: none;
+    padding: 20px 32px;
+    border-radius: 0 0 24px 24px;
+}
+
+.exhibition-modal .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.exhibition-modal .btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.exhibition-modal .btn-secondary {
+    background: #6b7280;
+    border: 1px solid #6b7280;
+    color: white;
+}
+
+.exhibition-modal .btn-secondary:hover {
+    background: #4b5563;
+    border-color: #4b5563;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+}
+
+.exhibition-modal .btn-primary {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border: 1px solid #3b82f6;
+    color: white;
+}
+
+.exhibition-modal .btn-primary:hover {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    border-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .exhibition-modal .modal-dialog {
+        margin: 15px !important;
+        max-width: calc(100vw - 30px) !important;
+    }
+
+    .exhibition-modal .modal-header {
+        padding: 1.5rem !important;
+    }
+
+    .exhibition-modal .modal-title {
+        font-size: 1.5rem !important;
+        padding-right: 80px !important;
+    }
+
+    .modal-controls {
+        top: 0.75rem !important;
+        right: 0.75rem !important;
+    }
+
+    .modal-maximize-btn,
+    .exhibition-modal .close {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 1rem !important;
+    }
+
+    .exhibition-modal .modal-body {
+        padding: 24px !important;
+    }
+
+    .exhibition-modal .modal-footer {
+        padding: 16px 24px !important;
+    }
+
+    .exhibition-modal .modal-actions {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .exhibition-modal .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Animation Enhancements */
+.exhibition-modal.fade .modal-dialog {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0.9) translateY(-30px);
+}
+
+.exhibition-modal.show .modal-dialog {
+    transform: scale(1) translateY(0);
+}
+
+/* Loading State */
+.exhibition-modal .modal-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.exhibition-modal .modal-loading i {
+    margin-right: 12px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

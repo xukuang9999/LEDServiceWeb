@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:insert="~{include :: header('Add Dict Type')}" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-dict-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">Dict Name：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="dictName" id="dictName" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">Dict Type：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="dictType" id="dictType" required>
+					<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> Data Storage Key value, such as sys_user_sex</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Status：</label>
+				<div class="col-sm-8">
+				    <div class="radio-box" th:each="dict : ${@dict.getType('sys_normal_disable')}">
+						<input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:checked="${dict.default}">
+						<label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Remark：</label>
+				<div class="col-sm-8">
+					<textarea id="remark" name="remark" class="form-control"></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:insert="~{include :: footer}" />
+	<script type="text/javascript">
+		var prefix = ctx + "system/dict";
+	
+		$("#form-dict-add").validate({
+			onkeyup: false,
+			rules:{
+				dictType:{
+					minlength: 5,
+					remote: {
+		                url: prefix + "/checkDictTypeUnique",
+		                type: "post",
+		                dataType: "json",
+		                data: {
+		                	name : function() {
+		                        return $.common.trim($("#dictType").val());
+		                    }
+		                }
+		            }
+				},
+			},
+			messages: {
+		        "dictType": {
+		            remote: "The Dict Type has already existed"
+		        }
+		    },
+		    focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	        	$.operate.save(prefix + "/add", $('#form-dict-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Exhibition Products - Discover innovative products and solutions from leading suppliers">
+    <meta name="keywords" content="exhibition products, trade show products, suppliers, innovative solutions">
+    <meta name="author" th:content="${site.name}">
+    <link th:href="@{/favicon.png}" rel="shortcut icon" />
+
+    <title th:text="'Exhibition Products | ' + ${site.name}">Exhibition Products</title>
+
+    <!-- Modern CSS Framework -->
+    <link th:href="@{/cms/bootstrap-v3/css/bootstrap.min.css}" rel="stylesheet" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Modern Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style th:replace="~{cms/fragments/head-style :: head-style}"></style>
+
+    <!-- Page Styles -->
+    <link th:href="@{/cms/css/index.css}" rel="stylesheet">
+    <link th:href="@{/cms/css/exhibition-products.css}" rel="stylesheet">
+    <link th:href="@{/cms/css/navbar-active.css}" rel="stylesheet">
+    <link th:href="@{/cms/css/back-to-top.css}" rel="stylesheet">
+</head>
+
+<body class="products-page">
+    <!-- Navigation -->
+    <header th:replace="~{cms/fragments/navbar :: navbar}" class="modern-nav"></header>
+
+    <!-- Hero Section -->
+    <!--<section class="products-hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-box-open"></i>
+                    <span>Exhibition Products</span>
+                </div>
+                <h1 class="hero-title">Innovative Products</h1>
+                <p class="hero-subtitle">
+                    Explore cutting-edge products from leading suppliers and discover the latest innovations in the industry
+                </p>
+            </div>
+        </div>
+    </section>-->
+
+    <!-- Main Content -->
+    <main class="products-main">
+        <!-- Products Grid Section -->
+        <section class="products-grid-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-shopping-bag"></i>
+                        Featured Products
+                    </h2>
+                    <p class="section-subtitle">Discover innovative products from our trusted suppliers</p>
+                </div>
+
+                <!-- Dynamic Products from Backend -->
+                <div class="products-grid" th:if="${not #lists.isEmpty(productsArticles)}">
+                    <div th:each="product, iterStat : ${productsArticles}" class="product-card">
+                        <!-- Product Image Gallery -->
+                        <div class="product-gallery">
+                            <div class="gallery-main">
+                                <img th:src="${product.imageUrl != null and product.imageUrl != '' ? product.imageUrl : '/cms/images/default-product.jpg'}" 
+                                     th:alt="${product.title}" 
+                                     class="main-image img-responsive"
+                                     loading="lazy"
+                                     decoding="async"
+                                     th:title="${product.title}">
+                            </div>
+                            <!-- Note: Additional images would need to be stored in a separate field or parsed from content -->
+                        </div>
+
+                        <!-- Product Info -->
+                        <div class="product-info">
+                            <h3 class="product-name" th:text="${product.title}">Product Name</h3>
+                            <p class="product-description" th:text="${product.description != null ? product.description : 'Product description...'}">Product description...</p>
+                            
+                            <!-- Supplier Info -->
+                            <div class="supplier-info">
+                                <div class="supplier-details">
+                                    <h4>Supplier Information</h4>
+                                    <!--<p class="supplier-name">&nbsp;&nbsp;&nbsp;&nbsp;LED Service Solutions</p>-->
+                                    <div class="contact-info">
+                                        <div class="contact-item">
+                                            <i class="fas fa-users"></i>
+                                            <span class="contact-address">
+                                               LED Service Solutions
+                                            </span>
+                                    </div>
+                                    <div class="contact-info">
+                                        <div class="contact-item">
+                                            <i class="fas fa-phone"></i>
+                                            <span class="contact-phone">+61 490919006</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-envelope"></i>
+                                            <span class="contact-email">kevin.liao@ledservice.com.au</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Button -->
+                            <div class="product-actions">
+                                <button class="btn btn-primary view-details-btn" 
+                                        th:data-product-id="${product.id}">
+                                    <i class="fas fa-eye"></i>
+                                    View Details
+                                </button>
+                                <button class="btn btn-secondary contact-supplier-btn">
+                                    <i class="fas fa-phone"></i>
+                                    Contact Supplier
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Default Products (when no backend data) -->
+                <div class="products-grid" th:if="${#lists.isEmpty(productsArticles)}">
+                    <!-- Sample Product 1 -->
+                    <div class="product-card">
+                        <div class="product-gallery">
+                            <div class="gallery-main">
+                                <img src="/cms/images/product-1.jpg" 
+                                     alt="Smart Kitchen System" 
+                                     class="main-image img-responsive"
+                                     loading="lazy"
+                                     decoding="async"
+                                     title="Smart Kitchen Management System">
+                            </div>
+                            <div class="gallery-thumbnails">
+                                <div class="thumbnail-item">
+                                    <img src="/cms/images/product-1-thumb1.jpg" alt="Smart Kitchen System" class="thumbnail-image">
+                                </div>
+                                <div class="thumbnail-item">
+                                    <img src="/cms/images/product-1-thumb2.jpg" alt="Smart Kitchen System" class="thumbnail-image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Smart Kitchen Management System</h3>
+                            <p class="product-description">Advanced kitchen management system with IoT integration, real-time monitoring, and automated inventory tracking for commercial kitchens.</p>
+                            <div class="supplier-info">
+                                <div class="supplier-details">
+                                    <h4>Supplier Information</h4>
+                                    <p class="supplier-name">LED Service Solutions</p>
+                                    <div class="contact-info">
+                                        <div class="contact-item">
+                                            <i class="fas fa-phone"></i>
+                                            <span class="contact-phone">+61 490919006</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-envelope"></i>
+                                            <span class="contact-email">kevin.liao@ledservice.com.au</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary view-details-btn" onclick="showSampleProductModal(1)">
+                                    <i class="fas fa-eye"></i>
+                                    View Details
+                                </button>
+                                <button class="btn btn-secondary contact-supplier-btn">
+                                    <i class="fas fa-phone"></i>
+                                    Contact Supplier
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sample Product 2 -->
+                    <div class="product-card">
+                        <div class="product-gallery">
+                            <div class="gallery-main">
+                                <img src="/cms/images/product-2.jpg" alt="Eco-Friendly Cleaning System" class="main-image img-responsive">
+                            </div>
+                            <div class="gallery-thumbnails">
+                                <div class="thumbnail-item">
+                                    <img src="/cms/images/product-2-thumb1.jpg" alt="Eco-Friendly Cleaning System" class="thumbnail-image">
+                                </div>
+                                <div class="thumbnail-item">
+                                    <img src="/cms/images/product-2-thumb2.jpg" alt="Eco-Friendly Cleaning System" class="thumbnail-image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Eco-Friendly Cleaning System</h3>
+                            <p class="product-description">Sustainable cleaning solution with biodegradable products and automated dispensing systems for hospitality environments.</p>
+                            <div class="supplier-info">
+                                <div class="supplier-details">
+                                    <h4>Supplier Information</h4>
+                                    <p class="supplier-name">LED Service Solutions</p>
+                                    <div class="contact-info">
+                                        <div class="contact-item">
+                                            <i class="fas fa-phone"></i>
+                                            <span class="contact-phone">+61 490919006</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-envelope"></i>
+                                            <span class="contact-email">kevin.liao@ledservice.com.au</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary view-details-btn" onclick="showSampleProductModal(2)">
+                                    <i class="fas fa-eye"></i>
+                                    View Details
+                                </button>
+                                <button class="btn btn-secondary contact-supplier-btn">
+                                    <i class="fas fa-phone"></i>
+                                    Contact Supplier
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sample Product 3 -->
+                    <div class="product-card">
+                        <div class="product-gallery">
+                            <div class="gallery-main">
+                                <img src="/cms/images/product-3.jpg" alt="Premium Hotel Furniture" class="main-image img-responsive">
+                            </div>
+                            <div class="gallery-thumbnails">
+                                <div class="thumbnail-item">
+                                    <img src="/cms/images/product-3-thumb1.jpg" alt="Premium Hotel Furniture" class="thumbnail-image">
+                                </div>
+                                <div class="thumbnail-item">
+                                    <img src="/cms/images/product-3-thumb2.jpg" alt="Premium Hotel Furniture" class="thumbnail-image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Premium Hotel Furniture Collection</h3>
+                            <p class="product-description">Luxury furniture collection designed specifically for hotels, featuring modern aesthetics and exceptional durability.</p>
+                            <div class="supplier-info">
+                                <div class="supplier-details">
+                                    <h4>Supplier Information</h4>
+                                    <p class="supplier-name">LED Service Solutions</p>
+                                    <div class="contact-info">
+                                        <div class="contact-item">
+                                            <i class="fas fa-phone"></i>
+                                            <span class="contact-phone">+61 490919006</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-envelope"></i>
+                                            <span class="contact-email">kevin.liao@ledservice.com.au</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary view-details-btn" onclick="showSampleProductModal(3)">
+                                    <i class="fas fa-eye"></i>
+                                    View Details
+                                </button>
+                                <button class="btn btn-secondary contact-supplier-btn">
+                                    <i class="fas fa-phone"></i>
+                                    Contact Supplier
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sample Product 4 -->
+                    <div class="product-card">
+                        <div class="product-gallery">
+                            <div class="gallery-main">
+                                <img src="/cms/images/product-4.jpg" alt="Advanced POS System" class="main-image img-responsive">
+                            </div>
+                            <div class="gallery-thumbnails">
+                                <div class="thumbnail-item">
+                                    <img src="/cms/images/product-4-thumb1.jpg" alt="Advanced POS System" class="thumbnail-image">
+                                </div>
+                                <div class="thumbnail-item">
+                                    <img src="/cms/images/product-4-thumb2.jpg" alt="Advanced POS System" class="thumbnail-image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Advanced POS & Management System</h3>
+                            <p class="product-description">Comprehensive point-of-sale and property management system with cloud integration and real-time analytics.</p>
+                            <div class="supplier-info">
+                                <div class="supplier-details">
+                                    <h4>Supplier Information</h4>
+                                    <p class="supplier-name">LED Service Solutions</p>
+                                    <div class="contact-info">
+                                        <div class="contact-item">
+                                            <i class="fas fa-phone"></i>
+                                            <span class="contact-phone">+61 490919006</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-envelope"></i>
+                                            <span class="contact-email">kevin.liao@ledservice.com.au</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary view-details-btn" onclick="showSampleProductModal(4)">
+                                    <i class="fas fa-eye"></i>
+                                    View Details
+                                </button>
+                                <button class="btn btn-secondary contact-supplier-btn">
+                                    <i class="fas fa-phone"></i>
+                                    Contact Supplier
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Back to Top Button -->
+    <div th:replace="~{cms/fragments/back-to-top :: back-to-top}"></div>
+
+    <!-- Footer -->
+    <footer th:replace="~{cms/fragments/footer :: footer}" class="modern-footer"></footer>
+
+    <!-- Dynamic Product Modals (from backend) -->
+    <div th:each="product : ${productsArticles}" class="modal fade product-modal" th:id="'modal-' + ${product.id}">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" th:text="${product.title}">Product Title</h4>
+                    <div class="modal-controls">
+                        <button type="button" class="modal-maximize-btn" onclick="toggleModalSize(this)">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-image" th:if="${product.imageUrl != null and product.imageUrl != ''}">
+                        <img th:src="${product.imageUrl}" th:alt="${product.title}" class="img-responsive">
+                    </div>
+                    <div class="modal-content-text" th:utext="${product.content}">
+                        Product content...
+                    </div>
+                    <div class="modal-supplier-info">
+                        <h5>Supplier Contact</h5>
+                        <p><strong>Supplier:</strong> <span>LED Service Solutions</span></p>
+                        <p><strong>Phone:</strong> +61 490919006</p>
+                        <p><strong>Email:</strong> kevin.liao@ledservice.com.au</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sample Product Modals (for default content) -->
+    <div class="modal fade product-modal" id="sample-modal-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Smart Kitchen Management System</h4>
+                    <div class="modal-controls">
+                        <button type="button" class="modal-maximize-btn" onclick="toggleModalSize(this)">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-image">
+                        <img src="/cms/images/product-1.jpg" alt="Smart Kitchen System" class="img-responsive">
+                    </div>
+                    <div class="modal-content-text">
+                        <p>Our Smart Kitchen Management System revolutionizes commercial kitchen operations with cutting-edge IoT technology and intelligent automation.</p>
+                        <h5>Key Features:</h5>
+                        <ul>
+                            <li>Real-time temperature and humidity monitoring</li>
+                            <li>Automated inventory tracking and alerts</li>
+                            <li>Energy consumption optimization</li>
+                            <li>Predictive maintenance scheduling</li>
+                            <li>Mobile app integration for remote monitoring</li>
+                        </ul>
+                        <h5>Benefits:</h5>
+                        <ul>
+                            <li>Reduce food waste by up to 30%</li>
+                            <li>Lower energy costs by 25%</li>
+                            <li>Improve food safety compliance</li>
+                            <li>Streamline kitchen operations</li>
+                        </ul>
+                    </div>
+                    <div class="modal-supplier-info">
+                        <h5>Supplier Contact</h5>
+                        <p><strong>Supplier:</strong> LED Service Solutions</p>
+                        <p><strong>Phone:</strong> +61 490919006</p>
+                        <p><strong>Email:</strong> kevin.liao@ledservice.com.au</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sample Product Modal 2 -->
+    <div class="modal fade product-modal" id="sample-modal-2">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Eco-Friendly Cleaning System</h4>
+                    <div class="modal-controls">
+                        <button type="button" class="modal-maximize-btn" onclick="toggleModalSize(this)">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-image">
+                        <img src="/cms/images/product-2.jpg" alt="Eco-Friendly Cleaning System" class="img-responsive">
+                    </div>
+                    <div class="modal-content-text">
+                        <p>Our Eco-Friendly Cleaning System provides sustainable cleaning solutions with biodegradable products and automated dispensing systems.</p>
+                        <h5>Key Features:</h5>
+                        <ul>
+                            <li>100% biodegradable cleaning products</li>
+                            <li>Automated dispensing and monitoring</li>
+                            <li>Reduced chemical waste by 40%</li>
+                            <li>Smart refill notifications</li>
+                            <li>Compliance with environmental standards</li>
+                        </ul>
+                        <h5>Benefits:</h5>
+                        <ul>
+                            <li>Environmentally responsible operations</li>
+                            <li>Cost-effective cleaning solutions</li>
+                            <li>Improved air quality</li>
+                            <li>Enhanced guest satisfaction</li>
+                        </ul>
+                    </div>
+                    <div class="modal-supplier-info">
+                        <h5>Supplier Contact</h5>
+                        <p><strong>Supplier:</strong> LED Service Solutions</p>
+                        <p><strong>Phone:</strong> +61 490919006</p>
+                        <p><strong>Email:</strong> kevin.liao@ledservice.com.au</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sample Product Modal 3 -->
+    <div class="modal fade product-modal" id="sample-modal-3">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Premium Hotel Furniture Collection</h4>
+                    <div class="modal-controls">
+                        <button type="button" class="modal-maximize-btn" onclick="toggleModalSize(this)">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-image">
+                        <img src="/cms/images/product-3.jpg" alt="Premium Hotel Furniture" class="img-responsive">
+                    </div>
+                    <div class="modal-content-text">
+                        <p>Our Premium Hotel Furniture Collection combines luxury aesthetics with exceptional durability, designed specifically for hospitality environments.</p>
+                        <h5>Key Features:</h5>
+                        <ul>
+                            <li>Modern, elegant design aesthetics</li>
+                            <li>Commercial-grade durability</li>
+                            <li>Stain and wear-resistant materials</li>
+                            <li>Customizable color options</li>
+                            <li>Easy maintenance and cleaning</li>
+                        </ul>
+                        <h5>Benefits:</h5>
+                        <ul>
+                            <li>Enhanced guest experience</li>
+                            <li>Long-lasting investment</li>
+                            <li>Reduced replacement costs</li>
+                            <li>Professional appearance</li>
+                        </ul>
+                    </div>
+                    <div class="modal-supplier-info">
+                        <h5>Supplier Contact</h5>
+                        <p><strong>Supplier:</strong> LED Service Solutions</p>
+                        <p><strong>Phone:</strong> +61 490919006</p>
+                        <p><strong>Email:</strong> kevin.liao@ledservice.com.au</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sample Product Modal 4 -->
+    <div class="modal fade product-modal" id="sample-modal-4">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Advanced POS & Management System</h4>
+                    <div class="modal-controls">
+                        <button type="button" class="modal-maximize-btn" onclick="toggleModalSize(this)">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-image">
+                        <img src="/cms/images/product-4.jpg" alt="Advanced POS System" class="img-responsive">
+                    </div>
+                    <div class="modal-content-text">
+                        <p>Our Advanced POS & Management System provides comprehensive point-of-sale and property management with cloud integration and real-time analytics.</p>
+                        <h5>Key Features:</h5>
+                        <ul>
+                            <li>Cloud-based system architecture</li>
+                            <li>Real-time sales analytics</li>
+                            <li>Inventory management integration</li>
+                            <li>Multi-location support</li>
+                            <li>Mobile app compatibility</li>
+                        </ul>
+                        <h5>Benefits:</h5>
+                        <ul>
+                            <li>Streamlined operations</li>
+                            <li>Improved decision making</li>
+                            <li>Reduced transaction time</li>
+                            <li>Enhanced customer service</li>
+                        </ul>
+                    </div>
+                    <div class="modal-supplier-info">
+                        <h5>Supplier Contact</h5>
+                        <p><strong>Supplier:</strong> LED Service Solutions</p>
+                        <p><strong>Phone:</strong> +61 490919006</p>
+                        <p><strong>Email:</strong> kevin.liao@ledservice.com.au</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <div th:replace="~{cms/fragments/scripts :: scripts}"></div>
+    
+    <script>
+        // Modal functionality for dynamic products
+        function showProductModal(productId) {
+            $('#modal-' + productId).modal('show');
+        }
+
+        // Modal functionality for sample products
+        function showSampleProductModal(productId) {
+            $('#sample-modal-' + productId).modal('show');
+        }
+
+        // Modal maximize/restore functionality
+        function toggleModalSize(button) {
+            const modal = button.closest('.modal');
+            const icon = button.querySelector('i');
+            
+            if (modal.classList.contains('maximized')) {
+                // Restore to normal size
+                modal.classList.remove('maximized');
+                icon.className = 'fas fa-expand';
+                button.setAttribute('title', 'Maximize');
+            } else {
+                // Maximize
+                modal.classList.add('maximized');
+                icon.className = 'fas fa-compress';
+                button.setAttribute('title', 'Restore');
+            }
+        }
+
+        // Gallery functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set active menu
+            if (window.setActiveMenu) {
+                window.setActiveMenu('exhibition');
+            }
+
+            // Handle view details button clicks
+            document.querySelectorAll('.view-details-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    if (productId) {
+                        showProductModal(productId);
+                    }
+                });
+            });
+
+            // Initialize gallery thumbnails
+            document.querySelectorAll('.thumbnail-image').forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    const mainImage = this.closest('.product-gallery').querySelector('.main-image');
+                    const tempSrc = mainImage.src;
+                    mainImage.src = this.src;
+                    this.src = tempSrc;
+                });
+            });
+
+            // Handle image loading and error states with optimized sizing
+            document.querySelectorAll('.main-image').forEach(img => {
+                // Add loading class initially
+                img.classList.remove('loaded');
+                
+                // Handle successful image load
+                img.addEventListener('load', function() {
+                    this.classList.add('loaded');
+                    this.classList.remove('error');
+                    
+                    // Optimize image display based on aspect ratio
+                    optimizeImageDisplay(this);
+                });
+                
+                // Handle image load error
+                img.addEventListener('error', function() {
+                    this.classList.add('error');
+                    this.classList.remove('loaded');
+                });
+                
+                // If image is already loaded (cached)
+                if (img.complete && img.naturalHeight !== 0) {
+                    img.classList.add('loaded');
+                    optimizeImageDisplay(img);
+                }
+            });
+
+            // Function to optimize image display for better horizontal expansion
+            function optimizeImageDisplay(img) {
+                const container = img.closest('.gallery-main');
+                if (!container) return;
+                
+                const containerWidth = container.clientWidth - 40; // Account for padding
+                const containerHeight = container.clientHeight - 40;
+                
+                const imgAspectRatio = img.naturalWidth / img.naturalHeight;
+                const containerAspectRatio = containerWidth / containerHeight;
+                
+                // Reset any previous styling
+                img.style.width = '';
+                img.style.height = '';
+                
+                if (imgAspectRatio > containerAspectRatio) {
+                    // Wide image - prioritize width expansion
+                    img.style.width = '100%';
+                    img.style.height = 'auto';
+                    img.style.maxWidth = containerWidth + 'px';
+                } else {
+                    // Tall image - fit to height but allow width expansion
+                    img.style.height = 'auto';
+                    img.style.width = '100%';
+                    img.style.maxHeight = containerHeight + 'px';
+                }
+            }
+
+            // Contact supplier functionality
+            document.querySelectorAll('.contact-supplier-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productCard = this.closest('.product-card');
+                    const phone = productCard.querySelector('.contact-phone').textContent;
+                    const supplierName = productCard.querySelector('.supplier-name').textContent;
+                    
+                    // Show contact confirmation
+                    if (confirm(`Contact ${supplierName} at ${phone}?`)) {
+                        window.location.href = `tel:${phone}`;
+                    }
+                });
+            });
+
+            // Handle window resize for image optimization
+            let resizeTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(function() {
+                    document.querySelectorAll('.main-image.loaded').forEach(img => {
+                        optimizeImageDisplay(img);
+                    });
+                }, 250);
+            });
+
+            // Animate elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.product-card').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+    
+    <!-- Navbar Active Menu Script -->
+    <script th:src="@{/cms/js/navbar-active.js}"></script>
+</body>
+
+</html>

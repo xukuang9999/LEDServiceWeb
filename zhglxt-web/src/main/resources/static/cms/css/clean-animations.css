@@ -1,0 +1,78 @@
+/* CLEAN ANIMATIONS CSS - Self-contained */
+
+/* Reset any conflicting animations */
+.premium-service-card {
+    animation: none !important;
+}
+
+/* Clean service card animations */
+.clean-animate {
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    will-change: transform, opacity !important;
+    backface-visibility: hidden !important;
+}
+
+.clean-hidden {
+    opacity: 0 !important;
+    transform: translateY(40px) !important;
+}
+
+.clean-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Clean navbar hover */
+.clean-hover {
+    transition: transform 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+.clean-hover:hover {
+    transform: scale(1.05) !important;
+}
+
+/* Clean back to top button */
+.clean-back-to-top {
+    position: fixed !important;
+    bottom: 30px !important;
+    right: 30px !important;
+    width: 50px !important;
+    height: 50px !important;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.2rem !important;
+    cursor: pointer !important;
+    z-index: 9999 !important;
+    transition: all 0.3s ease !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(20px) !important;
+}
+
+.clean-back-to-top.visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+
+.clean-back-to-top:hover {
+    transform: translateY(-5px) scale(1.1) !important;
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6) !important;
+}/* Remove
+ test styling */
+.navbar-brand {
+    border: none !important;
+    background: transparent !important;
+}
+
+/* Ensure service cards look professional */
+.premium-service-card {
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: rgba(15, 23, 42, 0.95) !important;
+}

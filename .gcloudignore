@@ -1,0 +1,9 @@
+*
+!Dockerfile
+!.dockerignore
+!.gcloudignore
+!zhglxt-web/
+zhglxt-web/*
+!zhglxt-web/target/
+zhglxt-web/target/*
+!zhglxt-web/target/zhglxt.war

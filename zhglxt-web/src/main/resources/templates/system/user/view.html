@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:insert="~{include :: header('User Detail')}" />
+</head>
+<body>
+    <div class="main-content">
+        <form class="form-horizontal" th:object="${user}">
+            <h4 class="form-header h4">Basic Info</h4>
+            <div class="row">
+            	<div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">User Name：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{userName}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Department：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{dept.deptName}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Phone：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{phonenumber}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Email：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{email}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Login Name：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{loginName}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Status：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{status == '0' ? 'Normal' : 'Abnormal'}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Position：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext">[[${#strings.defaultString(postGroup, 'None Position')}]]</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Sex：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{@dict.getLabel('sys_user_sex', sex)}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            	<div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">Role：</label>
+                        <div class="col-xs-10">
+                            <p class="form-control-plaintext">[[${#strings.defaultString(roleGroup, 'None Role')}]]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4 class="form-header h4">Other Info</h4>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Create By：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{createBy}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Create Time：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Update By：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{updateBy}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Update Time：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{#dates.format(updateTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Last Login IP：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{loginIp}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Last Login Time：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="*{#dates.format(loginDate, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+	        <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">Remark：</label>
+                        <div class="col-xs-10">
+                            <p class="form-control-plaintext" th:text="*{remark}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+	<th:block th:insert="~{include :: footer}" />
+</body>
+</html>

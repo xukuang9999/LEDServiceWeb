@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhglxt.cms.mapper.CustomerMessageMapper">
+    
+    <resultMap type="CustomerMessage" id="CustomerMessageResult">
+        <result property="id"    column="id"    />
+        <result property="custName"    column="cust_name"    />
+        <result property="email"    column="email"    />
+        <result property="phone"    column="phone"    />
+        <result property="subject"    column="subject"    />
+        <result property="messages"    column="messages"    />
+        <result property="isDel"    column="is_del"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCustomerMessageVo">
+        select id, cust_name, email, phone, subject, messages, is_del, create_by, create_time, update_by, update_time from cms_customer_message
+    </sql>
+
+    <select id="selectCustomerMessageList" parameterType="CustomerMessage" resultMap="CustomerMessageResult">
+        <include refid="selectCustomerMessageVo"/>
+        <where>  
+            <if test="custName != null  and custName != ''"> and cust_name like concat('%', #{custName}, '%')</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="subject != null  and subject != ''"> and subject = #{subject}</if>
+            <if test="messages != null  and messages != ''"> and messages = #{messages}</if>
+        </where>
+    </select>
+    
+    <select id="selectCustomerMessageById" parameterType="Long" resultMap="CustomerMessageResult">
+        <include refid="selectCustomerMessageVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCustomerMessage" parameterType="CustomerMessage" useGeneratedKeys="true" keyProperty="id">
+        insert into cms_customer_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="custName != null">cust_name,</if>
+            <if test="email != null">email,</if>
+            <if test="phone != null">phone,</if>
+            <if test="subject != null">subject,</if>
+            <if test="messages != null">messages,</if>
+            <if test="isDel != null">is_del,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="custName != null">#{custName},</if>
+            <if test="email != null">#{email},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="subject != null">#{subject},</if>
+            <if test="messages != null">#{messages},</if>
+            <if test="isDel != null">#{isDel},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCustomerMessage" parameterType="CustomerMessage">
+        update cms_customer_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="custName != null">cust_name = #{custName},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="subject != null">subject = #{subject},</if>
+            <if test="messages != null">messages = #{messages},</if>
+            <if test="isDel != null">is_del = #{isDel},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCustomerMessageById" parameterType="Long">
+        delete from cms_customer_message where id = #{id}
+    </delete>
+
+    <delete id="deleteCustomerMessageByIds" parameterType="String">
+        delete from cms_customer_message where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,118 @@
+/**
+ * Independent News Modal CSS
+ * Ensures modal is completely independent and displays properly
+ */
+
+/* Ensure modal is completely independent - MAXIMUM Z-INDEX */
+#independent-news-modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 2147483647 !important; /* Maximum possible z-index */
+    background: rgba(0, 0, 0, 0.7) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Modal window styling */
+#modal-window {
+    background: white !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+    overflow: hidden !important;
+}
+
+/* Button hover effects */
+#maximize-btn:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+#close-btn:hover {
+    background: #c82333 !important;
+}
+
+#footer-close-btn:hover {
+    background: #5a6268 !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #modal-window {
+        width: 95vw !important;
+        height: 90vh !important;
+        margin: 10px !important;
+    }
+}
+
+/* Scrollbar styling for modal body */
+#independent-news-modal div[style*="overflow-y: auto"]::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+#independent-news-modal div[style*="overflow-y: auto"]::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+    border-radius: 4px !important;
+}
+
+#independent-news-modal div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb {
+    background: #c1c1c1 !important;
+    border-radius: 4px !important;
+}
+
+#independent-news-modal div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8 !important;
+}
+
+/* Ensure text is selectable in modal */
+#independent-news-modal * {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+}
+
+/* But not on buttons */
+#independent-news-modal button {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+}
+
+/* Animation for modal appearance */
+#independent-news-modal {
+    animation: fadeIn 0.3s ease-out !important;
+}
+
+#modal-window {
+    animation: slideIn 0.3s ease-out !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0 !important; }
+    to { opacity: 1 !important; }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0 !important;
+        transform: scale(0.9) translateY(-20px) !important;
+    }
+    to { 
+        opacity: 1 !important;
+        transform: scale(1) translateY(0) !important;
+    }
+}

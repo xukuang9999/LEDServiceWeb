@@ -1,0 +1,315 @@
+# File Manager Configuration
+# Comprehensive configuration for zhglxt-file-manager module
+zhglxt:
+  file-manager:
+    # Enable/disable file manager module
+    enabled: true
+    
+    # Root directory for file storage (relative to application working directory)
+    root-directory: upload
+    
+    # Maximum file size in bytes (100MB)
+    max-file-size: 104857600
+    
+    # Maximum total storage size in bytes (10GB, 0 = unlimited)
+    max-storage-size: 10737418240
+    
+    # Maximum number of files per directory (0 = unlimited)
+    max-files-per-directory: 1000
+    
+    # Allowed file extensions
+    allowed-extensions:
+      - jpg
+      - jpeg
+      - png
+      - gif
+      - bmp
+      - webp
+      - pdf
+      - doc
+      - docx
+      - xls
+      - xlsx
+      - ppt
+      - pptx
+      - txt
+      - md
+      - zip
+      - rar
+      - 7z
+      - mp4
+      - mov
+      - mp3
+    
+    # Blocked file extensions (takes precedence over allowed extensions)
+    blocked-extensions:
+      - exe
+      - bat
+      - cmd
+      - com
+      - pif
+      - scr
+      - vbs
+      - js
+      - jar
+      - sh
+    
+    # Allowed MIME types (empty = allow all based on extensions)
+    allowed-mime-types: []
+    
+    # Security settings
+    virus-scan-enabled: false
+    virus-scanner-command: ""
+    
+    # Operation timeout in seconds
+    operation-timeout-seconds: 300
+    
+    # File versioning
+    versioning-enabled: false
+    max-versions: 5
+    
+    # Audit logging
+    audit-enabled: true
+    audit-retention-days: 90
+    
+    # Temporary file settings
+    temp-directory: ${java.io.tmpdir}
+    cleanup-temp-on-startup: true
+    temp-cleanup-interval-minutes: 60
+    temp-file-max-age-hours: 24
+    
+    # Compression settings
+    compression-enabled: false
+    compression-quality: 0.8
+    compressible-types:
+      - jpg
+      - jpeg
+      - png
+      - pdf
+    
+    # Auto organization
+    auto-organize-enabled: false
+    organization-pattern: "yyyy/MM/dd"
+    
+    # Performance configuration
+    performance:
+      monitoring-enabled: true
+      thread-pool-size: 10
+      queue-size: 100
+      async-enabled: true
+      batch-size: 50
+      memory-threshold: 10485760  # 10MB
+    
+    # Security configuration
+    security:
+      scanning-enabled: true
+      max-filename-length: 255
+      max-path-depth: 10
+      path-traversal-protection: true
+      content-type-validation: true
+      file-signature-validation: true
+      quarantine-directory: quarantine
+      rate-limiting-enabled: true
+      rate-limit-per-minute: 100
+      
+      # Rate limiting configuration
+      rate-limit:
+        window-minutes: 1
+        upload-max-per-user: 10
+        download-max-per-user: 50
+        delete-max-per-user: 20
+        default-max-per-user: 100
+        upload-max-per-ip: 50
+        download-max-per-ip: 200
+        delete-max-per-ip: 100
+        default-max-per-ip: 500
+        upload-max-global: 1000
+        download-max-global: 5000
+        delete-max-global: 2000
+        default-max-global: 10000
+      
+      # CSRF protection configuration
+      csrf:
+        enabled: true
+        token-expiration-minutes: 60
+      
+      # File scanning configuration
+      scanning:
+        enabled: true
+        max-file-size-for-scanning: 52428800  # 50MB
+        signature-validation-enabled: true
+        content-scanning-enabled: true
+        entropy-analysis-enabled: true
+        block-high-threat-files: true
+        quarantine-suspicious-files: true
+    
+    # Cache configuration
+    cache:
+      enabled: true
+      provider: memory  # memory, redis, caffeine
+      default-ttl-seconds: 3600
+      max-size: 10000
+      eviction-policy: LRU  # LRU, LFU, FIFO
+      statistics-enabled: true
+    
+    # Thumbnail configuration
+    thumbnail:
+      enabled: true
+      directory: thumbnails
+      width: 200
+      height: 200
+      quality: 0.8
+      max-width: 800
+      max-height: 600
+      format: jpg
+      maintain-aspect-ratio: true
+      background-color: "#FFFFFF"
+      progressive: false
+      cache-duration: 3600
+    
+    # Watermark configuration
+    watermark:
+      enabled: false
+      text: zhglxt
+      opacity: 0.5
+      font-size: 24
+      color: "#FFFFFF"
+      position: BOTTOM_RIGHT
+      font-family: Arial
+      font-style: PLAIN  # PLAIN, BOLD, ITALIC, BOLD_ITALIC
+      margin: 10
+      rotation: 0
+      apply-to-thumbnails: false
+      min-image-width: 200
+      min-image-height: 200
+      # image-path: ""  # Alternative to text watermark
+      image-scale: 0.2
+    
+    # Storage configuration
+    storage:
+      type: LOCAL  # LOCAL, AWS_S3, ALIBABA_OSS, TENCENT_COS, MINIO, AZURE_BLOB, GOOGLE_CLOUD
+      
+      # Cloud storage settings (configure when using cloud storage)
+      # endpoint: ""
+      # access-key: ""
+      # secret-key: ""
+      # bucket-name: ""
+      # region: ""
+      
+      # CDN settings
+      # cdn-enabled: false
+      # cdn-domain: ""
+      
+      # Connection settings
+      connection-timeout: 30000
+      read-timeout: 60000
+      max-connections: 50
+      use-https: true
+      path-style-access: false
+      
+      # Custom domain and encryption
+      # custom-domain: ""
+      server-side-encryption: false
+      encryption-algorithm: AES256
+      storage-class: STANDARD
+      
+      # Retry configuration
+      retry:
+        max-attempts: 3
+        initial-delay: 1000
+        max-delay: 10000
+        backoff-multiplier: 2.0
+      
+      # Custom properties for storage-specific settings
+      properties: {}
+    
+    # Custom properties for extensibility
+    custom-properties: {}
+
+---
+# Example configurations for different storage backends
+
+# AWS S3 Configuration Example
+# zhglxt:
+#   file-manager:
+#     storage:
+#       type: AWS_S3
+#       access-key: ${AWS_ACCESS_KEY_ID}
+#       secret-key: ${AWS_SECRET_ACCESS_KEY}
+#       bucket-name: my-file-bucket
+#       region: us-east-1
+#       cdn-enabled: true
+#       cdn-domain: https://cdn.example.com
+#       server-side-encryption: true
+
+# Alibaba Cloud OSS Configuration Example
+# zhglxt:
+#   file-manager:
+#     storage:
+#       type: ALIBABA_OSS
+#       endpoint: https://oss-cn-hangzhou.aliyuncs.com
+#       access-key: ${ALIBABA_ACCESS_KEY_ID}
+#       secret-key: ${ALIBABA_ACCESS_KEY_SECRET}
+#       bucket-name: my-oss-bucket
+#       region: cn-hangzhou
+
+# Tencent Cloud COS Configuration Example
+# zhglxt:
+#   file-manager:
+#     storage:
+#       type: TENCENT_COS
+#       access-key: ${TENCENT_SECRET_ID}
+#       secret-key: ${TENCENT_SECRET_KEY}
+#       bucket-name: my-cos-bucket
+#       region: ap-beijing
+
+# MinIO Configuration Example
+# zhglxt:
+#   file-manager:
+#     storage:
+#       type: MINIO
+#       endpoint: http://localhost:9000
+#       access-key: minioadmin
+#       secret-key: minioadmin
+#       bucket-name: file-manager
+#       use-https: false
+#       path-style-access: true
+
+# High Performance Configuration Example
+# zhglxt:
+#   file-manager:
+#     max-file-size: 1073741824  # 1GB
+#     performance:
+#       thread-pool-size: 20
+#       queue-size: 500
+#       batch-size: 100
+#       memory-threshold: 52428800  # 50MB
+#     cache:
+#       provider: redis
+#       max-size: 100000
+#       default-ttl-seconds: 7200
+
+# High Security Configuration Example
+# zhglxt:
+#   file-manager:
+#     virus-scan-enabled: true
+#     virus-scanner-command: "clamdscan --fdpass"
+#     security:
+#       max-filename-length: 100
+#       max-path-depth: 5
+#       rate-limit-per-minute: 50
+#       file-signature-validation: true
+#     blocked-extensions:
+#       - exe
+#       - bat
+#       - cmd
+#       - com
+#       - pif
+#       - scr
+#       - vbs
+#       - js
+#       - jar
+#       - sh
+#       - php
+#       - asp
+#       - jsp 
