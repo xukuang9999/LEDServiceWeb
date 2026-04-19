@@ -221,6 +221,7 @@
     }
 }
 
+
 /* High contrast mode support */
 @media (prefers-contrast: high) {
     .navbar-nav .nav-item.active > .nav-link,

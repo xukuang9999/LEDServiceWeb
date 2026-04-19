@@ -1,223 +1,27 @@
-<!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" th:content="${site.description}">
-    <meta name="keywords" th:content="${site.keywords}">
-    <meta name="author" th:content="${site.name}">
-    <link th:href="@{/favicon.png}" rel="shortcut icon" />
-
-    <title>Enterprise Official Website - LED Display Services</title>
-
-    <!-- Bootstrap core CSS -->
-    <link th:href="@{/cms/bootstrap-v3/css/bootstrap.min.css}" rel="stylesheet" />
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link th:href="@{/cms/bootstrap-v3/css/ie10-viewport-bug-workaround.css}" rel="stylesheet" />
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]>
-    <script th:src="@{/cms/bootstrap-v3/docs/assets/js/ie8-responsive-file-warning.js}"></script><![endif]-->
-    <script th:src="@{/cms/bootstrap-v3/docs/assets/js/ie-emulation-modes-warning.js}"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- Google Fonts for modern typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-    <!-- Modern Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link th:href="@{/cms/css/carousel.css}" rel="stylesheet">
-    <!--时间轴-->
-    <link th:href="@{/cms/css/timeline.css}" rel="stylesheet">
-    <!-- Service page modern styling -->
-    <link th:href="@{/cms/css/service.css}" rel="stylesheet">
-    <!--自定义样式-->
-    <style th:replace="~{cms/fragments/head-style :: head-style}"></style>
-
-    <!-- Modern Index Page Styles for consistent navbar -->
-    <link th:href="@{/cms/css/index.css}" rel="stylesheet">
-    <link th:href="@{/cms/css/navbar-active.css}" rel="stylesheet">
-    
-    <!-- Back to Top Button Styles -->
-    <link th:href="@{/cms/css/back-to-top.css}" rel="stylesheet">
-</head>
-
-<body class="service-page">
-    <!-- Modern Navigation -->
-    <header th:replace="~{cms/fragments/navbar :: navbar}" class="modern-nav"></header>
-
-    <!-- Services Hero Section -->
-    <section class="services-hero">
-        <div class="hero-background">
-            <div class="hero-pattern"></div>
-            <div class="hero-gradient"></div>
-        </div>
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <i class="fas fa-tv"></i>
-                    <span>LED Technology</span>
-                </div>
-                <h1 class="hero-title">Professional LED Service Solutions</h1>
-                <p class="hero-subtitle">Cutting-edge visual technology and comprehensive services for modern businesses</p>
-                
-                <!-- Service Categories -->
-                <div class="service-categories">
-                    <div class="category-item">
-                        <i class="fas fa-desktop"></i>
-                        <span>Indoor Displays</span>
-                    </div>
-                    <div class="category-item">
-                        <i class="fas fa-sun"></i>
-                        <span>Outdoor Screens</span>
-                    </div>
-                    <div class="category-item">
-                        <i class="fas fa-tools"></i>
-                        <span>Installation</span>
-                    </div>
-                    <div class="category-item">
-                        <i class="fas fa-headset"></i>
-                        <span>Support</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 主要内容区域 -->
-    <main class="main-content">
-        <!-- Services Content Section -->
-        <section class="services-content-section">
-            <div class="container">
-                <!-- Services Showcase Header (only for standalone service page) -->
-                <div class="services-tech-header">
-                    <div class="tech-particles">
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                    </div>
-                    <div class="services-intro">
-                        <div class="intro-badge">
-                            <i class="fas fa-cogs"></i>
-                            <span>Our Services</span>
-                        </div>
-                        <h2 class="services-main-title">Professional Service Portfolio</h2>
-                        <p class="services-main-subtitle">Tailored solutions designed to meet your specific business requirements</p>
-                    </div>
-
-                    <!-- Service Capabilities Grid -->
-                    <div class="tech-capabilities">
-                        <div class="capability-item">
-                            <div class="capability-icon">
-                                <i class="fas fa-rocket"></i>
-                            </div>
-                            <span>Innovation</span>
-                        </div>
-                        <div class="capability-item">
-                            <div class="capability-icon">
-                                <i class="fas fa-award"></i>
-                            </div>
-                            <span>Quality</span>
-                        </div>
-                        <div class="capability-item">
-                            <div class="capability-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <span>Expert Team</span>
-                        </div>
-                        <div class="capability-item">
-                            <div class="capability-icon">
-                                <i class="fas fa-handshake"></i>
-                            </div>
-                            <span>Partnership</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Services Grid -->
-                <div th:replace="~{cms/fragments/service :: services}"></div>
-            </div>
-        </section>
-
-        <!-- Back to Top Button -->
-        <div th:replace="~{cms/fragments/back-to-top :: back-to-top}"></div>
-
-        <!-- 页脚 -->
-        <footer th:replace="~{cms/fragments/footer :: footer}"></footer>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,follow" />
+    <title>Redirecting...</title>
+    <link rel="canonical" href="/zhglxt/modern/service/" />
+    <meta http-equiv="refresh" content="0; url=/zhglxt/modern/service/" />
+    <script>
+      const target = "/zhglxt/modern/service/";
+      const next = target + window.location.search + window.location.hash;
+      window.location.replace(next);
+    </script>
+  </head>
+  <body>
+    <main style="font-family: 'Space Grotesk', Arial, sans-serif; padding: 40px; line-height: 1.6;">
+      <h1 style="margin: 0 0 12px;">Redirecting to the current public page</h1>
+      <p style="margin: 0 0 12px;">
+        This public page has moved to the current LED Service route.
+      </p>
+      <p style="margin: 0;">
+        If the redirect does not happen automatically, <a href="/zhglxt/modern/service/">open the updated page</a>.
+      </p>
     </main>
-
-    <!-- 页脚脚本 -->
-    <div th:replace="~{cms/fragments/scripts :: scripts}"></div>
-
-    <!-- Service page scripts -->
-    <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar-wrapper');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Service card animations
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-in');
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.premium-service-card').forEach(card => {
-                observer.observe(card);
-            });
-
-            // Quote button functionality
-            document.querySelectorAll('.premium-cta.secondary').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Add quote functionality here
-                    alert('Quote request functionality would be implemented here');
-                });
-            });
-        });
-    </script>
-    
-    <!-- Navbar Active Menu Script -->
-    <script th:src="@{/cms/js/navbar-active.js}"></script>
-    
-    <!-- Page-specific active menu initialization -->
-    <script>
-        // Set active menu for service page
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                if (window.setActiveMenu) {
-                    window.setActiveMenu('service');
-                }
-            }, 100);
-        });
-    </script>
-</body>
-
+  </body>
 </html>

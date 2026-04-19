@@ -932,7 +932,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .timeline.timeline {
         width: 100%;
         max-width: 100%;

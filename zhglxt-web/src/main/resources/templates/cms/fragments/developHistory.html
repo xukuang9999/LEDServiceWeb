@@ -23,8 +23,8 @@
                                     th:text="${developHistory.description}"></h4>
                             </div>
                             <div class="timeline-body">
-                                <p th:if="${not #strings.isEmpty(developHistory.content)}"
-                                   th:utext="${developHistory.content}"></p>
+                                <div class="cms-rich-text" th:if="${not #strings.isEmpty(developHistory.content)}"
+                                     th:utext="${developHistory.content}"></div>
                             </div>
                             <div class="timeline-footer">
                                 <p class="text-right" th:if="${not #strings.isEmpty(developHistory.title)}"

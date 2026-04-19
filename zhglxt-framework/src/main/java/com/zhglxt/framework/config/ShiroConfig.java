@@ -303,6 +303,10 @@ public class ShiroConfig
         // 对静态资源设置匿名访问
         filterChainDefinitionMap.put("/favicon.png**", "anon");
         filterChainDefinitionMap.put("/zhglxt.png**", "anon");
+        filterChainDefinitionMap.put("/robots.txt", "anon");
+        filterChainDefinitionMap.put("/llms.txt", "anon");
+        filterChainDefinitionMap.put("/llms-full.txt", "anon");
+        filterChainDefinitionMap.put("/sitemap.xml", "anon");
         filterChainDefinitionMap.put("/html/**", "anon");
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/docs/**", "anon");

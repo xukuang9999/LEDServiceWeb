@@ -1,0 +1,12 @@
+{
+  "name": "led-service-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 3001 --directory ../cloudrun-static/site",
+    "build": "../scripts/sync-frontend-build.sh",
+    "preview": "python3 -m http.server 3001 --directory ../cloudrun-static/site",
+    "check": "echo 'frontend source tree not restored in this rollback'"
+  }
+}

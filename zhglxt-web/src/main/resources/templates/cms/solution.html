@@ -1,83 +1,27 @@
-<!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" th:content="${site.description}">
-    <meta name="keywords" th:content="${site.keywords}">
-    <meta name="author" th:content="${site.name}">
-    <link th:href="@{/favicon.png}" rel="shortcut icon"/>
-    
-    <title>Enterprise Official Website - Solutions</title>
-    
-    <!-- Bootstrap core CSS -->
-    <link th:href="@{/cms/bootstrap-v3/css/bootstrap.min.css}" rel="stylesheet"/>
-    
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link th:href="@{/cms/bootstrap-v3/css/ie10-viewport-bug-workaround.css}" rel="stylesheet"/>
-    
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]>
-    <script th:src="@{/cms/bootstrap-v3/docs/assets/js/ie8-responsive-file-warning.js}"></script><![endif]-->
-    <script th:src="@{/cms/bootstrap-v3/docs/assets/js/ie-emulation-modes-warning.js}"></script>
-    
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-    <!-- Google Fonts for modern typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-    <!-- Modern Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link th:href="@{/cms/css/carousel.css}" rel="stylesheet">
-    <!--时间轴-->
-    <link th:href="@{/cms/css/timeline.css}" rel="stylesheet">
-    <!--自定义样式-->
-    <style th:replace="~{cms/fragments/head-style :: head-style}"></style>
-
-    <!-- Modern Index Page Styles for consistent navbar -->
-    <link th:href="@{/cms/css/index.css}" rel="stylesheet">
-    
-    <!-- Back to Top Button Styles -->
-    <link th:href="@{/cms/css/back-to-top.css}" rel="stylesheet">
-</head>
-<body>
-<!-- Modern Navigation -->
-<header th:replace="~{cms/fragments/navbar :: navbar}" class="modern-nav"></header>
-
-<!-- 主要内容区域 -->
-<div class="container marketing">
-    <!-- 解决方案 -->
-    <div th:replace="~{cms/fragments/solution :: solutions}"></div>
-    
-    <!-- Back to Top Button -->
-    <div th:replace="~{cms/fragments/back-to-top :: back-to-top}"></div>
-    
-    <!-- 页脚 -->
-    <footer th:replace="~{cms/fragments/footer :: footer}"></footer>
-</div>
-
-<!-- 页脚脚本 -->
-<div th:replace="~{cms/fragments/scripts :: scripts}"></div>
-
-<!-- Navbar scroll effect script -->
-<script>
-    // Navbar scroll effect
-    window.addEventListener('scroll', () => {
-        const navbar = document.querySelector('.navbar-wrapper');
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-</script>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,follow" />
+    <title>Redirecting...</title>
+    <link rel="canonical" href="/zhglxt/modern/solutions/" />
+    <meta http-equiv="refresh" content="0; url=/zhglxt/modern/solutions/" />
+    <script>
+      const target = "/zhglxt/modern/solutions/";
+      const next = target + window.location.search + window.location.hash;
+      window.location.replace(next);
+    </script>
+  </head>
+  <body>
+    <main style="font-family: 'Space Grotesk', Arial, sans-serif; padding: 40px; line-height: 1.6;">
+      <h1 style="margin: 0 0 12px;">Redirecting to the current public page</h1>
+      <p style="margin: 0 0 12px;">
+        This public page has moved to the current LED Service route.
+      </p>
+      <p style="margin: 0;">
+        If the redirect does not happen automatically, <a href="/zhglxt/modern/solutions/">open the updated page</a>.
+      </p>
+    </main>
+  </body>
 </html>

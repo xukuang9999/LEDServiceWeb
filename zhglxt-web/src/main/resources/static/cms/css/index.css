@@ -4684,3 +4684,191 @@ ERRIDE - Force animations to be visible */
 [style*="transform"] {
     transform: var(--inline-transform) !important;
 }
+
+/* Global public-site override: static top navbar and block layout */
+body,
+body.index-page,
+body.hero-page,
+body.news-page,
+body.service-page {
+    padding-top: 0 !important;
+}
+
+.loock {
+    padding-top: 0 !important;
+}
+
+.navbar-wrapper,
+.navbar-wrapper.scrolled,
+.navbar-wrapper.dark-navbar,
+.navbar-wrapper.light-navbar,
+.navbar-wrapper.tech-navbar,
+.navbar-wrapper.gradient-navbar {
+    position: relative !important;
+    top: 0 !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+}
+
+.navbar-wrapper .navbar,
+.navbar-wrapper .navbar-fixed-top,
+.navbar-wrapper .container,
+.navbar-wrapper .container-fluid {
+    position: static !important;
+    top: auto !important;
+}
+
+.services-hero,
+.news-hero {
+    padding-top: 40px !important;
+}
+
+.service-detail-hero,
+.exhibition-hero {
+    padding-top: 0 !important;
+}
+
+/* Mobile-rich-text safeguards for CMS content blocks */
+.cms-rich-text,
+.about-description,
+.contact-description,
+.modal-content-text,
+.content-text,
+.article-content-text,
+.data-content,
+.info-content,
+.highlight-text,
+.news-article-content,
+.timeline-body,
+.modal-body {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.cms-rich-text img,
+.about-description img,
+.contact-description img,
+.modal-content-text img,
+.content-text img,
+.article-content-text img,
+.data-content img,
+.info-content img,
+.highlight-text img,
+.news-article-content img,
+.timeline-body img,
+.modal-body img,
+.cms-rich-text video,
+.about-description video,
+.contact-description video,
+.modal-content-text video,
+.content-text video,
+.article-content-text video,
+.data-content video,
+.info-content video,
+.highlight-text video,
+.news-article-content video,
+.timeline-body video,
+.modal-body video,
+.cms-rich-text iframe,
+.about-description iframe,
+.contact-description iframe,
+.modal-content-text iframe,
+.content-text iframe,
+.article-content-text iframe,
+.data-content iframe,
+.info-content iframe,
+.highlight-text iframe,
+.news-article-content iframe,
+.timeline-body iframe,
+.modal-body iframe {
+    max-width: 100%;
+}
+
+.cms-rich-text img,
+.about-description img,
+.contact-description img,
+.modal-content-text img,
+.content-text img,
+.article-content-text img,
+.data-content img,
+.info-content img,
+.highlight-text img,
+.news-article-content img,
+.timeline-body img,
+.modal-body img,
+.cms-rich-text video,
+.about-description video,
+.contact-description video,
+.modal-content-text video,
+.content-text video,
+.article-content-text video,
+.data-content video,
+.info-content video,
+.highlight-text video,
+.news-article-content video,
+.timeline-body video,
+.modal-body video {
+    height: auto;
+}
+
+@media (max-width: 1024px) {
+    .cms-rich-text table,
+    .about-description table,
+    .contact-description table,
+    .modal-content-text table,
+    .content-text table,
+    .article-content-text table,
+    .data-content table,
+    .info-content table,
+    .highlight-text table,
+    .news-article-content table,
+    .timeline-body table,
+    .modal-body table,
+    .cms-rich-text pre,
+    .about-description pre,
+    .contact-description pre,
+    .modal-content-text pre,
+    .content-text pre,
+    .article-content-text pre,
+    .data-content pre,
+    .info-content pre,
+    .highlight-text pre,
+    .news-article-content pre,
+    .timeline-body pre,
+    .modal-body pre {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .cms-rich-text table,
+    .about-description table,
+    .contact-description table,
+    .modal-content-text table,
+    .content-text table,
+    .article-content-text table,
+    .data-content table,
+    .info-content table,
+    .highlight-text table,
+    .news-article-content table,
+    .timeline-body table,
+    .modal-body table {
+        display: block;
+    }
+
+    .cms-rich-text pre,
+    .about-description pre,
+    .contact-description pre,
+    .modal-content-text pre,
+    .content-text pre,
+    .article-content-text pre,
+    .data-content pre,
+    .info-content pre,
+    .highlight-text pre,
+    .news-article-content pre,
+    .timeline-body pre,
+    .modal-body pre {
+        white-space: pre-wrap;
+    }
+}

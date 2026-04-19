@@ -1,0 +1,21 @@
+{
+  "name": "led-service-workspace",
+  "private": true,
+  "packageManager": "npm@11.6.2",
+  "workspaces": [
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=24 <26"
+  },
+  "scripts": {
+    "doctor": "./scripts/doctor.sh",
+    "frontend:install": "npm install --workspace frontend",
+    "frontend:dev": "npm --workspace frontend run dev",
+    "frontend:build": "npm --workspace frontend run build",
+    "frontend:preview": "npm --workspace frontend run preview",
+    "frontend:build:backend": "npm run frontend:build",
+    "backend:dev": "./scripts/dev-backend.sh",
+    "backend:package": "./scripts/mvn.sh -pl zhglxt-web -am -Dmaven.test.skip=true package"
+  }
+}

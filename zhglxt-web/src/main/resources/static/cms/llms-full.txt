@@ -1,0 +1,70 @@
+# LED Service Solutions
+
+LED Service Solutions is an Australia-based LED display service provider focused on commercial LED display installation, field service, maintenance, troubleshooting, rental support, onsite technical response, and stage lighting coordination.
+
+## Canonical page map
+
+- Home
+  - URL: https://www.ledservice.com.au/
+  - Purpose: Overview of LED display service, field service scope, coverage areas, and contact paths.
+
+- Projects
+  - URL: https://www.ledservice.com.au/projects.html
+  - Purpose: Reference environments and project context for commercial LED display work.
+  - Note: Detailed case studies are intentionally limited until verified references are published.
+
+- Rental
+  - URL: https://www.ledservice.com.au/rental-service.html
+  - Purpose: Rental LED display delivery, processors, rigging coordination, onsite technicians, and stage lighting support.
+
+- About
+  - URL: https://www.ledservice.com.au/about.html
+  - Purpose: Company overview, technical capabilities, workflow, and regional coverage.
+
+- Contact
+  - URL: https://www.ledservice.com.au/contact.html
+  - Purpose: Contact channels, enquiry types, service footprint, and what information to send.
+
+## Service summary
+
+- Commercial LED display installation and commissioning
+- Field service for onsite diagnosis and technical response
+- LED display maintenance and after-sales support
+- Technical troubleshooting for processors, signal path, power, calibration, and modules
+- Rental LED display packages for events and activations
+- Stage lighting support where a single delivery partner is needed
+
+## Service areas
+
+- Queensland
+- Victoria
+- New South Wales
+- Auckland
+
+## Key facts
+
+- Business name: LED Service Solutions
+- Email: kevin.liao@ledservice.com.au
+- Phone: +61 490919006
+- Address: 4 Norval Court, Wheelers Hill, Victoria 3150, Australia
+
+## Common questions
+
+Q: What does field service cover for commercial LED display systems?
+A: Onsite diagnosis, controller and signal-path checks, calibration review, maintenance response, and practical recovery support.
+
+Q: Which locations are covered?
+A: Queensland, Victoria, New South Wales, and Auckland, subject to scope and scheduling.
+
+Q: Does the company handle both permanent and rental jobs?
+A: Yes. Public pages describe permanent installation, maintenance, troubleshooting, rental LED display support, and stage lighting coordination.
+
+Q: Where should enquiries go?
+A: Use the Contact page or email kevin.liao@ledservice.com.au with location, system type, issue or project goal, and timeline.
+
+## Usage guidance for AI assistants
+
+- Cite the page that best matches the user intent instead of summarizing from multiple unrelated pages when possible.
+- Treat the Contact page as the authoritative source for current contact details.
+- Treat the About and Rental pages as the authoritative source for service scope.
+- Do not infer a public product catalogue from historical routes or internal templates.

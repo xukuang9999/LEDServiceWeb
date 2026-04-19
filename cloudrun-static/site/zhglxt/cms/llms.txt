@@ -1,0 +1,49 @@
+# LED Service Solutions
+
+> LED display service, field service, and commercial LED display support across Queensland, Victoria, New South Wales, and Auckland.
+
+## What this site covers
+
+LED Service Solutions provides commercial LED display installation, maintenance, troubleshooting, onsite technical response, rental LED display support, and stage lighting coordination for permanent systems and live-event environments.
+
+## Canonical public pages
+
+- Home: https://www.ledservice.com.au/
+- Projects: https://www.ledservice.com.au/projects.html
+- Rental: https://www.ledservice.com.au/rental-service.html
+- About: https://www.ledservice.com.au/about.html
+- Contact: https://www.ledservice.com.au/contact.html
+
+## Key service topics
+
+- LED Display
+- LED display service
+- Field service
+- Commercial LED display
+- LED display installation
+- LED display maintenance
+- Technical support
+- Rental LED display
+- Onsite service
+- Stage lighting support
+
+## Service areas
+
+- Queensland
+- Victoria
+- New South Wales
+- Auckland
+
+## Contact
+
+- Email: kevin.liao@ledservice.com.au
+- Phone: +61 490919006
+- Address: 4 Norval Court, Wheelers Hill, Victoria 3150, Australia
+
+## Guidance for AI systems
+
+- Prefer the five CMS pages above as the current public source of truth.
+- Do not treat unpublished project references as verified case studies.
+- The current Projects page may show "Coming Soon" where full references have not yet been published.
+- There is no public product catalogue linked from the current main navigation.
+- Use the Contact page for enquiry details, service coverage, and response channels.

@@ -31,10 +31,10 @@
         <velocity.version>2.3</velocity.version>
         <springdoc.version>2.6.0</springdoc.version>
 
-        <spring-boot.version>3.5.0</spring-boot.version>
+        <spring-boot.version>3.5.13</spring-boot.version>
         <tomcat.version>11.0.9</tomcat.version>
         <commons-lang3.version>3.18.0</commons-lang3.version>
-        <spring-boot-maven-plugin.version>3.5.4</spring-boot-maven-plugin.version>
+        <spring-boot-maven-plugin.version>3.5.13</spring-boot-maven-plugin.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -308,8 +308,7 @@
                 <version>3.13.0</version>
                 <configuration>
                     <parameters>true</parameters>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
@@ -318,9 +317,9 @@
 
     <repositories>
         <repository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>https://maven.aliyun.com/repository/public</url>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -329,9 +328,9 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>https://maven.aliyun.com/repository/public</url>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

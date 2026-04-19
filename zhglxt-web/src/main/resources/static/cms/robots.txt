@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.ledservice.com.au/sitemap.xml
+
+# AI-readable summary
+# https://www.ledservice.com.au/llms.txt

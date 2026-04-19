@@ -662,24 +662,6 @@
             }
         });
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar-wrapper');
-            const header = document.querySelector('.modern-nav.dark-navbar');
-            
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-                // Remove dark-navbar class when scrolled to show light navbar
-                navbar.classList.remove('dark-navbar');
-            } else {
-                navbar.classList.remove('scrolled');
-                // Add dark-navbar class back when at top for dark hero sections
-                if (header) {
-                    navbar.classList.add('dark-navbar');
-                }
-            }
-        });
-        
         // Animate elements on scroll
         const observerOptions = {
             threshold: 0.1,
